@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  backend:
+    build: ""
+    container_name: "backend_nginx"
+    ports:
+      - "8081:80"
+    networks:
+      - backend
+  node:
+    image: "node:14.18.1-bullseye-slim"
+    networks:
+      - backend
+
+networks: 
+  backend: 
+    name: "app_backend"
