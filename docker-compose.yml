@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   react_client:
-    build: "./client"
+    build: "./motor-services-frontend"
     container_name: "react_client"
     stdin_open: true
     ports: 
@@ -9,7 +9,7 @@ services:
     networks:
       - mern-app
   node_server:
-    build: "./server"
+    build: "./motor-services-backend"
     container_name: "node_server"
     ports: 
     - "3000:3000"
@@ -22,8 +22,8 @@ services:
     image: "mariadb:10.5"
     restart: always
     volumes:
-      - "./server/mysql_data:/var/lib/mysql"
-      - "./server/init:/docker-entrypoint-initdb.d"
+      - "./motor-services-backend/mysql_data:/var/lib/mysql"
+      - "./motor-services-backend/init:/docker-entrypoint-initdb.d"
     environment:
       - MYSQL_ROOT_PASSWORD='mypassword'
       - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD='yes'
@@ -36,6 +36,3 @@ services:
 networks:
   mern-app:
     name: "mern-app"
-#volumes:
-#  mariadb_data: 
-#    driver: local

@@ -13,6 +13,7 @@ app.get('/products', (req, res) => {
     const query1 = 'use mydatabase';
     const query = 'select * from products';
     pool.query(query1).then(result =>{
+      console.log("entra");
       res.send(result);
     }).catch(error => console.log(error));
 
