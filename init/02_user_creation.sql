@@ -1,0 +1,2 @@
+CREATE USER IF NOT EXISTS 'newuser'@'%' IDENTIFIED BY 'test';
+
