@@ -10,10 +10,12 @@ const port = 3000;
 
 app.get('/products', (req, res) => {
   try {
-    const query1 = 'use mydatabase';
-    const query = 'select * from products';
-    pool.query(query1).then(result =>{
-      console.log("entra");
+    //const firstquery = 'use mydatabase;';
+    //const secondquery = 'select * from products;';
+
+    const thirdquery = 'use mydatabase; select * from products;'
+
+    pool.query(thirdquery).then(result =>{
       res.send(result);
     }).catch(error => console.log(error));
 
