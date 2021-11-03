@@ -1,18 +1,38 @@
 version: '3.7'
-
 services:
-  backend:
-    build: ""
-    container_name: "backend_nginx"
+  react_client:
+    build: "./motor-services-frontend"
+    container_name: "react_client"
+    stdin_open: true
+    ports: 
+    - "8080:80"
+    networks:
+      - mern-app
+  node_server:
+    build: "./motor-services-backend"
+    container_name: "node_server"
+    ports: 
+    - "3000:3000"
+    networks:
+      - mern-app
+    depends_on:
+      - mariadb
+  mariadb:
+    container_name: "mariadb"
+    image: "mariadb:10.5"
+    restart: always
+    volumes:
+      - "./motor-services-backend/mysql_data:/var/lib/mysql"
+      - "./motor-services-backend/init:/docker-entrypoint-initdb.d"
+    environment:
+      - MYSQL_ROOT_PASSWORD='mypassword'
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD='yes'
     ports:
-      - "8081:80"
+    - 3307:3306
     networks:
-      - backend
-  node:
-    image: "node:14.18.1-bullseye-slim"
-    networks:
-      - backend
+    - mern-app
+    
 
-networks: 
-  backend: 
-    name: "app_backend"
+networks:
+  mern-app:
+    name: "mern-app"
