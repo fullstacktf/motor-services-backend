@@ -29,9 +29,11 @@ pickauto
 ```
 ## 🖥️ Tech Stack
 
-* Go
-* Nginx
+* Node
+* Express
 * MariaDB
+* Nginx
+
 
 
 ## API Reference (Endpoints)
