@@ -29,13 +29,7 @@ pickauto
 │   ├── mysql_data
 │   │   ├── aria_log.00000001
 │   │   ├── aria_log_control
-│   │   ├── ib_buffer_pool
-│   │   ├── ibdata1
-│   │   ├── ib_logfile0
-│   │   ├── multi-master.info
-│   │   ├── mydatabase [error opening dir]
-│   │   ├── mysql [error opening dir]
-│   │   └── performance_schema [error opening dir]
+│   │   ├── ...
 │   ├── package.json
 │   ├── package-lock.json
 │   └── routes
