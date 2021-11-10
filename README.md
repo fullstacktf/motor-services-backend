@@ -68,33 +68,33 @@ pickauto
 
 * app.post('/api/users/register'); when a user registers, is added to the database.
 * app.get('/api/users'); get all users.
-* app.delete('/api/users/:_id'); remove a specific user, if he/she wants to remove his/her account.
-* app.put('/api/users/:_id'); update data of a specific user, edit user profile.
+* app.delete('/api/users/{userID}'); remove a specific user, if he/she wants to remove his/her account.
+* app.put('/api/users/{userID}'); update data of a specific user, edit user profile.
 
 * app.get('/api/users/pickers'); get all users who are pickers.
 * app.get('/api/users/owners'); get all users who are owners.
 
 
-* app.get('/api/users/:_id/cars'); get all cars of a specific user.
-* app.post('/api/users/:_id/cars'); add a car to a specific user.
-* app.delete('/api/users/:_id/cars/:_id'); remove a specific car from a specific user.
-* app.put('/api/users/:_id/cars/:_id'); update car data from a specific user.
-* app.get('/api/users/:_id/dates?from=&to='); get all dates from a specific date to specific date.
-* app.get('/api/users/:_id/dates?status="Pendiente"); get all pending dates from a specific user.
+* app.get('/api/users/{userID}/cars'); get all cars of a specific user.
+* app.post('/api/users/{userID}/cars'); add a car to a specific user.
+* app.delete('/api/users/{userID}/cars/{carID}'); remove a specific car from a specific user.
+* app.put('/api/users/{userID}/cars/{carID}'); update car data from a specific user.
+* app.get('/api/users/{userID}/dates?from=&to='); get all dates from a specific date to specific date.
+* app.get('/api/users/{userID}/dates?status="Pendiente"); get all pending dates from a specific user.
 
-* app.post('/api/users/:_id/dates'); set an appointment to a specific user.
-* app.get('/api/users/:_id/dates/:_id'); get an specific appointment from an specific user.
-* app.put('/api/users/:_id/dates/:_id'); picker updates information of a date. 
-* app.delete('/api/users/:_id/dates/:_id'); to cancel an appointment.
+* app.post('/api/users/{userID}/dates'); set an appointment to a specific user.
+* app.get('/api/users/{userID}/dates/{dateID}'); get an specific appointment from an specific user.
+* app.put('/api/users/{userID}/dates/{dateID}'); picker updates information of a date. 
+* app.delete('/api/users/{userID}/dates/{dateID}'); to cancel an appointment.
 
 
 * app.get('api/services/'); get all services.
-* app.get('api/services/:_id'); get a specific service.
+* app.get('api/services/{serviceID}'); get a specific service.
 
 
-* app.get('/api/users/:_id/dates/:_id/review'); get a review of a past date, if it has it.
-* app.post('/api/users/:_id/dates/:_id/review'); post a review to an specific date.
-* app.delete('/api/users/:_id/dates/:_id/review'); remove a review of a specific date, if it has it.
+* app.get('/api/users/{userID}/dates/{dateID}/review'); get a review of a past date, if it has it.
+* app.post('/api/users/{userID}/dates/{dateID}/review'); post a review to an specific date.
+* app.delete('/api/users/{userID}/dates/{dateID}/review'); remove a review of a specific date, if it has it.
 
 #### Get all items
 
