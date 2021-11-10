@@ -66,7 +66,7 @@ pickauto
 
 ## API Reference (Endpoints)
 
-* app.post('/api/users/register'); when a user registers, it adds to database.
+* app.post('/api/users/register'); when a user registers, is added to the database.
 * app.get('/api/users'); get all users.
 * app.delete('/api/users/:_id'); remove a specific user, if he/she wants to remove his/her account.
 * app.put('/api/users/:_id'); update data of a specific user, edit user profile.
