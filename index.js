@@ -1,5 +1,5 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+//import bodyParser from 'body-parser';
 //import {pool} from './db/database.js';
 const app = express();
 const port = 3000;
@@ -21,7 +21,12 @@ app.get('/products', (req, res) => {
 });
 */
 
-const users = [
+app.use( express.json() );       // to support JSON-encoded bodies
+app.use(express.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+let users = [
   { 
     id: 0,
     name: 'Antonio',
@@ -45,13 +50,15 @@ let services = [
   }
 ];
 
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-})); 
+const bodyIsEmpty = (body) =>  body === {};
+
+
 
 //app.post('/register'); //when a user registers, is added to the database.
 app.post('/users', (req, res) => { //when a user registers, is added to the database.
+  if (bodyIsEmpty(req.body)) {
+    res.status(400).send('Envía algo en el body .');
+  } else {
   const userNewId =  users.length +1
   const userNewName = req.body.name;
   res.send(userNewName)
@@ -61,6 +68,7 @@ app.post('/users', (req, res) => { //when a user registers, is added to the data
     rol: 'owner'
   }
   users.push(postUser);
+}
 }); 
 app.get('/users', (req, res) => {
     res.json(users);
@@ -76,8 +84,36 @@ app.get('/users/:userID',(req, res) => {
   }
 
 });
-app.delete('/users/:userID', (req, res) => {}); //remove a specific user, if he/she wants to remove his/her account.
-app.put('/users/:userID', (req, res) => {}); //update data of a specific user, edit user profile.
+app.delete('/users', (req, res) => {
+  if (bodyIsEmpty(req.body)) {
+    res.status(400).send('Envía algo en el body .');
+  } else {
+  const id = req.body.id;
+  const user = users.find(user => user.id === parseInt(id));
+  if(user){
+    users = users.filter(user => user.id !== parseInt(id));
+    res.send(users);
+  }else{
+    res.status(400).send("Error no existe el usuario")
+  }
+}
+}); //remove a specific user, if he/she wants to remove his/her account.
+app.put('/users/:id', (req, res) => {
+  if (bodyIsEmpty(req.body)) {
+    res.status(400).send('Envía algo en el body .');
+    } else {
+      const name = req.body.name;
+      const id = req.params.id;
+      const user = users.find(user => user.id === parseInt(id));
+      const userIndex = users.findIndex((user) => user.id === parseInt(id));
+      if (userIndex === -1) {
+        res.status(400).send('Pa la próxima me pones un user que exista😉.');
+      }
+      user.name = name;
+      users[userIndex] = user;
+      res.send({ users });
+    }
+}); //update data of a specific user, edit user profile.
 
 app.get('/users/pickers', (req, res) => {}); //get all users who are pickers.
 app.get('/users/owners', (req, res) => {}); //get all users who are owners.
