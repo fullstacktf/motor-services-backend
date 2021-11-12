@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
+    "start:nodemon": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -13,8 +14,10 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mariadb": "^2.5.5",
-    "mongoose": "^6.0.12",
-    "nodemon": "^2.0.14"
+    "mongoose": "^6.0.12"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }
