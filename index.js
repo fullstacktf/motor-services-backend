@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 //import {pool} from './db/database.js';
 const app = express();
 const port = 3000;
@@ -20,12 +21,14 @@ app.get('/products', (req, res) => {
 });
 */
 
-let users = [
+const users = [
   { 
+    id: 0,
     name: 'Antonio',
     rol: 'picker'
   },
-  { 
+  {  
+    id: 1,
     name: 'Domingo',
     rol: 'owner'
   }
@@ -42,11 +45,37 @@ let services = [
   }
 ];
 
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
 //app.post('/register'); //when a user registers, is added to the database.
 app.post('/users', (req, res) => { //when a user registers, is added to the database.
-
+  const userNewId =  users.length +1
+  const userNewName = req.body.name;
+  res.send(userNewName)
+  const postUser = {
+    id: userNewId,
+    name: userNewName,
+    rol: 'owner'
+  }
+  users.push(postUser);
 }); 
-app.get('/users', (req, res) => {}); //get all users.
+app.get('/users', (req, res) => {
+    res.json(users);
+}); //get all users.
+
+app.get('/users/:userID',(req, res) => {
+  const id = req.params.userID;
+  const user = users.find(user => user.id == id);
+  if(user){
+    res.json(user);
+  }else{
+    res.status(400).send("Error no existe el usuario")
+  }
+
+});
 app.delete('/users/:userID', (req, res) => {}); //remove a specific user, if he/she wants to remove his/her account.
 app.put('/users/:userID', (req, res) => {}); //update data of a specific user, edit user profile.
 
