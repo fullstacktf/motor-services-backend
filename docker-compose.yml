@@ -1,22 +1,22 @@
 version: '3.7'
 services:
-  react_client:
-    build: "./motor-services-frontend"
-    container_name: "react_client"
-    stdin_open: true
-    ports: 
-    - "8080:80"
-    networks:
-      - mern-app
-  node_server:
-    build: "./motor-services-backend"
-    container_name: "node_server"
-    ports: 
-    - "3000:3000"
-    networks:
-      - mern-app
-    depends_on:
-      - mariadb
+#  react_client:
+#    build: "./motor-services-frontend"
+#    container_name: "react_client"
+#    stdin_open: true
+#    ports: 
+#    - "8080:80"
+#    networks:
+#      - mern-app
+#  node_server:
+#    build: "./motor-services-backend"
+#    container_name: "node_server"
+#    ports: 
+#    - "3000:3000"
+#    networks:
+#      - mern-app
+#    depends_on:
+#      - mariadb
   mariadb:
     container_name: "mariadb"
     image: "mariadb:10.5"
