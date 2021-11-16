@@ -17,3 +17,22 @@ CREATE PROCEDURE pickauto.Insert_user(
     END;//
 
 DELIMITER ;
+
+DELIMITER //
+//
+CREATE PROCEDURE pickauto.Insert_vehicle(
+  plate_number_value varchar(8),
+  id_owner_value int(10) unsigned,
+  brand_value varchar(20),
+  model_value varchar(20),
+  powered_value int(10) unsigned,
+  kilometers_value int(10) unsigned,
+  fuel_value varchar(10),
+  vehicle_description_value varchar(200),
+  vehicle_image_value varchar(200))
+    BEGIN
+      insert into Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) VALUES
+      (plate_number_value, id_owner_value, brand_value, model_value, powered_value, kilometers_value, fuel_value, vehicle_description_value, vehicle_image_value);
+    END;//
+
+DELIMITER ;
