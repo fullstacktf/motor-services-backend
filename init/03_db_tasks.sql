@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS User (
     city ENUM('Madrid', 'Barcelona', 'Bilbao', 'Sevilla') NOT NULL,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(40) NOT NULL,
+    rol INT UNSIGNED NOT NULL,
     phone_number INT UNSIGNED,
     birth_date DATE NOT NULL,
     profile_image VARCHAR(100),
