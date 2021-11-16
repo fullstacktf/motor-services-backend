@@ -1,6 +1,11 @@
 GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'%' IDENTIFIED BY 'test';
 USE pickauto;
 
+CREATE TABLE IF NOT EXISTS Rol (
+    id_rol INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    rol VARCHAR(10) NOT NULL UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS User (
     DNI INT UNSIGNED NOT NULL PRIMARY KEY,
     password_key VARCHAR(20) NOT NULL,
@@ -13,12 +18,7 @@ CREATE TABLE IF NOT EXISTS User (
     birth_date DATE NOT NULL,
     profile_image VARCHAR(100),
     /*Las imágenes van en una carpeta y en la tabla se hace referencia a la ruta*/
-    CONSTRAINT FOREIGN KEY (rol) REFERENCES Rol(id_rol)
-);
-
-CREATE TABLE IF NOT EXISTS Rol (
-    id_rol INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    rol VARCHAR(10) NOT NULL
+    FOREIGN KEY (rol) REFERENCES Rol(id_rol)
 );
 
 CREATE TABLE IF NOT EXISTS Picker (
