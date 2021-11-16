@@ -1,25 +1,26 @@
 GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'%' IDENTIFIED BY 'test';
 USE pickauto;
 
+CREATE TABLE IF NOT EXISTS Rol (
+    id_rol INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    rol VARCHAR(10) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS User (
     DNI INT UNSIGNED NOT NULL PRIMARY KEY,
+    id_rol INT UNSIGNED NOT NULL, 
     password_key VARCHAR(20) NOT NULL,
     email VARCHAR(50) NOT NULL,
     city ENUM('Madrid', 'Barcelona', 'Bilbao', 'Sevilla') NOT NULL,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(40) NOT NULL,
-    phone_number INT UNSIGNED,
+    phone_number INT UNSIGNED NOT NULL, 
     birth_date DATE NOT NULL,
-    profile_image VARCHAR(100)
-    /*Las imágenes van en una carpeta y en la tabla se hace referencia a la ruta*/
+    profile_image VARCHAR(100),
+    FOREIGN KEY (id_rol) REFERENCES Rol(id_rol)
 );
 
-CREATE TABLE IF NOT EXISTS Rol (
-    id_rol INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id_user INT UNSIGNED NOT NULL,
-    rol VARCHAR(10) NOT NULL,
-    FOREIGN KEY (id_user) REFERENCES User(DNI)
-);
+
 
 CREATE TABLE IF NOT EXISTS Picker (
     id_picker INT UNSIGNED NOT NULL PRIMARY KEY,
@@ -72,3 +73,6 @@ CREATE TABLE IF NOT EXISTS Rating (
     rating TINYINT UNSIGNED,
     CONSTRAINT FOREIGN KEY (id_appointment) REFERENCES Appointment(id_appointment)
 );
+
+CREATE TABLE products(name VARCHAR(100));
+INSERT INTO products VALUES ('portatil'), ('teclado'), ('raton');
