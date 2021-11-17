@@ -32,3 +32,6 @@ CALL Insert_service('ITV', 'Traslado del vehiculo al centro ITV');
 CALL Insert_appointment('1154abd', 2, 12345672, 'Calle de la piruleta, 32', '2021-10-23 11:30', 'Entregado', 'Cambio de aceite y revisión de neumaticos.', 'Calle de la piruleta, 32', 'Taller Pepe el Potencia');
 CALL Insert_appointment('5154abd', 1, 12345677, 'Avenida del boniato, 88', '2021-11-29 11:30', 'En el taller', 'Pintar verde menta.', 'Calle amarilla, 12', 'Taller Camaleon');
 CALL Insert_appointment('1134fbd', 5, 12345672, 'Calle imaginaria, 15', '2021-11-29 12:30', 'Camino al punto de entrega', 'Limpieza de tapiceria.', 'Calle imaginaria, 15', 'LimpiAuto');
+
+CALL Insert_rating(2, 'Todo correcto, muy puntual', 5);
+CALL Insert_rating(3, 'Dejo el coche aparcado al sol', 4);

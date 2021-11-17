@@ -81,3 +81,16 @@ CREATE PROCEDURE pickauto.Insert_appointment(
     END;//
 
 DELIMITER ;
+
+DELIMITER //
+//
+CREATE PROCEDURE pickauto.Insert_rating(
+  id_appointment_value int(10) unsigned,
+  notes_value varchar(200),
+  rating_value tinyint(3) unsigned)
+    BEGIN
+      INSERT INTO Rating (id_appointment, notes, rating) VALUES 
+      (id_appointment_value, notes_value, rating_value);
+    END;//
+
+DELIMITER ;
