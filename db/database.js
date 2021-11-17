@@ -10,7 +10,7 @@ mariadb.createPool({
   port: "3306",
   user: "newuser", 
   password: "test",
-  database: "mydatabase",
+  database: "pickauto",
   multipleStatements: true
 });
 
