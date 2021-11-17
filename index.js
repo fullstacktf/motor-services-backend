@@ -1,6 +1,6 @@
 import express from 'express';
 //import bodyParser from 'body-parser';
-//import {pool} from './db/database.js';
+import {pool} from './db/database.js';
 const app = express();
 const port = 3000;
 
@@ -51,39 +51,69 @@ let services = [
 ];
 
 const bodyIsEmpty = (body) =>  body === {};
-
+let query = '';
 
 
 //app.post('/register'); //when a user registers, is added to the database.
 app.post('/users', (req, res) => { //when a user registers, is added to the database.
   if (bodyIsEmpty(req.body)) {
-    res.status(400).send('Envía algo en el body .');
+    res.status(400).send('Envía algo en el body.');
   } else {
-  const userNewId =  users.length +1
-  const userNewName = req.body.name;
-  res.send(userNewName)
-  const postUser = {
-    id: userNewId,
-    name: userNewName,
-    rol: 'owner'
+    const dni = req.body.dni;
+    const id_rol = req.body.id_rol; //mirar esto luego, para ver como se introduce el id_rol
+    const email = req.body.email;
+    const city = req.body.city;
+    const first_name = req.body.first_name;
+    const last_name = req.body.last_name;
+    const phone_number = req.body.phone_number;
+    const birth_date = req.body.birth_date;
+    const profile_image = req.body.profile_image;
+    try { //mirar si todos estos campos son obligatorios o qué
+      query = `INSERT INTO User (DNI, id_rol, password_key, email, city, first_name, last_name, phone_number, birth_date, profile_image)
+  VALUES (${dni}, ${id_rol}, ${password}, ${email}, ${city}, ${first_name}, ${last_name}, ${phone_number}, ${birth_date}, ${profile_image});`;
+      pool.query(query).then(user => {
+        res.send(`Usuario ${user} insertado correctamente`);
+      }).catch(error => console.log(error));
+    } catch (error) {
+      console.log(error);
+    }
   }
-  users.push(postUser);
-}
-}); 
-app.get('/users', (req, res) => {
-    res.json(users);
-}); //get all users.
-
-app.get('/users/:userID',(req, res) => {
-  const id = req.params.userID;
-  const user = users.find(user => user.id == id);
-  if(user){
-    res.json(user);
-  }else{
-    res.status(400).send("Error no existe el usuario")
-  }
-
 });
+
+app.get('/users', (req, res) => {
+  try {
+    query = 'use pickauto; select * from User;';
+    pool.query(query).then(users => {
+      res.json(users);
+    }).catch(error => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get('/rol', (req, res) => {
+  try {
+    query = 'use pickauto; select * from Rol;';
+    pool.query(query).then(users => {
+      res.json(users);
+    }).catch(error => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get('/users/:userID', (req, res) => {
+  const id = req.params.userID;
+  try {
+    query = `select * from User where user_id='${id}'`;
+    pool.query(query).then(user => {
+      res.json(user);
+    }).catch(error => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.delete('/users', (req, res) => {
   if (bodyIsEmpty(req.body)) {
     res.status(400).send('Envía algo en el body .');
