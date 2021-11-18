@@ -80,7 +80,7 @@ app.post('/users', (req, res) => { //when a user registers, is added to the data
   }
 });
 
-app.get('/users', (req, res) => {
+app.get('/rol', (req, res) => {
   try {
     query = 'use pickauto; select * from Rol;';
     pool.query(query).then(users => {
@@ -91,7 +91,7 @@ app.get('/users', (req, res) => {
   }
 });
 
-app.get('/rol', (req, res) => {
+app.get('/rols', (req, res) => {
   try {
     query = 'use pickauto; select * from Rol;';
     pool.query(query).then(users => {
