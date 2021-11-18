@@ -1,5 +1,10 @@
 import express from 'express';
+<<<<<<< HEAD
 import { pool } from './db/database.js';
+=======
+//import bodyParser from 'body-parser';
+import {pool} from './db/database.js';
+>>>>>>> main
 const app = express();
 const port = 3000;
 
@@ -7,9 +12,39 @@ const port = 3000;
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({     // to support URL-encoded bodies
   extended: true
+<<<<<<< HEAD
 }));
 
 const bodyIsEmpty = (body) => body === {};
+=======
+})); 
+
+let users = [
+  { 
+    id: 0,
+    name: 'Antonio',
+    rol: 'picker'
+  },
+  {  
+    id: 1,
+    name: 'Domingo',
+    rol: 'owner'
+  }
+];
+
+let services = [
+  {
+    name:"Chapa y pintura",
+    descripcion: "Conjunto o proceso de cambios superficiales del vehículo."
+  },
+  {
+    name: "Electricidad",
+    descripción: "La electricidad del automovil involucra partes y sistemas de vital importancia para el funcionamiento correcto de nuestro automóvil."
+  }
+];
+
+const bodyIsEmpty = (body) =>  body === {};
+>>>>>>> main
 let query = '';
 
 
@@ -30,7 +65,11 @@ app.post('/users', (req, res) => { //when a user registers, is added to the data
       query = `INSERT INTO User (DNI, id_rol, password_key, email, city, first_name, last_name, phone_number, birth_date, profile_image)
   VALUES (${dni}, ${id_rol}, ${password}, ${email}, ${city}, ${first_name}, ${last_name}, ${phone_number}, ${birth_date}, ${profile_image});`;
       pool.query(query).then(user => {
+<<<<<<< HEAD
         res.send("Usuario insertado correctamente");
+=======
+        res.send(`Usuario ${user} insertado correctamente`);
+>>>>>>> main
       }).catch(error => console.log(error));
     } catch (error) {
       console.log(error);
@@ -40,13 +79,39 @@ app.post('/users', (req, res) => { //when a user registers, is added to the data
 
 app.get('/users', (req, res) => {
   try {
+<<<<<<< HEAD
     query = 'select * from User;'
+=======
+    query = 'use pickauto; select * from User;';
+>>>>>>> main
     pool.query(query).then(users => {
       res.json(users);
     }).catch(error => console.log(error));
   } catch (error) {
     console.log(error);
   }
+});
+
+<<<<<<< HEAD
+app.get('/users/:userID', (req, res) => {
+  const id = req.params.userID;
+  try {
+    query = `select * from User where user_id='${id}'`;
+    pool.query(query).then(user => {
+      res.json(user);
+=======
+app.get('/rols', (req, res) => {
+  try {
+    query = 'use pickauto; select * from Rol;';
+    pool.query(query).then(users => {
+      res.json(users);
+>>>>>>> main
+    }).catch(error => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+<<<<<<< HEAD
+=======
 });
 
 app.get('/users/:userID', (req, res) => {
@@ -59,6 +124,7 @@ app.get('/users/:userID', (req, res) => {
   } catch (error) {
     console.log(error);
   }
+>>>>>>> main
 });
 
 app.delete('/users', (req, res) => {
@@ -126,11 +192,15 @@ app.delete('/users/:userID/appointments/:appointmentID/review'); //remove a revi
 
 
 app.get('/', (req, res) => {
+<<<<<<< HEAD
   res.send('Hello world');
 });
 
 app.get('/hola', (req, res) => {
   res.send('Hello');
+=======
+  res.send('Hello! World')
+>>>>>>> main
 });
 
 app.get('/products', (req, res) => {
