@@ -1,8 +1,10 @@
-import express from 'express';
+const express =  require ('express');
 //import bodyParser from 'body-parser';
 //import {pool} from './db/database.js';
 const app = express();
 const port = 3000;
+import carRouter from ('./routes/cars');
+
 
 // Create a connection pool
 /*
@@ -35,6 +37,11 @@ let users = [
   {  
     id: 1,
     name: 'Domingo',
+    rol: 'owner'
+  },
+  {  
+    id: 2,
+    name: 'Juan',
     rol: 'owner'
   }
 ];
@@ -119,10 +126,44 @@ app.get('/users/pickers', (req, res) => {}); //get all users who are pickers.
 app.get('/users/owners', (req, res) => {}); //get all users who are owners.
 
 
-app.get('/users/:userID/cars'); //get all cars of a specific user.
-app.post('/users/:userID/cars'); //add a car to a specific user.
+//VEHICLES ENDPOINTS
+app.use('/users/:userID/cars',carRouter);
+
+app.get('/users/:userID/cars',(req, res) => {
+
+}); 
+
+//get all cars of a specific user.
+app.post('/users/:userID/cars',(req, res)=>{
+
+  if(bodyIsEmpty(req.body)){
+    res.status(400).send('Fallo al añadir el coche')
+  }else{
+    const id = cars.length + 1
+    const id_user = req.body.user_id
+    const car_name = req.params.car_name;
+    const car_model = req.params.car_model;
+    const car_color = req.params.car_color;
+    const car_model_year = req.params.car_model_year;
+    const car_registration = req.params.car_registration;
+
+    const newCar = {
+      id: id,
+      id_user: id_user,
+      car_name: car_name,
+      car_model: car_model,
+      car_color: car_color,
+      car_model_year: car_model_year,
+      car_registration: car_registration
+    }
+    cars.push(newCar);
+  }
+}); //add a car to a specific user.
 app.delete('/users/:userID/cars/:carID'); //remove a specific car from a specific user.
 app.put('/users/:userID/cars/:carID'); //update car data from a specific user.
+
+
+
 app.get('/users/:userID/appointments?from=&to='); //get all dates from a specific date to specific date.
 app.get('/users/:userID/appointments?status="Pendiente"'); //get all pending dates from a specific user.
 
@@ -140,7 +181,8 @@ app.get('/users/:userID/appointments/:appointmentID/review'); //get a review of 
 app.post('/users/:userID/appointments/:appointmentID/review'); //post a review to an specific appointment.
 app.delete('/users/:userID/appointments/:appointmentID/review'); //remove a review of a specific appointment, if it has it.
 
-
+//Added car router
+app.use('/users/:userID/cars',carRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
