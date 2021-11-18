@@ -8,13 +8,11 @@ services:
 #    - "8080:80"
 #    networks:
 #      - mern-app
-
 #  node_server:
 #    build: "./motor-services-backend"
 #    container_name: "node_server"
 #    ports:
-#      - '3000:3000'
-#      - '9229:9229'
+#    - "3000:3000"
 #    networks:
 #      - mern-app
 #    depends_on:
@@ -33,7 +31,6 @@ services:
     - 3307:3306
     networks:
     - mern-app
-
 networks:
   mern-app:
     name: "mern-app"
