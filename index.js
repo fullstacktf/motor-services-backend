@@ -80,9 +80,9 @@ app.post('/users', (req, res) => { //when a user registers, is added to the data
   }
 });
 
-app.get('/rol', (req, res) => {
+app.get('/users', (req, res) => {
   try {
-    query = 'use pickauto; select * from Rol;';
+    query = 'use pickauto; select * from User;';
     pool.query(query).then(users => {
       res.json(users);
     }).catch(error => console.log(error));
@@ -173,7 +173,7 @@ app.delete('/users/:userID/appointments/:appointmentID/review'); //remove a revi
 
 
 app.get('/', (req, res) => {
-  res.send('Hello!')
+  res.send('Hello! World')
 });
 
 
