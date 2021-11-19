@@ -73,11 +73,8 @@ pickauto
 * app.get('/api/users/pickers'); get all users who are pickers.
 * app.get('/api/users/owners'); get all users who are owners.
 
-
-* app.get('/api/users/{userID}/cars'); get all cars of a specific user.
-* app.post('/api/users/{userID}/cars'); add a car to a specific user.
-* app.delete('/api/users/{userID}/cars/{carID}'); remove a specific car from a specific user.
 * app.put('/api/users/{userID}/cars/{carID}'); update car data from a specific user.
+
 * app.get('/api/users/{userID}/dates?from=&to='); get all dates from a specific date to specific date.
 * app.get('/api/users/{userID}/dates?status="Pendiente"); get all pending dates from a specific user.
 
@@ -95,30 +92,60 @@ pickauto
 * app.post('/api/users/{userID}/dates/{dateID}/review'); post a review to an specific date.
 * app.delete('/api/users/{userID}/dates/{dateID}/review'); remove a review of a specific date, if it has it.
 
-#### Get all items
+#### EndPoints Vehicles 🚗
+#### Get all vehicles from an user
 
 ```http
-  GET /api/items
+  GET /api/users/:userID/vehicles
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+| `userID`  | `string` | **Required**.id of the user|
 
-#### Get item
+#### Get one specific vehicle from an user
 
 ```http
-  GET /api/items/${id}
+  GET /api/users/:userID/vehicles/:vehicleID
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `userID`  | `string` | **Required**.id of the user|
+| `vehicleID`  | `string` | **Required**.id vehicle|
 
-#### add(num1, num2)
+#### Add vehicle to specific user
 
-Takes two numbers and returns the sum.
+```http
+  POST /api/users/:userID/vehicle
+```
 
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `userID`  | `string` | **Required**.id of the user|
+
+
+#### Update one specific vehicle from an user
+
+```http
+  PUT /api/users/:userID/vehicles/:vehicleID
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `userID`  | `string` | **Required**.id of the user|
+| `vehicleID`  | `string` | **Required**.id vehicle|
+
+#### Delete one specific vehicle from an user
+
+```http
+  DELETE /api/users/:userID/vehicles/:vehicleID
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `userID`  | `string` | **Required**.id of the user|
+| `vehicleID`  | `string` | **Required**.id vehicle|
 
 ## Database Schema
 

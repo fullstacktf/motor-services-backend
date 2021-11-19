@@ -1,14 +1,75 @@
+import {pool} from './db/database.js';
+import {router as carRouter} from './routes/cars.js';
+
 import express from 'express';
+<<<<<<< HEAD
 import { pool } from './db/database.js';
 import { execQuery } from './db/database.js';
 const app = express();
 const port = 3000;
 
+=======
+//import bodyParser from 'body-parser';
+const app = express();
+const port = 3000;
+
+
+
+// Create a connection pool
+/*
+app.get('/products', (req, res) => {
+  try {
+
+    const thirdquery = 'use mydatabase; select * from products;'
+
+    pool.query(thirdquery).then(result =>{
+      res.send(result);
+    }).catch(error => console.log(error));
+
+  } catch (error) {
+    console.log(error);
+  }
+});
+*/
+>>>>>>> main
 
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({     // to support URL-encoded bodies
   extended: true
+<<<<<<< HEAD
 }));
+=======
+})); 
+
+let users = [
+  { 
+    id: 0,
+    name: 'Antonio',
+    rol: 'picker'
+  },
+  {  
+    id: 1,
+    name: 'Domingo',
+    rol: 'owner'
+  },
+  {  
+    id: 2,
+    name: 'Juan',
+    rol: 'owner'
+  }
+];
+
+let services = [
+  {
+    name:"Chapa y pintura",
+    descripcion: "Conjunto o proceso de cambios superficiales del vehículo."
+  },
+  {
+    name: "Electricidad",
+    descripción: "La electricidad del automovil involucra partes y sistemas de vital importancia para el funcionamiento correcto de nuestro automóvil."
+  }
+];
+>>>>>>> main
 
 const bodyIsEmpty = (body) => body === {};
 let queryExec = '';
@@ -150,10 +211,44 @@ app.get('/users/owners', async (req, res) => {
 }); //get all users who are owners.
 
 
-app.get('/users/:userID/cars'); //get all cars of a specific user.
-app.post('/users/:userID/cars'); //add a car to a specific user.
+//VEHICLES ENDPOINTS
+app.use('/users/:userID/cars',carRouter);
+
+app.get('/users/:userID/cars',(req, res) => {
+
+}); 
+
+//get all cars of a specific user.
+app.post('/users/:userID/cars',(req, res)=>{
+
+  if(bodyIsEmpty(req.body)){
+    res.status(400).send('Fallo al añadir el coche')
+  }else{
+    const id = cars.length + 1
+    const id_user = req.body.user_id
+    const car_name = req.params.car_name;
+    const car_model = req.params.car_model;
+    const car_color = req.params.car_color;
+    const car_model_year = req.params.car_model_year;
+    const car_registration = req.params.car_registration;
+
+    const newCar = {
+      id: id,
+      id_user: id_user,
+      car_name: car_name,
+      car_model: car_model,
+      car_color: car_color,
+      car_model_year: car_model_year,
+      car_registration: car_registration
+    }
+    cars.push(newCar);
+  }
+}); //add a car to a specific user.
 app.delete('/users/:userID/cars/:carID'); //remove a specific car from a specific user.
 app.put('/users/:userID/cars/:carID'); //update car data from a specific user.
+
+
+
 app.get('/users/:userID/appointments?from=&to='); //get all dates from a specific date to specific date.
 app.get('/users/:userID/appointments?status="Pendiente"'); //get all pending dates from a specific user.
 
@@ -171,7 +266,8 @@ app.get('/users/:userID/appointments/:appointmentID/review'); //get a review of 
 app.post('/users/:userID/appointments/:appointmentID/review'); //post a review to an specific appointment.
 app.delete('/users/:userID/appointments/:appointmentID/review'); //remove a review of a specific appointment, if it has it.
 
-
+//Added car router
+app.use('/users/:userID/cars',carRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello! World')
