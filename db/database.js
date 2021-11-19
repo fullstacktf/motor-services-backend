@@ -16,3 +16,13 @@ mariadb.createPool({
 
 
 
+export async function execQuery(queryExec) {
+  let data;
+  try {
+    rows = await pool.query(queryExec);
+  } catch (error) {
+    console.log(error);
+  }
+  return data;
+}
+

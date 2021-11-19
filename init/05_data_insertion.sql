@@ -1,6 +1,7 @@
 USE pickauto;
 
-INSERT INTO Rol (rol) VALUES ('Owner'), ('Picker');
+CALL Insert_role(1,'Owner');
+CALL Insert_role(2, 'Picker');
 
 CALL Insert_user(12345678, 'seguridad', 'sawyer@lost.org' , 'Sevilla', 'James', 'Ford', 1, 123456789, '1969-07-20', 'Sawyer');
 CALL Insert_user(12345679, 'seguridad', 'jackshephard@lost.org' , 'Barcelona', 'Jack', 'Shephard', 1, 123456389, '1966-07-14', 'Doctor');

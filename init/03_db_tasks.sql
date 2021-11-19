@@ -2,39 +2,26 @@ GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'%' IDENTIFIED BY 'test';
 USE pickauto;
 
 CREATE TABLE IF NOT EXISTS Rol (
-    id_rol INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-<<<<<<< HEAD
-    rol VARCHAR(10) NOT NULL
-=======
-    rol VARCHAR(10) NOT NULL UNIQUE
->>>>>>> main
+    id_rol INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    rol VARCHAR(10) NOT NULL,
+    PRIMARY KEY (ID_rol)
 );
 
 CREATE TABLE IF NOT EXISTS User (
     DNI INT UNSIGNED NOT NULL PRIMARY KEY,
-    id_rol INT UNSIGNED NOT NULL, 
+    id_rol INT UNSIGNED NOT NULL DEFAULT 1, 
     password_key VARCHAR(20) NOT NULL,
     email VARCHAR(50) NOT NULL,
     city ENUM('Madrid', 'Barcelona', 'Bilbao', 'Sevilla') NOT NULL,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(40) NOT NULL,
-<<<<<<< HEAD
-    phone_number INT UNSIGNED NOT NULL, 
-    birth_date DATE NOT NULL,
-    profile_image VARCHAR(100),
-    FOREIGN KEY (id_rol) REFERENCES Rol(id_rol)
-);
-
-
-=======
-    rol INT UNSIGNED NOT NULL,
+    rol INT UNSIGNED NOT NULL ,
     phone_number INT UNSIGNED,
     birth_date DATE NOT NULL,
     profile_image VARCHAR(100),
     /*Las imágenes van en una carpeta y en la tabla se hace referencia a la ruta*/
-    FOREIGN KEY (rol) REFERENCES Rol(id_rol)
+    FOREIGN KEY (rol) REFERENCES Rol(id_rol) ON DELETE CASCADE
 );
->>>>>>> main
 
 CREATE TABLE IF NOT EXISTS Picker (
     id_picker INT UNSIGNED NOT NULL PRIMARY KEY,
@@ -42,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Picker (
     start_time TIME,
     finish_time TIME,
     rating TINYINT DEFAULT 5,
-    FOREIGN KEY (id_picker) REFERENCES User(DNI)
+    FOREIGN KEY (id_picker) REFERENCES User(DNI) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Vehicle (
@@ -55,7 +42,7 @@ CREATE TABLE IF NOT EXISTS Vehicle (
     fuel ENUM('diesel', 'gasolina','híbrido', 'electrico', 'gas'),
     vehicle_description VARCHAR(200),
     vehicle_image VARCHAR(100),
-    FOREIGN KEY (id_owner) REFERENCES User(DNI)
+    FOREIGN KEY (id_owner) REFERENCES User(DNI) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Services (
@@ -75,9 +62,9 @@ CREATE TABLE IF NOT EXISTS Appointment (
     notes VARCHAR(200),
     delivery_place VARCHAR(100) NOT NULL,
     garage VARCHAR(100),
-    CONSTRAINT FOREIGN KEY (id_vehicle) REFERENCES Vehicle(plate_number),
-    CONSTRAINT FOREIGN KEY (id_service) REFERENCES Services(id_service),
-    CONSTRAINT FOREIGN KEY (id_picker) REFERENCES Picker(id_picker)
+    CONSTRAINT FOREIGN KEY (id_vehicle) REFERENCES Vehicle(plate_number) ON DELETE CASCADE,
+    CONSTRAINT FOREIGN KEY (id_service) REFERENCES Services(id_service) ON DELETE CASCADE,
+    CONSTRAINT FOREIGN KEY (id_picker) REFERENCES Picker(id_picker) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Rating (
@@ -85,7 +72,7 @@ CREATE TABLE IF NOT EXISTS Rating (
     id_appointment INT UNSIGNED NOT NULL,
     notes VARCHAR(200),
     rating TINYINT UNSIGNED,
-    CONSTRAINT FOREIGN KEY (id_appointment) REFERENCES Appointment(id_appointment)
+    CONSTRAINT FOREIGN KEY (id_appointment) REFERENCES Appointment(id_appointment) ON DELETE CASCADE
 );
 
 CREATE TABLE products(name VARCHAR(100));

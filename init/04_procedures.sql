@@ -1,5 +1,16 @@
 DELIMITER //
 //
+CREATE PROCEDURE pickauto.Insert_role(
+  id_rol_value int(10) unsigned,
+  rol_value VARCHAR(10))
+    BEGIN
+      insert into Rol (id_rol, rol) VALUES (id_rol_value, rol_value);
+    END;//
+
+DELIMITER ;
+
+DELIMITER //
+//
 CREATE PROCEDURE pickauto.Insert_user(
   DNI_value int(10) unsigned,
   password_key_value varchar(20),

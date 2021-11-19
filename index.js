@@ -1,5 +1,6 @@
 import express from 'express';
 import { pool } from './db/database.js';
+import { execQuery } from './db/database.js';
 const app = express();
 const port = 3000;
 
@@ -10,10 +11,11 @@ app.use(express.urlencoded({     // to support URL-encoded bodies
 }));
 
 const bodyIsEmpty = (body) => body === {};
-let query = '';
+let queryExec = '';
+let queryUse = 'use pickauto;';
 
 
-app.post('/users', (req, res) => { //when a user registers, is added to the database.
+app.post('/users', async (req, res) => { //when a user registers, is added to the database. Añadir el caso de si el usuario existe
   if (bodyIsEmpty(req.body)) {
     res.status(400).send('Envía algo en el body.');
   } else {
@@ -26,63 +28,68 @@ app.post('/users', (req, res) => { //when a user registers, is added to the data
     const phone_number = req.body.phone_number;
     const birth_date = req.body.birth_date;
     const profile_image = req.body.profile_image;
-    try { //mirar si todos estos campos son obligatorios o qué
-      query = `INSERT INTO User (DNI, id_rol, password_key, email, city, first_name, last_name, phone_number, birth_date, profile_image)
-  VALUES (${dni}, ${id_rol}, ${password}, ${email}, ${city}, ${first_name}, ${last_name}, ${phone_number}, ${birth_date}, ${profile_image});`;
-      pool.query(query).then(user => {
-        res.send(`Usuario ${user} insertado correctamente`);
-      }).catch(error => console.log(error));
-    } catch (error) {
-      console.log(error);
-    }
+
+    queryExec = queryUse + `INSERT INTO User (DNI, password_key, email, city, first_name, last_name, rol, phone_number, birth_date, profile_image) 
+    VALUES (${dni}, ${password}, ${email}, ${city}, ${first_name}, ${last_name}, ${id_rol}, ${phone_number}, ${birth_date}, ${profile_image});`;
+    let data = await execQuery(queryExec);
+    res.send({
+        msg: 'Usuario añadido correctamente',
+        resultado: data
+    });
   }
 });
 
-app.get('/users', (req, res) => {
-  try {
-    query = 'use pickauto; select * from User;';
-    pool.query(query).then(users => {
-      res.json(users);
-    }).catch(error => console.log(error));
-  } catch (error) {
-    console.log(error);
-  }
+app.get('/users', async (req, res) => {
+    queryExec = queryUse + 'select * from User;';
+    let data = await execQuery(queryExec);
+    res.json({
+        msg: 'Solicitud exitosa',
+        users: data[1]
+    });
 });
 
-app.get('/rols', (req, res) => {
-  try {
-    query = 'use pickauto; select * from Rol;';
-    pool.query(query).then(users => {
-      res.json(users);
-    }).catch(error => console.log(error));
-  } catch (error) {
-    console.log(error);
-  }
+app.get('/rols', async (req, res) => {
+    queryExec = queryUse + 'select * from Rol;';
+    let data = await execQuery(queryExec);
+    res.json({
+        msg: 'Solicitud exitosa',
+        rols: data[1]
+    });
 });
 
-app.get('/users/:userID', (req, res) => {
+app.get('/users/:userID', async (req, res) => {
   const id = req.params.userID;
-  try {
-    query = `select * from User where user_id='${id}'`;
-    pool.query(query).then(user => {
-      res.json(user);
-    }).catch(error => console.log(error));
-  } catch (error) {
-    console.log(error);
-  }
+  queryExec = queryUse + `select * from User where user_id='${id};'`;
+  let data = await execQuery(queryExec);
+  res.json({
+      msg: 'Solicitud exitosa',
+      user: data[1]
+  });
 });
 
 app.delete('/users', (req, res) => {
   if (bodyIsEmpty(req.body)) {
     res.status(400).send('Envía algo en el body .');
   } else {
-    const id = req.body.id;
-    const user = users.find(user => user.id === parseInt(id));
-    if (user) {
-      users = users.filter(user => user.id !== parseInt(id));
-      res.send(users);
-    } else {
-      res.status(400).send("Error, no existe el usuario")
+    try {
+      const id = req.body.id;
+      const queryExist = queryUse + `select exists(select * from User where DNI=${id} limit 1);`;
+      pool.query(queryExist).then(user => {
+        let objUser = user[1][0];
+        if (objUser[Object.keys(objUser)[0]] === 1) {
+          try {
+            let queryDelete = queryUse + `DELETE FROM User where DNI=${id};`;
+            pool.query(queryDelete).then(userToDelete => console.log(userToDelete)).catch(error => console.log(error));
+          } catch (error) {
+            console.log(error);
+          }
+         //res.send(users);
+        } else {
+          res.status(400).send("Error, no existe el usuario")
+        }
+      }).catch(error => console.log(error));
+    } catch (error) {
+      console.log(error);
     }
   }
 }); //remove a specific user, if he/she wants to remove his/her account.
@@ -94,8 +101,28 @@ app.put('/users/:id', (req, res) => {
   } else {
     const name = req.body.name;
     const id = req.params.id;
-    const user = users.find(user => user.id === parseInt(id));
-    const userIndex = users.findIndex((user) => user.id === parseInt(id));
+    try {
+      const queryExist = queryUse + `select exists(select * from User where DNI=${id} limit 1);`;
+      pool.query(queryExist).then(user => {
+        let objUser = user[1][0];
+        if (objUser[Object.keys(objUser)[0]] === 1) {
+          try {
+            let queryDelete = queryUse + `ALTER TABLE User where DNI=${id};`;
+            pool.query(queryDelete).then(userToDelete => console.log(userToDelete)).catch(error => console.log(error));
+          } catch (error) {
+            console.log(error);
+          }
+         //res.send(users);
+        } else {
+          res.status(400).send("Error, no existe el usuario")
+        }
+      }).catch(error => console.log(error));
+    } catch (error) {
+      console.log(error);
+    }
+    //const user = users.find(user => user.id === parseInt(id));
+
+    //const userIndex = users.findIndex((user) => user.id === parseInt(id));
     if (userIndex === -1) {
       res.status(400).send('Pa la próxima me pones un user que exista😉.');
     }
@@ -105,11 +132,21 @@ app.put('/users/:id', (req, res) => {
   }
 }); //update data of a specific user, edit user profile.
 
-app.get('/users/pickers', (req, res) => {
-
+app.get('/users/pickers', async (req, res) => {
+    queryExec = queryUse + `select * from User where rol=2;`;
+    let data = await execQuery(queryExec);
+    res.json({
+        msg: 'Solicitud exitosa',
+        pickers: data[1]
+    });
 }); //get all users who are pickers.
-app.get('/users/owners', (req, res) => {
-
+app.get('/users/owners', async (req, res) => {
+  queryExec = queryUse + `select * from User where rol=1;`;
+  let data = await execQuery(queryExec);
+  res.json({
+      msg: 'Solicitud exitosa',
+      pickers: data[1]
+  });
 }); //get all users who are owners.
 
 
@@ -144,7 +181,7 @@ app.get('/products', (req, res) => {
   try {
     const thirdquery = 'use pickauto; select * from products;';
     console.log("entra");
-    pool.query(thirdquery).then(result =>{
+    pool.query(thirdquery).then(result => {
       res.send(result);
     }).catch(error => console.log(error));
   } catch (error) {
