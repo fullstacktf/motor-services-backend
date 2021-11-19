@@ -1,9 +1,11 @@
-const express =  require ('express');
-//import bodyParser from 'body-parser';
 import {pool} from './db/database.js';
+import {router as carRouter} from './routes/cars.js';
+
+import express from 'express';
+//import bodyParser from 'body-parser';
 const app = express();
 const port = 3000;
-import carRouter from ('./routes/cars');
+
 
 
 // Create a connection pool

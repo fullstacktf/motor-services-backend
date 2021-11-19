@@ -1,6 +1,7 @@
-import express  from  'express'
-const router = express.Router()
 import {pool} from '../db/database.js';
+import express  from  'express'
+
+var router = express.Router()
 let query = ''
 
 //Get vehicles from expecific user
@@ -58,4 +59,5 @@ router.post('/users/:userID/vehicle',(req, res)=>{
   });
 
 
-module.exports = router
+// module.exports = router;
+export {router}
