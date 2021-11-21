@@ -9,18 +9,17 @@ CREATE TABLE IF NOT EXISTS Rol (
 
 CREATE TABLE IF NOT EXISTS User (
     DNI INT UNSIGNED NOT NULL PRIMARY KEY,
-    id_rol INT UNSIGNED NOT NULL DEFAULT 1, 
+    id_rol INT UNSIGNED NOT NULL, 
     password_key VARCHAR(20) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    city ENUM('Madrid', 'Barcelona', 'Bilbao', 'Sevilla') NOT NULL,
+    city ENUM('Madrid', 'Barcelona', 'Bilbao', 'Sevilla') NOT NULL,  /*preguntar a Marta si cambio esto*/
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(40) NOT NULL,
-    rol INT UNSIGNED NOT NULL ,
     phone_number INT UNSIGNED,
     birth_date DATE NOT NULL,
     profile_image VARCHAR(100),
     /*Las imágenes van en una carpeta y en la tabla se hace referencia a la ruta*/
-    FOREIGN KEY (rol) REFERENCES Rol(id_rol) ON DELETE CASCADE
+    FOREIGN KEY (id_rol) REFERENCES Rol(id_rol) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Picker (
@@ -59,6 +58,7 @@ CREATE TABLE IF NOT EXISTS Appointment (
     pick_up_place VARCHAR(100) NOT NULL,
     pick_up_date DATETIME NOT NULL,
     appointment_status ENUM('No recogido', 'Camino al taller', 'En el taller', 'Camino al punto de entrega', 'Entregado'),
+    appointment_request ENUM ('Pendiente','Aceptada', 'Cancelada'),
     notes VARCHAR(200),
     delivery_place VARCHAR(100) NOT NULL,
     garage VARCHAR(100),
