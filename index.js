@@ -1,9 +1,11 @@
-const express =  require ('express');
+import express from 'express';
 //import bodyParser from 'body-parser';
 import {pool} from './db/database.js';
+
 const app = express();
 const port = 3000;
-import carRouter from ('./routes/cars');
+// const queryExec = queryUse + `select * from Vehicle where vehicle_id='${id};'`;
+import {router as carRouter} from './routes/cars.js';
 
 
 // Create a connection pool
@@ -23,7 +25,7 @@ app.get('/products', (req, res) => {
 });
 */
 
-app.use( express.json() );       // to support JSON-encoded bodies
+app.use(express.json() );       // to support JSON-encoded bodies
 app.use(express.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
@@ -59,7 +61,6 @@ let services = [
 
 const bodyIsEmpty = (body) =>  body === {};
 let query = '';
-
 
 //app.post('/register'); //when a user registers, is added to the database.
 app.post('/users', (req, res) => { //when a user registers, is added to the database.
@@ -98,6 +99,7 @@ app.get('/users', (req, res) => {
   }
 });
 
+
 app.get('/rols', (req, res) => {
   try {
     query = 'use pickauto; select * from Rol;';
@@ -111,8 +113,9 @@ app.get('/rols', (req, res) => {
 
 app.get('/users/:userID', (req, res) => {
   const id = req.params.userID;
+  console.log(id);
   try {
-    query = `select * from User where user_id='${id}'`;
+    query = `select * from User where DNI='${id}'`;
     pool.query(query).then(user => {
       res.json(user);
     }).catch(error => console.log(error));
@@ -157,40 +160,114 @@ app.get('/users/owners', (req, res) => {}); //get all users who are owners.
 
 
 //VEHICLES ENDPOINTS
-app.use('/users/:userID/cars',carRouter);
+// app.use('/users/:userID/vehicle',carRouter);
+//Added car router
+// app.use('/users/:userID/cars',router)
 
-app.get('/users/:userID/cars',(req, res) => {
+//Get vehicles from user
+app.get('/users/:userID/vehicle',(req, res) => {
+  const id = req.params.userID;
+  try {
+      query = `use pickauto; Select * from Vehicle Where id_owner= ${id}`
+      pool.query(query)
+          .then(vehicle => res.json(vehicle))
+          .catch(err=>console.error(err))
+  } catch (err) {
+      console.error(err)
+  }
+})
+//Get specific vehicle from user
+app.get('/users/:userID/vehicle/:idVehicle',(req, res) => {
+  const idUser = req.params.userID;
+  const idVehicle = req.params.idVehicle;
 
-}); 
+  try {
+      query = `use pickauto; Select * from Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`
+      pool.query(query)
+          .then(vehicle => res.json(vehicle))
+          .catch(err=> console.error(err))
+  } catch (err) {
+      console.log(err);
+  }
 
-//get all cars of a specific user.
-app.post('/users/:userID/cars',(req, res)=>{
+})
+
+
+app.post('/users/:userID/vehicle',(req, res)=>{
 
   if(bodyIsEmpty(req.body)){
     res.status(400).send('Fallo al añadir el coche')
   }else{
-    const id = cars.length + 1
-    const id_user = req.body.user_id
-    const car_name = req.params.car_name;
-    const car_model = req.params.car_model;
-    const car_color = req.params.car_color;
-    const car_model_year = req.params.car_model_year;
-    const car_registration = req.params.car_registration;
+    const plate_number = req.body.plate_number;
+    const id_owner = req.params.userID;
+    const brand = req.body.brand;
+    const model = req.body.model;
+    const powered = req.body.powered;
+    const kilometers = req.body.kilometers;
+    const fuel = req.body.fuel;
+    const vehicle_description = req.body.vehicle_description;
+    const vehicle_image = req.body.vehicle_image;
 
-    const newCar = {
-      id: id,
-      id_user: id_user,
-      car_name: car_name,
-      car_model: car_model,
-      car_color: car_color,
-      car_model_year: car_model_year,
-      car_registration: car_registration
+    try {
+        query = `use pickauto; INSERT INTO Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) VALUES ('${plate_number}', ${id_owner}, '${brand}', '${model}', ${powered}, ${kilometers}, '${fuel}', '${vehicle_description}', '${vehicle_image}')`
+          pool.query(query)
+              .then(vehicle =>{
+                  res.send(`Vehiculo ${vehicle} insertado correctamente`)
+              })
+              .catch(err =>res.status(400).json('Error:'+err))
+    } catch (err) {
+        console.log(err)
     }
-    cars.push(newCar);
   }
-}); //add a car to a specific user.
-app.delete('/users/:userID/cars/:carID'); //remove a specific car from a specific user.
-app.put('/users/:userID/cars/:carID'); //update car data from a specific user.
+});
+
+//update car data from a specific user.
+app.put('/users/:idUser/vehicle/:idVehicle', (req, res)=>{
+    const idUser = req.params.idUser;
+    const idVehicle = req.params.idVehicle;
+
+    let brand = req.body.brand;
+    let model = req.body.model;
+    let powered = req.body.powered;
+    let kilometers = req.body.kilometers;
+    let fuel = req.body.fuel;
+    let vehicle_description = req.body.vehicle_description;
+    let vehicle_image = req.body.vehicle_image;
+
+    try {
+      query = `use pickauto; Update Vehicle set brand='${brand}', model='${model}', powered='${powered}', kilometers=${kilometers}, fuel='${fuel}', vehicle_description='${vehicle_description}', vehicle_image='${vehicle_image}'
+      WHERE id_owner= ${idUser} && plate_number LIKE '${idVehicle}';`
+ 
+  
+      pool.query(query)
+        .then(vehicle => res.json(vehicle))
+        .catch(err=> res.status(400).json('Error:'+err))
+
+    } catch (error) {
+      console.log(error);
+    }
+    
+});
+
+//remove a specific car from a specific user.
+app.delete('/users/:idUser/vehicle/:idVehicle', (req, res)=>{
+  let idUser = req.params.idUser
+  let idVehicle = req.params.idVehicle
+
+  try {
+
+    query=`use pickauto; DELETE FROM Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`
+    pool.query(query)
+      .then(vehicle => res.json(vehicle))
+      .catch(err => res.status(400).json('Error' + err))
+    
+  } catch (error) {
+    console.log(error);
+  }
+
+
+});
+
 
 
 
@@ -211,8 +288,7 @@ app.get('/users/:userID/appointments/:appointmentID/review'); //get a review of 
 app.post('/users/:userID/appointments/:appointmentID/review'); //post a review to an specific appointment.
 app.delete('/users/:userID/appointments/:appointmentID/review'); //remove a review of a specific appointment, if it has it.
 
-//Added car router
-app.use('/users/:userID/cars',carRouter)
+
 
 app.get('/', (req, res) => {
   res.send('Hello! World')
