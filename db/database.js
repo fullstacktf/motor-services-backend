@@ -16,3 +16,15 @@ mariadb.createPool({
 
 
 
+export async function execQuery(queryExec) {
+  let data;
+  try {
+    data = await pool.query(queryExec);
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+  return data[1];
+}
+
+// Exportar database entero, cuando lo investigue
