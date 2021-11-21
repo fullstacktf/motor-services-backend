@@ -1,6 +1,7 @@
-import express  from  'express'
-const  router = express.Router()
 import {pool} from '../db/database.js';
+import express  from  'express'
+
+var router = express.Router()
 let query = ''
 
 //Get all vehicles from expecific user

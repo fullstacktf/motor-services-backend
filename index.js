@@ -1,163 +1,153 @@
+import { router as carRouter } from './routes/cars.js';
 import express from 'express';
-//import bodyParser from 'body-parser';
-import {pool} from './db/database.js';
-
+import { execQuery } from './db/database.js';
 const app = express();
 const port = 3000;
-// const queryExec = queryUse + `select * from Vehicle where vehicle_id='${id};'`;
-import {router as carRouter} from './routes/cars.js';
 
 
-// Create a connection pool
-/*
-app.get('/products', (req, res) => {
-  try {
-
-    const thirdquery = 'use mydatabase; select * from products;'
-
-    pool.query(thirdquery).then(result =>{
-      res.send(result);
-    }).catch(error => console.log(error));
-
-  } catch (error) {
-    console.log(error);
-  }
-});
-*/
-
-app.use(express.json() );       // to support JSON-encoded bodies
+app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+}));
 
-let users = [
-  { 
-    id: 0,
-    name: 'Antonio',
-    rol: 'picker'
-  },
-  {  
-    id: 1,
-    name: 'Domingo',
-    rol: 'owner'
-  },
-  {  
-    id: 2,
-    name: 'Juan',
-    rol: 'owner'
-  }
-];
+let queryExec = '';
+let queryUse = 'use pickauto;';
+let data = {};
+const bodyIsEmpty = (body) => Object.keys(body).length === 0;
 
-let services = [
-  {
-    name:"Chapa y pintura",
-    descripcion: "Conjunto o proceso de cambios superficiales del vehículo."
-  },
-  {
-    name: "Electricidad",
-    descripción: "La electricidad del automovil involucra partes y sistemas de vital importancia para el funcionamiento correcto de nuestro automóvil."
-  }
-];
 
-const bodyIsEmpty = (body) =>  body === {};
-let query = '';
-
-//app.post('/register'); //when a user registers, is added to the database.
-app.post('/users', (req, res) => { //when a user registers, is added to the database.
+app.post('/users', async (req, res) => { //when a user registers, is added to the database. Añadir el caso de si el usuario existe
   if (bodyIsEmpty(req.body)) {
     res.status(400).send('Envía algo en el body.');
   } else {
     const dni = req.body.dni;
-    const id_rol = req.body.id_rol; //mirar esto luego, para ver como se introduce el id_rol
+    const id_rol = req.body.id_rol; 
     const email = req.body.email;
+    const password = req.body.password_key;
     const city = req.body.city;
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
     const phone_number = req.body.phone_number;
     const birth_date = req.body.birth_date;
     const profile_image = req.body.profile_image;
-    try { //mirar si todos estos campos son obligatorios o qué
-      query = `INSERT INTO User (DNI, id_rol, password_key, email, city, first_name, last_name, phone_number, birth_date, profile_image)
-  VALUES (${dni}, ${id_rol}, ${password}, ${email}, ${city}, ${first_name}, ${last_name}, ${phone_number}, ${birth_date}, ${profile_image});`;
-      pool.query(query).then(user => {
-        res.send(`Usuario ${user} insertado correctamente`);
-      }).catch(error => console.log(error));
-    } catch (error) {
-      console.log(error);
+    queryExec = queryUse + `insert into User(DNI, id_rol, password_key, email, city, first_name, last_name, phone_number, birth_date, profile_image) VALUES(${dni}, ${id_rol}, '${password}', '${email}', '${city}', '${first_name}', '${last_name}', ${phone_number}, '${birth_date}', '${profile_image}');`;
+    data = await execQuery(queryExec);
+    if (data && data.code === 'ER_DUP_ENTRY') {
+      return res.send("Usuario ya insertado");
+    } else if (data && data.code === 'ER_BAD_FIELD_ERROR') {
+      return res.send("Campo en el body no reconocido");
     }
+    return res.send('Usuario añadido correctamente');
   }
 });
 
-app.get('/users', (req, res) => {
-  try {
-    query = 'use pickauto; select * from User;';
-    pool.query(query).then(users => {
-      res.json(users);
-    }).catch(error => console.log(error));
-  } catch (error) {
-    console.log(error);
-  }
+app.get('/users', async (req, res) => {
+  queryExec = queryUse + 'select * from User;';
+  data = await execQuery(queryExec);
+  res.json({
+    users: data
+  });
 });
 
-
-app.get('/rols', (req, res) => {
-  try {
-    query = 'use pickauto; select * from Rol;';
-    pool.query(query).then(users => {
-      res.json(users);
-    }).catch(error => console.log(error));
-  } catch (error) {
-    console.log(error);
-  }
+app.get('/rols', async (req, res) => {
+  queryExec = queryUse + 'select * from Rol;';
+  data = await execQuery(queryExec);
+  res.json({
+    rols: data
+  });
 });
 
-app.get('/users/:userID', (req, res) => {
+app.get('/users/:userID', async (req, res) => {
   const id = req.params.userID;
-  console.log(id);
-  try {
-    query = `select * from User where DNI='${id}'`;
-    pool.query(query).then(user => {
-      res.json(user);
-    }).catch(error => console.log(error));
-  } catch (error) {
-    console.log(error);
-  }
+  queryExec = queryUse + `select * from User where DNI='${id};'`;
+  data = await execQuery(queryExec);
+  if (data.length!==0){
+  res.json({
+    user: data
+  });
+} else {
+  res.send("No existe ningún usuario con ese DNI");
+}
 });
 
-app.delete('/users', (req, res) => {
+app.delete('/users', async (req, res) => {
   if (bodyIsEmpty(req.body)) {
     res.status(400).send('Envía algo en el body .');
   } else {
-  const id = req.body.id;
-  const user = users.find(user => user.id === parseInt(id));
-  if(user){
-    users = users.filter(user => user.id !== parseInt(id));
-    res.send(users);
-  }else{
-    res.status(400).send("Error no existe el usuario")
+    const id = req.body.dni;
+    queryExec = queryUse + `DELETE FROM User where DNI=${id};`;
+    data = await execQuery(queryExec);
+    if (data && data.affectedRows === 0) {
+      return res.send("El usuario no existe, inserte otro id");
+    } else if (data && data.code === 'ER_BAD_FIELD_ERROR') {
+      return res.send("Campo en el body no reconocido");
+    }
+    res.send("Usuario eliminado correctamente");
   }
-}
 }); //remove a specific user, if he/she wants to remove his/her account.
-app.put('/users/:id', (req, res) => {
+
+
+app.put('/users/:id', async (req, res) => {
+  const dni = req.params.id;
+  let putArr = [];
+  let valuesInQuery = "";
   if (bodyIsEmpty(req.body)) {
     res.status(400).send('Envía algo en el body .');
-    } else {
-      const name = req.body.name;
-      const id = req.params.id;
-      const user = users.find(user => user.id === parseInt(id));
-      const userIndex = users.findIndex((user) => user.id === parseInt(id));
-      if (userIndex === -1) {
-        res.status(400).send('Pa la próxima me pones un user que exista😉.');
+  } else {
+    let arrVarObj = {
+      email: [req.body.email, "email", "string"],
+      password: [req.body.password_key, "password_key", "string"], 
+      phone_number: [req.body.phone_number, "phone_number", "number"], 
+      birth_date: [req.body.birth_date, "birth_date", "string"], 
+      profile_image: [req.body.profile_image, "profile_image", "string"], 
+      city: [req.body.city, "city", "string"], 
+      first_name: [req.body.first_name, "first_name", "string"], 
+      last_name: [req.body.last_name, "last_name", "string"]
+    };
+     Object.values(arrVarObj).forEach(item => {
+      if (item[0] && item[2] ==="number"){
+        putArr.push(`${item[1]}=${item[0]},`);
+      } else if(item[0] && item[2] ==="string"){
+        putArr.push(`${item[1]}='${item[0]}',`);
       }
-      user.name = name;
-      users[userIndex] = user;
-      res.send({ users });
+    });
+    valuesInQuery = putArr.join(" ").slice(0, -1);
+    queryExec = queryUse + `UPDATE User SET ${valuesInQuery} WHERE DNI=${dni};`;
+    data = await execQuery(queryExec);
+    if (data && data.affectedRows === 0) {
+      return res.send("El usuario no existe, inserte otro id");
     }
+    res.send("Usuario actualizado correctamente");    
+  }
 }); //update data of a specific user, edit user profile.
 
-app.get('/users/pickers', (req, res) => {}); //get all users who are pickers.
-app.get('/users/owners', (req, res) => {}); //get all users who are owners.
+app.get('/users/pickers', async (req, res) => {
+  queryExec = queryUse + `select * from User where rol=2;`;
+  data = await execQuery(queryExec);
+  res.json({
+    msg: 'Solicitud exitosa',
+    pickers: data[1]
+  });
+}); //get all users who are pickers.
 
+
+app.get('/users/owners', async (req, res) => {
+  queryExec = queryUse + `select * from User where rol=1;`;
+  data = await execQuery(queryExec);
+  res.json({
+    msg: 'Solicitud exitosa',
+    pickers: data[1]
+  });
+}); //get all users who are owners.
+
+app.get('/vehicle', async (req, res) => {
+  queryExec = `use pickauto; select * from Vehicle;`;
+  data = await execQuery(queryExec);
+  return res.json({
+    msg: 'Solicitud exitosa',
+    pickers: data[1]
+  });
+});
 
 //VEHICLES ENDPOINTS
 // app.use('/users/:userID/vehicle',carRouter);
@@ -275,16 +265,47 @@ app.get('/users/:userID/appointments?from=&to='); //get all dates from a specifi
 app.get('/users/:userID/appointments?status="Pendiente"'); //get all pending dates from a specific user.
 
 app.post('/users/:userID/appointments'); //set an appointment to a specific user.
+app.get('/users/:userID/appointments',async (req, res) => {
+  //select * from Appointments where DNI = {req.params.userID}
+  //queryExec = queryUse + `SELECT plate_number FROM Vehicle LEFT JOIN User ON Vehicle.id_owner = User.DNI WHERE id_owner = ${req.params.userID}`;
+  queryExec = queryUse + `SELECT id_appointment
+  FROM Appointment
+  JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle)
+  JOIN User ON (User.DNI = Vehicle.id_owner) WHERE id_owner = ${req.params.userID} AND User.id_rol=1;`;
+  data = await execQuery(queryExec);
+  res.json({
+    appointments: data
+  });
+}); //get all appointments from specific user.
 app.get('/users/:userID/appointments/:appointmentID'); //get an specific appointment from an specific user.
 app.put('/users/:userID/appointments/:appointmentID'); //picker updates information of a date. 
 app.delete('/users/:userID/appointments/:appointmentID'); //to cancel an appointment.
 
 
-app.get('/services/', (req, res) => {}); //get all services.
-app.get('/services/:serviceID', (req, res) => {}); //get a specific service.
+app.get('/services', async (req, res) => {
+  queryExec = queryUse + 'select * from Services;';
+  data = await execQuery(queryExec);
+  res.json({
+    services: data
+  });
+ }); //get all services.
+
+app.get('/services/:serviceID', async (req, res) => { 
+  const service_id = req.params.serviceID;
+  queryExec = queryUse + `select * from Services where id_service=${service_id};`;
+  data = await execQuery(queryExec);
+  if (data.length!==0){
+    res.json({
+      service: data
+    });
+  } else {
+    res.send("No existe ningún servicio con ese ID");
+  }
+}); //get a specific service.
 
 
 app.get('/users/:userID/appointments/:appointmentID/review'); //get a review of a past appointment, if it has it.
+app.get('/users/:userID/reviews'); //get all reviews form an specific user, if it has it.
 app.post('/users/:userID/appointments/:appointmentID/review'); //post a review to an specific appointment.
 app.delete('/users/:userID/appointments/:appointmentID/review'); //remove a review of a specific appointment, if it has it.
 

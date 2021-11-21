@@ -2,23 +2,24 @@ GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'%' IDENTIFIED BY 'test';
 USE pickauto;
 
 CREATE TABLE IF NOT EXISTS Rol (
-    id_rol INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    rol VARCHAR(10) NOT NULL UNIQUE
+    id_rol INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    rol VARCHAR(10) NOT NULL,
+    PRIMARY KEY (ID_rol)
 );
 
 CREATE TABLE IF NOT EXISTS User (
     DNI INT UNSIGNED NOT NULL PRIMARY KEY,
+    id_rol INT UNSIGNED NOT NULL, 
     password_key VARCHAR(20) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    city ENUM('Madrid', 'Barcelona', 'Bilbao', 'Sevilla') NOT NULL,
+    city ENUM('Madrid', 'Barcelona', 'Bilbao', 'Sevilla') NOT NULL,  /*preguntar a Marta si cambio esto*/
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(40) NOT NULL,
-    rol INT UNSIGNED NOT NULL,
     phone_number INT UNSIGNED,
     birth_date DATE NOT NULL,
     profile_image VARCHAR(100),
     /*Las imágenes van en una carpeta y en la tabla se hace referencia a la ruta*/
-    FOREIGN KEY (rol) REFERENCES Rol(id_rol)
+    FOREIGN KEY (id_rol) REFERENCES Rol(id_rol) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Picker (
@@ -27,7 +28,7 @@ CREATE TABLE IF NOT EXISTS Picker (
     start_time TIME,
     finish_time TIME,
     rating TINYINT DEFAULT 5,
-    FOREIGN KEY (id_picker) REFERENCES User(DNI)
+    FOREIGN KEY (id_picker) REFERENCES User(DNI) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Vehicle (
@@ -40,7 +41,7 @@ CREATE TABLE IF NOT EXISTS Vehicle (
     fuel ENUM('diesel', 'gasolina','híbrido', 'electrico', 'gas'),
     vehicle_description VARCHAR(200),
     vehicle_image VARCHAR(100),
-    FOREIGN KEY (id_owner) REFERENCES User(DNI)
+    FOREIGN KEY (id_owner) REFERENCES User(DNI) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Services (
@@ -57,12 +58,13 @@ CREATE TABLE IF NOT EXISTS Appointment (
     pick_up_place VARCHAR(100) NOT NULL,
     pick_up_date DATETIME NOT NULL,
     appointment_status ENUM('No recogido', 'Camino al taller', 'En el taller', 'Camino al punto de entrega', 'Entregado'),
+    appointment_request ENUM ('Pendiente','Aceptada', 'Cancelada'),
     notes VARCHAR(200),
     delivery_place VARCHAR(100) NOT NULL,
     garage VARCHAR(100),
-    CONSTRAINT FOREIGN KEY (id_vehicle) REFERENCES Vehicle(plate_number),
-    CONSTRAINT FOREIGN KEY (id_service) REFERENCES Services(id_service),
-    CONSTRAINT FOREIGN KEY (id_picker) REFERENCES Picker(id_picker)
+    CONSTRAINT FOREIGN KEY (id_vehicle) REFERENCES Vehicle(plate_number) ON DELETE CASCADE,
+    CONSTRAINT FOREIGN KEY (id_service) REFERENCES Services(id_service) ON DELETE CASCADE,
+    CONSTRAINT FOREIGN KEY (id_picker) REFERENCES Picker(id_picker) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Rating (
@@ -70,5 +72,8 @@ CREATE TABLE IF NOT EXISTS Rating (
     id_appointment INT UNSIGNED NOT NULL,
     notes VARCHAR(200),
     rating TINYINT UNSIGNED,
-    CONSTRAINT FOREIGN KEY (id_appointment) REFERENCES Appointment(id_appointment)
+    CONSTRAINT FOREIGN KEY (id_appointment) REFERENCES Appointment(id_appointment) ON DELETE CASCADE
 );
+
+CREATE TABLE products(name VARCHAR(100));
+INSERT INTO products VALUES ('portatil'), ('teclado'), ('raton');
