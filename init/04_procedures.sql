@@ -102,11 +102,7 @@ CREATE PROCEDURE pickauto.Insert_rating(
   rating_value tinyint(3) unsigned)
     BEGIN
       INSERT INTO Rating (id_appointment, rating_notes, rating) VALUES 
-<<<<<<< HEAD
-      (id_appointment_value, notes_value, rating_notes_value);
-=======
-      (id_appointment_value, notes_value, rating_value);
->>>>>>> main
+      (id_appointment_value, rating_notes_value, rating_value);
     END;//
 
 DELIMITER ;
