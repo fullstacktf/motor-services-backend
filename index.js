@@ -1,4 +1,3 @@
-import { router as carRouter } from './routes/cars.js';
 import express from 'express';
 import { execQuery } from './db/database.js';
 const app = express();
@@ -245,7 +244,6 @@ app.delete('/users/:idUser/vehicle/:idVehicle', (req, res)=>{
   let idVehicle = req.params.idVehicle
 
   try {
-
     query=`use pickauto; DELETE FROM Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`
     pool.query(query)
       .then(vehicle => res.json(vehicle))
@@ -254,29 +252,59 @@ app.delete('/users/:idUser/vehicle/:idVehicle', (req, res)=>{
   } catch (error) {
     console.log(error);
   }
-
-
 });
-
-
 
 
 app.get('/users/:userID/appointments?from=&to='); //get all dates from a specific date to specific date.
 app.get('/users/:userID/appointments?status="Pendiente"'); //get all pending dates from a specific user.
+///appointments/:userID/:vehicleID'
+app.post('/vehicles/:vehicleID/appointments', async(req, res)=>{ //poner cita de un determinado vehiculo. Las de vehiculo no llevan user, pq se peude sacar.
+  // si un usuario pone un id de un vehiculo que no es suyo no te deja. Funcion comprobar que el vehiculo es del usuario.
+  console.log("entra");
+  if (bodyIsEmpty(req.body)) {
+    res.status(400).send('Envía algo en el body.');
+  } else {
+    const id_vehicle = req.params.vehicleID;
+    const id_service = req.body.id_service;
+    //const id_picker = searchPicker();
+    const id_picker = req.body.id_picker;
+    //const id_picker = req.body.id; //<-- el picker se le pone automaticamente, el que esté disponible
+    //funcion obtener picker disponible, el primero que salga en la consulta. 
+    const pick_up_place = req.body.pick_up_place;
+    const pick_up_date = req.body.pick_up_date; 
+    //const appointment_status = req.body.appointment_status; <-- lo cambia el picker
+    //const appointment_request = req.body.appointment_request; <-- lo cambia el picker
+    const notes = req.body.notes;
+    const delivery_place = req.body.delivery_place;
+    const garage = req.body.garage;
+    queryExec = queryUse + `insert into Appointment(id_vehicle, id_service, id_picker, pick_up_place, pick_up_date, appointment_status, appointment_request, notes, delivery_place, garage) 
+    VALUES('${id_vehicle}', ${id_service}, '${id_picker}', '${pick_up_place}', '${pick_up_date}', 'No recogido', 'Pendiente', '${notes}', '${delivery_place}', '${garage}');`;
+    data = await execQuery(queryExec);
+    res.json({
+      appointments: data
+    });
+  };
+}); //set an appointment to a specific user.
 
-app.post('/users/:userID/appointments'); //set an appointment to a specific user.
+
 app.get('/users/:userID/appointments',async (req, res) => {
   //select * from Appointments where DNI = {req.params.userID}
   //queryExec = queryUse + `SELECT plate_number FROM Vehicle LEFT JOIN User ON Vehicle.id_owner = User.DNI WHERE id_owner = ${req.params.userID}`;
-  queryExec = queryUse + `SELECT id_appointment
+  const userId = req.params.userID;
+  const fromDate = (req.query.from) ? new Date(req.query.from) : undefined;
+  const toDate = (req.query.to) ? new Date(req.query.to) : undefined;
+  const status = (req.query.status) ? (req.query.status) : undefined;
+  //cambiar esto cuando pueda
+  queryExec = queryUse + `SELECT id_appointment 
   FROM Appointment
-  JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle)
-  JOIN User ON (User.DNI = Vehicle.id_owner) WHERE id_owner = ${req.params.userID} AND User.id_rol=1;`;
+  JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle) 
+  JOIN User ON (User.DNI = Vehicle.id_owner) WHERE id_owner = ${userId} AND User.id_rol=1;`; 
   data = await execQuery(queryExec);
   res.json({
     appointments: data
   });
 }); //get all appointments from specific user.
+
 app.get('/users/:userID/appointments/:appointmentID'); //get an specific appointment from an specific user.
 app.put('/users/:userID/appointments/:appointmentID'); //picker updates information of a date. 
 app.delete('/users/:userID/appointments/:appointmentID'); //to cancel an appointment.

@@ -24,7 +24,6 @@ CREATE TABLE IF NOT EXISTS User (
 
 CREATE TABLE IF NOT EXISTS Picker (
     id_picker INT UNSIGNED NOT NULL PRIMARY KEY,
-    available BOOLEAN NOT NULL,
     start_time TIME,
     finish_time TIME,
     rating TINYINT DEFAULT 5,

@@ -1,6 +1,7 @@
 USE pickauto;
 CALL Insert_role(1, 'Owner');
 CALL Insert_role(2, 'Picker');
+/*Mirar que solo tengan coches los Owners y no los pickers*/
 CALL Insert_user(
     12345678,
     1,
@@ -133,7 +134,7 @@ CALL Insert_vehicle(
 );
 CALL Insert_vehicle(
     '1154abd',
-    12345672,
+    12345673,
     'Renault',
     'Megane',
     115,
@@ -153,10 +154,12 @@ CALL Insert_vehicle(
     'Softail heritage. Nacional 5HD. TC 88  Inyeccion. Estado impecable. Ruedas, pastillas de freno y bateria nuevos.',
     'La mochillo'
 );
-CALL Insert_picker(12345677, 0, '12:00', '17:30', 4);
-CALL Insert_picker(12345676, 0, '09:00', '16:30', 5);
-CALL Insert_picker(12345674, 0, '11:30', '20:30', 5);
-CALL Insert_picker(12345672, 1, '00:00', '23:49', 5);
+CALL Insert_picker(12345677, '12:00', '17:30', 4);
+CALL Insert_picker(12345676, '09:00', '16:30', 5);
+CALL Insert_picker(12345674, '11:30', '20:30', 5);
+CALL Insert_picker(12345672, '18:00', '00:00', 5);
+
+
 CALL Insert_service(
     'Chapa y Pintura',
     'Distintos tipos de reparaciones y modificaciones sobre la carroceria del vehículo'
@@ -187,6 +190,7 @@ CALL Insert_appointment(
     'Entregado',
     'Aceptada',
     'Cambio de aceite y revisión de neumaticos.',
+    '',
     'Calle de la piruleta, 32',
     'Taller Pepe el Potencia'
 );
@@ -199,6 +203,7 @@ CALL Insert_appointment(
     'En el taller',
     'Aceptada',
     'Pintar verde menta.',
+    '',
     'Calle amarilla, 12',
     'Taller Camaleon'
 );
@@ -211,6 +216,7 @@ CALL Insert_appointment(
     'Camino al punto de entrega',
     'Aceptada',
     'Limpieza de tapiceria.',
+    '',
     'Calle imaginaria, 15',
     'LimpiAuto'
 );
@@ -223,6 +229,7 @@ CALL Insert_appointment(
     'No recogido',
     'Cancelada',
     'Píntenlo de azul',
+    '',
     'Calle imaginaria, 15',
     'Taller de Chapa y pintura, Florencio'
 );
@@ -235,6 +242,7 @@ CALL Insert_appointment(
     'No recogido',
     'Pendiente',
     'Limpieza de tapiceria.',
+    '',
     'Calle imaginaria, 15',
     'LimpiAuto'
 );
