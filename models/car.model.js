@@ -9,7 +9,6 @@ const {
 
 module.exports = (sequelize,DataTypes)=>{
     class Car extends Model {
-
         //Define relations with another tables here
         static associate (models){
             participation.belogTo(models.user,{
