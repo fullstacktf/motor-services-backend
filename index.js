@@ -20,7 +20,7 @@ app.post('/users', async (req, res) => { //when a user registers, is added to th
     res.status(400).send('Envía algo en el body.');
   } else {
     const dni = req.body.dni;
-    const id_rol = req.body.id_rol; 
+    const id_rol = req.body.id_rol;
     const email = req.body.email;
     const password = req.body.password_key;
     const city = req.body.city;
@@ -60,13 +60,13 @@ app.get('/users/:userID', async (req, res) => {
   const id = req.params.userID;
   queryExec = queryUse + `select * from User where DNI='${id};'`;
   data = await execQuery(queryExec);
-  if (data.length!==0){
-  res.json({
-    user: data
-  });
-} else {
-  res.send("No existe ningún usuario con ese DNI");
-}
+  if (data.length !== 0) {
+    res.json({
+      user: data
+    });
+  } else {
+    res.send("No existe ningún usuario con ese DNI");
+  }
 });
 
 app.delete('/users', async (req, res) => {
@@ -95,18 +95,18 @@ app.put('/users/:id', async (req, res) => {
   } else {
     let arrVarObj = {
       email: [req.body.email, "email", "string"],
-      password: [req.body.password_key, "password_key", "string"], 
-      phone_number: [req.body.phone_number, "phone_number", "number"], 
-      birth_date: [req.body.birth_date, "birth_date", "string"], 
-      profile_image: [req.body.profile_image, "profile_image", "string"], 
-      city: [req.body.city, "city", "string"], 
-      first_name: [req.body.first_name, "first_name", "string"], 
+      password: [req.body.password_key, "password_key", "string"],
+      phone_number: [req.body.phone_number, "phone_number", "number"],
+      birth_date: [req.body.birth_date, "birth_date", "string"],
+      profile_image: [req.body.profile_image, "profile_image", "string"],
+      city: [req.body.city, "city", "string"],
+      first_name: [req.body.first_name, "first_name", "string"],
       last_name: [req.body.last_name, "last_name", "string"]
     };
-     Object.values(arrVarObj).forEach(item => {
-      if (item[0] && item[2] ==="number"){
+    Object.values(arrVarObj).forEach(item => {
+      if (item[0] && item[2] === "number") {
         putArr.push(`${item[1]}=${item[0]},`);
-      } else if(item[0] && item[2] ==="string"){
+      } else if (item[0] && item[2] === "string") {
         putArr.push(`${item[1]}='${item[0]}',`);
       }
     });
@@ -116,7 +116,7 @@ app.put('/users/:id', async (req, res) => {
     if (data && data.affectedRows === 0) {
       return res.send("El usuario no existe, inserte otro id");
     }
-    res.send("Usuario actualizado correctamente");    
+    res.send("Usuario actualizado correctamente");
   }
 }); //update data of a specific user, edit user profile.
 
@@ -154,39 +154,39 @@ app.get('/vehicle', async (req, res) => {
 // app.use('/users/:userID/cars',router)
 
 //Get vehicles from user
-app.get('/users/:userID/vehicle',(req, res) => {
+app.get('/users/:userID/vehicle', (req, res) => {
   const id = req.params.userID;
   try {
-      query = `use pickauto; Select * from Vehicle Where id_owner= ${id}`
-      pool.query(query)
-          .then(vehicle => res.json(vehicle))
-          .catch(err=>console.error(err))
+    query = `use pickauto; Select * from Vehicle Where id_owner= ${id}`
+    pool.query(query)
+      .then(vehicle => res.json(vehicle))
+      .catch(err => console.error(err))
   } catch (err) {
-      console.error(err)
+    console.error(err)
   }
 })
 //Get specific vehicle from user
-app.get('/users/:userID/vehicle/:idVehicle',(req, res) => {
+app.get('/users/:userID/vehicle/:idVehicle', (req, res) => {
   const idUser = req.params.userID;
   const idVehicle = req.params.idVehicle;
 
   try {
-      query = `use pickauto; Select * from Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`
-      pool.query(query)
-          .then(vehicle => res.json(vehicle))
-          .catch(err=> console.error(err))
+    query = `use pickauto; Select * from Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`
+    pool.query(query)
+      .then(vehicle => res.json(vehicle))
+      .catch(err => console.error(err))
   } catch (err) {
-      console.log(err);
+    console.log(err);
   }
 
 })
 
 
-app.post('/users/:userID/vehicle',(req, res)=>{
+app.post('/users/:userID/vehicle', (req, res) => {
 
-  if(bodyIsEmpty(req.body)){
+  if (bodyIsEmpty(req.body)) {
     res.status(400).send('Fallo al añadir el coche')
-  }else{
+  } else {
     const plate_number = req.body.plate_number;
     const id_owner = req.params.userID;
     const brand = req.body.brand;
@@ -198,69 +198,68 @@ app.post('/users/:userID/vehicle',(req, res)=>{
     const vehicle_image = req.body.vehicle_image;
 
     try {
-        query = `use pickauto; INSERT INTO Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) VALUES ('${plate_number}', ${id_owner}, '${brand}', '${model}', ${powered}, ${kilometers}, '${fuel}', '${vehicle_description}', '${vehicle_image}')`
-          pool.query(query)
-              .then(vehicle =>{
-                  res.send(`Vehiculo ${vehicle} insertado correctamente`)
-              })
-              .catch(err =>res.status(400).json('Error:'+err))
+      query = `use pickauto; INSERT INTO Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) VALUES ('${plate_number}', ${id_owner}, '${brand}', '${model}', ${powered}, ${kilometers}, '${fuel}', '${vehicle_description}', '${vehicle_image}')`
+      pool.query(query)
+        .then(vehicle => {
+          res.send(`Vehiculo ${vehicle} insertado correctamente`)
+        })
+        .catch(err => res.status(400).json('Error:' + err))
     } catch (err) {
-        console.log(err)
+      console.log(err)
     }
   }
 });
 
 //update car data from a specific user.
-app.put('/users/:idUser/vehicle/:idVehicle', (req, res)=>{
-    const idUser = req.params.idUser;
-    const idVehicle = req.params.idVehicle;
+app.put('/users/:idUser/vehicle/:idVehicle', (req, res) => {
+  const idUser = req.params.idUser;
+  const idVehicle = req.params.idVehicle;
 
-    let brand = req.body.brand;
-    let model = req.body.model;
-    let powered = req.body.powered;
-    let kilometers = req.body.kilometers;
-    let fuel = req.body.fuel;
-    let vehicle_description = req.body.vehicle_description;
-    let vehicle_image = req.body.vehicle_image;
+  let brand = req.body.brand;
+  let model = req.body.model;
+  let powered = req.body.powered;
+  let kilometers = req.body.kilometers;
+  let fuel = req.body.fuel;
+  let vehicle_description = req.body.vehicle_description;
+  let vehicle_image = req.body.vehicle_image;
 
-    try {
-      query = `use pickauto; Update Vehicle set brand='${brand}', model='${model}', powered='${powered}', kilometers=${kilometers}, fuel='${fuel}', vehicle_description='${vehicle_description}', vehicle_image='${vehicle_image}'
+  try {
+    query = `use pickauto; Update Vehicle set brand='${brand}', model='${model}', powered='${powered}', kilometers=${kilometers}, fuel='${fuel}', vehicle_description='${vehicle_description}', vehicle_image='${vehicle_image}'
       WHERE id_owner= ${idUser} && plate_number LIKE '${idVehicle}';`
- 
-  
-      pool.query(query)
-        .then(vehicle => res.json(vehicle))
-        .catch(err=> res.status(400).json('Error:'+err))
 
-    } catch (error) {
-      console.log(error);
-    }
-    
+
+    pool.query(query)
+      .then(vehicle => res.json(vehicle))
+      .catch(err => res.status(400).json('Error:' + err))
+
+  } catch (error) {
+    console.log(error);
+  }
+
 });
 
 //remove a specific car from a specific user.
-app.delete('/users/:idUser/vehicle/:idVehicle', (req, res)=>{
+app.delete('/users/:idUser/vehicle/:idVehicle', (req, res) => {
   let idUser = req.params.idUser
   let idVehicle = req.params.idVehicle
 
   try {
-    query=`use pickauto; DELETE FROM Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`
+    query = `use pickauto; DELETE FROM Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`
     pool.query(query)
       .then(vehicle => res.json(vehicle))
       .catch(err => res.status(400).json('Error' + err))
-    
+
   } catch (error) {
     console.log(error);
   }
 });
 
 
-app.get('/users/:userID/appointments?from=&to='); //get all dates from a specific date to specific date.
-app.get('/users/:userID/appointments?status="Pendiente"'); //get all pending dates from a specific user.
+
 ///appointments/:userID/:vehicleID'
-app.post('/vehicles/:vehicleID/appointments', async(req, res)=>{ //poner cita de un determinado vehiculo. Las de vehiculo no llevan user, pq se peude sacar.
-  // si un usuario pone un id de un vehiculo que no es suyo no te deja. Funcion comprobar que el vehiculo es del usuario.
-  console.log("entra");
+app.post('/vehicles/:vehicleID/appointments', async (req, res) => {
+  console.log(req.query.status);
+  //limitar el numero de citas, buscar picker
   if (bodyIsEmpty(req.body)) {
     res.status(400).send('Envía algo en el body.');
   } else {
@@ -271,14 +270,15 @@ app.post('/vehicles/:vehicleID/appointments', async(req, res)=>{ //poner cita de
     //const id_picker = req.body.id; //<-- el picker se le pone automaticamente, el que esté disponible
     //funcion obtener picker disponible, el primero que salga en la consulta. 
     const pick_up_place = req.body.pick_up_place;
-    const pick_up_date = req.body.pick_up_date; 
+    const pick_up_date = req.body.pick_up_date;
     //const appointment_status = req.body.appointment_status; <-- lo cambia el picker
     //const appointment_request = req.body.appointment_request; <-- lo cambia el picker
-    const notes = req.body.notes;
+    //const picker_notes = req.body.picker_notes; <-- lo cambia el picker al finalizar la cita
+    const owner_notes = req.body.owner_notes;
     const delivery_place = req.body.delivery_place;
     const garage = req.body.garage;
-    queryExec = queryUse + `insert into Appointment(id_vehicle, id_service, id_picker, pick_up_place, pick_up_date, appointment_status, appointment_request, notes, delivery_place, garage) 
-    VALUES('${id_vehicle}', ${id_service}, '${id_picker}', '${pick_up_place}', '${pick_up_date}', 'No recogido', 'Pendiente', '${notes}', '${delivery_place}', '${garage}');`;
+    queryExec = queryUse + `insert into Appointment(id_vehicle, id_service, id_picker, pick_up_place, pick_up_date, appointment_status, appointment_request, owner_notes, picker_notes, delivery_place, garage) 
+    VALUES('${id_vehicle}', ${id_service}, '${id_picker}', '${pick_up_place}', '${pick_up_date}', 'No recogido', 'Pendiente', '${owner_notes}', '', '${delivery_place}', '${garage}');`;
     data = await execQuery(queryExec);
     res.json({
       appointments: data
@@ -286,28 +286,66 @@ app.post('/vehicles/:vehicleID/appointments', async(req, res)=>{ //poner cita de
   };
 }); //set an appointment to a specific user.
 
+app.get('/users/:userID/appointments?status=Entregado'); //Citas pasadas
+app.get('/users/:userID/appointments?request=Aceptada?status=No%20recogido');//Citas futuras, request: Aceptada
+app.get('/users/:userID/appointments?request=Pendiente'); //citas pendientes de aceptar
+app.get('/users/:userID/appointments?request=Aceptada?status!=No%20recogido');//Cita en curso, status distinto de no recogido
 
-app.get('/users/:userID/appointments',async (req, res) => {
-  //select * from Appointments where DNI = {req.params.userID}
-  //queryExec = queryUse + `SELECT plate_number FROM Vehicle LEFT JOIN User ON Vehicle.id_owner = User.DNI WHERE id_owner = ${req.params.userID}`;
+app.get('/users/:userID/appointments', async (req, res) => {
+  console.log("entra");
   const userId = req.params.userID;
-  const fromDate = (req.query.from) ? new Date(req.query.from) : undefined;
-  const toDate = (req.query.to) ? new Date(req.query.to) : undefined;
   const status = (req.query.status) ? (req.query.status) : undefined;
-  //cambiar esto cuando pueda
+  const request = (req.query.request) ? (req.query.request) : undefined;
+  let append = '';
+  //refactorizar cuando pueda, construir string
+  if (status && !request) {
+    append = ` AND appointment_status='Entregado';`;
+  } else if (request && !status) {
+    append = ` AND appointment_request='Pendiente'`;
+  } else if (request && status && status === 'No recogido') {
+    append = ` AND appointment_request='Aceptada' AND appointment_status='No recogido'`;
+  } else if (request && status && status !== 'No recogido') {
+    append = ` AND appointment_request='Aceptada' AND appointment_status='${status}'`;
+  }
+
   queryExec = queryUse + `SELECT id_appointment 
   FROM Appointment
   JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle) 
-  JOIN User ON (User.DNI = Vehicle.id_owner) WHERE id_owner = ${userId} AND User.id_rol=1;`; 
+  JOIN User ON (User.DNI = Vehicle.id_owner) WHERE id_owner = ${userId} AND User.id_rol=1${append};`;
+
   data = await execQuery(queryExec);
   res.json({
     appointments: data
   });
 }); //get all appointments from specific user.
 
-app.get('/users/:userID/appointments/:appointmentID'); //get an specific appointment from an specific user.
-app.put('/users/:userID/appointments/:appointmentID'); //picker updates information of a date. 
-app.delete('/users/:userID/appointments/:appointmentID'); //to cancel an appointment.
+app.get('/appointments/:appointmentID', async (req, res) => {
+  const id_appointment = req.params.appointmentID;
+  queryExec = queryUse + `select * from User where DNI='${id_appointment};'`;
+  data = await execQuery(queryExec);
+  if (data.length !== 0) {
+    res.json({
+      appointment: data
+    });
+  } else {
+    res.send("No existe ninguna cita con ese identificador");
+  }
+}); //get an specific appointment from an specific user.
+app.put('/appointments/:appointmentID', async (req, res) => {
+  //funcion comprobar que el usuario es user o picker
+
+}); //picker updates information of a date. 
+app.delete('/appointments/:appointmentID', async (req, res) => {
+  const id_appointment = req.params.appointmentID;
+    queryExec = queryUse + `DELETE FROM Appointment where id_appointment=${id_appointment};`;
+    data = await execQuery(queryExec);
+    if (data && data.affectedRows === 0) {
+      return res.send("La cita no existe, inserte otro id");
+    } else if (data && data.code === 'ER_BAD_FIELD_ERROR') {
+      return res.send("Campo en el body no reconocido");
+    }
+    res.send("Cita eliminada correctamente");
+  }); //to cancel an appointment.
 
 
 app.get('/services', async (req, res) => {
@@ -316,13 +354,13 @@ app.get('/services', async (req, res) => {
   res.json({
     services: data
   });
- }); //get all services.
+}); //get all services.
 
-app.get('/services/:serviceID', async (req, res) => { 
+app.get('/services/:serviceID', async (req, res) => {
   const service_id = req.params.serviceID;
   queryExec = queryUse + `select * from Services where id_service=${service_id};`;
   data = await execQuery(queryExec);
-  if (data.length!==0){
+  if (data.length !== 0) {
     res.json({
       service: data
     });
