@@ -58,7 +58,8 @@ CREATE TABLE IF NOT EXISTS Appointment (
     pick_up_date DATETIME NOT NULL,
     appointment_status ENUM('No recogido', 'Camino al taller', 'En el taller', 'Camino al punto de entrega', 'Entregado'),
     appointment_request ENUM ('Pendiente','Aceptada', 'Cancelada'),
-    notes VARCHAR(200),
+    notes_owner VARCHAR(200),
+    notes_picker VARCHAR(200),
     delivery_place VARCHAR(100) NOT NULL,
     garage VARCHAR(100),
     CONSTRAINT FOREIGN KEY (id_vehicle) REFERENCES Vehicle(plate_number) ON DELETE CASCADE,
@@ -69,7 +70,7 @@ CREATE TABLE IF NOT EXISTS Appointment (
 CREATE TABLE IF NOT EXISTS Rating (
     id_rating INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_appointment INT UNSIGNED NOT NULL,
-    notes VARCHAR(200),
+    rating_notes VARCHAR(200),
     rating TINYINT UNSIGNED,
     CONSTRAINT FOREIGN KEY (id_appointment) REFERENCES Appointment(id_appointment) ON DELETE CASCADE
 );

@@ -244,7 +244,6 @@ app.delete('/users/:idUser/vehicle/:idVehicle', (req, res)=>{
   let idVehicle = req.params.idVehicle
 
   try {
-
     query=`use pickauto; DELETE FROM Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`
     pool.query(query)
       .then(vehicle => res.json(vehicle))
@@ -252,12 +251,6 @@ app.delete('/users/:idUser/vehicle/:idVehicle', (req, res)=>{
     
   } catch (error) {
     console.log(error);
-  }
-
-
-});
-
-
   }
 });
 

@@ -190,6 +190,7 @@ CALL Insert_appointment(
     'Entregado',
     'Aceptada',
     'Cambio de aceite y revisión de neumaticos.',
+    '',
     'Calle de la piruleta, 32',
     'Taller Pepe el Potencia'
 );
@@ -202,6 +203,7 @@ CALL Insert_appointment(
     'En el taller',
     'Aceptada',
     'Pintar verde menta.',
+    '',
     'Calle amarilla, 12',
     'Taller Camaleon'
 );
@@ -214,6 +216,7 @@ CALL Insert_appointment(
     'Camino al punto de entrega',
     'Aceptada',
     'Limpieza de tapiceria.',
+    '',
     'Calle imaginaria, 15',
     'LimpiAuto'
 );
@@ -226,6 +229,7 @@ CALL Insert_appointment(
     'No recogido',
     'Cancelada',
     'Píntenlo de azul',
+    '',
     'Calle imaginaria, 15',
     'Taller de Chapa y pintura, Florencio'
 );
@@ -238,6 +242,7 @@ CALL Insert_appointment(
     'No recogido',
     'Pendiente',
     'Limpieza de tapiceria.',
+    '',
     'Calle imaginaria, 15',
     'LimpiAuto'
 );
