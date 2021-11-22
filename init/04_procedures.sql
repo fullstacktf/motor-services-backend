@@ -84,12 +84,13 @@ CREATE PROCEDURE pickauto.Insert_appointment(
   pick_up_date_value datetime,
   appointment_status_value varchar(40),
   appointment_request_value varchar(40),
-  notes_value varchar(200),
+  owner_notes_value varchar(200),
+  picker_notes_value varchar(200),
   delivery_place_value varchar(100),
   garage_value varchar(100))
     BEGIN
-      insert into Appointment (id_vehicle, id_service, id_picker, pick_up_place, pick_up_date, appointment_status, appointment_request, appointment_description, delivery_place, garage) VALUES
-      (id_vehicle_value, id_service_value, id_picker_value, pick_up_place_value, pick_up_date_value, appointment_status_value, appointment_request_value, notes_value, delivery_place_value, garage_value);
+      insert into Appointment (id_vehicle, id_service, id_picker, pick_up_place, pick_up_date, appointment_status, appointment_request, owner_notes, picker_notes, delivery_place, garage) VALUES
+      (id_vehicle_value, id_service_value, id_picker_value, pick_up_place_value, pick_up_date_value, appointment_status_value, appointment_request_value, owner_notes_value, picker_notes_value, delivery_place_value, garage_value);
     END;//
 
 DELIMITER ;
