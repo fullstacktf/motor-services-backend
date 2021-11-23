@@ -8,7 +8,6 @@ const router = express.Router();
 let queryExec = '';
 
 let data = {};
-const bodyIsEmpty = (body) => Object.keys(body).length === 0;
 
 router.get('/', async (req, res) => {
     queryExec = queryUse + 'select * from Services;';
