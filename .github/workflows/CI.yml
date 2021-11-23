@@ -19,6 +19,6 @@ jobs:
       - name: Install dependencies
         run: npm install    
         
-      - name: start
+      - name: test
         run: |
-         npm run start:nodemon
+         npm run test
