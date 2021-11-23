@@ -1,3 +1,4 @@
+import { router as vehicleRouter } from './routes/vehicle.js';
 import express from 'express';
 import { execQuery } from './db/database.js';
 const app = express();
@@ -139,120 +140,18 @@ app.get('/users/owners', async (req, res) => {
   });
 }); //get all users who are owners.
 
-app.get('/vehicle', async (req, res) => {
-  queryExec = `use pickauto; select * from Vehicle;`;
-  data = await execQuery(queryExec);
-  return res.json({
-    msg: 'Solicitud exitosa',
-    pickers: data[1]
-  });
-});
+// app.get('/vehicle', async (req, res) => {
+//   queryExec = `use pickauto; select * from Vehicle;`;
+//   data = await execQuery(queryExec);
+//   return res.json({
+//     msg: 'Solicitud exitosa',
+//     pickers: data[1]
+//   });
+// });
 
 //VEHICLES ENDPOINTS
-// app.use('/users/:userID/vehicle',carRouter);
-//Added car router
-// app.use('/users/:userID/cars',router)
 
-//Get vehicles from user
-app.get('/users/:userID/vehicle',(req, res) => {
-  const id = req.params.userID;
-  try {
-      query = `use pickauto; Select * from Vehicle Where id_owner= ${id}`
-      pool.query(query)
-          .then(vehicle => res.json(vehicle))
-          .catch(err=>console.error(err))
-  } catch (err) {
-      console.error(err)
-  }
-})
-//Get specific vehicle from user
-app.get('/users/:userID/vehicle/:idVehicle',(req, res) => {
-  const idUser = req.params.userID;
-  const idVehicle = req.params.idVehicle;
-
-  try {
-      query = `use pickauto; Select * from Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`
-      pool.query(query)
-          .then(vehicle => res.json(vehicle))
-          .catch(err=> console.error(err))
-  } catch (err) {
-      console.log(err);
-  }
-
-})
-
-
-app.post('/users/:userID/vehicle',(req, res)=>{
-
-  if(bodyIsEmpty(req.body)){
-    res.status(400).send('Fallo al añadir el coche')
-  }else{
-    const plate_number = req.body.plate_number;
-    const id_owner = req.params.userID;
-    const brand = req.body.brand;
-    const model = req.body.model;
-    const powered = req.body.powered;
-    const kilometers = req.body.kilometers;
-    const fuel = req.body.fuel;
-    const vehicle_description = req.body.vehicle_description;
-    const vehicle_image = req.body.vehicle_image;
-
-    try {
-        query = `use pickauto; INSERT INTO Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) VALUES ('${plate_number}', ${id_owner}, '${brand}', '${model}', ${powered}, ${kilometers}, '${fuel}', '${vehicle_description}', '${vehicle_image}')`
-          pool.query(query)
-              .then(vehicle =>{
-                  res.send(`Vehiculo ${vehicle} insertado correctamente`)
-              })
-              .catch(err =>res.status(400).json('Error:'+err))
-    } catch (err) {
-        console.log(err)
-    }
-  }
-});
-
-//update car data from a specific user.
-app.put('/users/:idUser/vehicle/:idVehicle', (req, res)=>{
-    const idUser = req.params.idUser;
-    const idVehicle = req.params.idVehicle;
-
-    let brand = req.body.brand;
-    let model = req.body.model;
-    let powered = req.body.powered;
-    let kilometers = req.body.kilometers;
-    let fuel = req.body.fuel;
-    let vehicle_description = req.body.vehicle_description;
-    let vehicle_image = req.body.vehicle_image;
-
-    try {
-      query = `use pickauto; Update Vehicle set brand='${brand}', model='${model}', powered='${powered}', kilometers=${kilometers}, fuel='${fuel}', vehicle_description='${vehicle_description}', vehicle_image='${vehicle_image}'
-      WHERE id_owner= ${idUser} && plate_number LIKE '${idVehicle}';`
- 
-  
-      pool.query(query)
-        .then(vehicle => res.json(vehicle))
-        .catch(err=> res.status(400).json('Error:'+err))
-
-    } catch (error) {
-      console.log(error);
-    }
-    
-});
-
-//remove a specific car from a specific user.
-app.delete('/users/:idUser/vehicle/:idVehicle', (req, res)=>{
-  let idUser = req.params.idUser
-  let idVehicle = req.params.idVehicle
-
-  try {
-    query=`use pickauto; DELETE FROM Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`
-    pool.query(query)
-      .then(vehicle => res.json(vehicle))
-      .catch(err => res.status(400).json('Error' + err))
-    
-  } catch (error) {
-    console.log(error);
-  }
-});
+app.use('/me/vehicles',vehicleRouter);
 
 
 app.get('/users/:userID/appointments?from=&to='); //get all dates from a specific date to specific date.
