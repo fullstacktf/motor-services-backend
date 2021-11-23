@@ -21,4 +21,4 @@ jobs:
         
       - name: start
         run: |
-         npm run start
+         npm run start:nodemon
