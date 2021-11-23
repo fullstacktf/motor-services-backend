@@ -13,10 +13,13 @@ app.use(express.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
-
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 app.use('/users', userRouter);
 app.use('/appointments', appointmentRouter);
 app.use('/services', serviceRouter);
+
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
