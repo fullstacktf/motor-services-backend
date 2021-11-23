@@ -17,9 +17,10 @@ mariadb.createPool({
 
 
 export async function execQuery(queryExec) {
+  let queryUse = 'use pickauto;';
   let data;
   try {
-    data = await pool.query(queryExec);
+    data = await pool.query(queryUse + queryExec);
   } catch (error) {
     console.log(error);
     return error;

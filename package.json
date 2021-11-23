@@ -1,13 +1,13 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node index",
-    "start:nodemon": "nodemon index.js",
+    "start": "node app",
+    "start:nodemon": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index"
+    "dev": "nodemon app"
   },
   "author": "",
   "license": "ISC",
