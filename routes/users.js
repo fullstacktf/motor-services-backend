@@ -1,13 +1,13 @@
 import express from 'express';
 import { execQuery } from '../db/database.js';
-export const router = express.Router;
+const router = express.Router();
 
 let queryExec = '';
 
 let data = {};
 const bodyIsEmpty = (body) => Object.keys(body).length === 0;
 
-router.post('/users', async (req, res) => { //when a user registers, is added to the database. Añadir el caso de si el usuario existe
+router.post('/', async (req, res) => { //when a user registers, is added to the database. Añadir el caso de si el usuario existe
     if (bodyIsEmpty(req.body)) {
         res.status(400).send('Envía algo en el body.');
     } else {
@@ -32,25 +32,25 @@ router.post('/users', async (req, res) => { //when a user registers, is added to
     }
 });
 
-router.get('/users', async (req, res) => {
-    queryExec = queryUse + 'select * from User;';
+router.get('/', async (req, res) => {
+    queryExec ='select * from User;';
     data = await execQuery(queryExec);
     res.json({
         users: data
     });
 });
 
-router.get('/users/rols', async (req, res) => {
-    queryExec = queryUse + 'select * from Rol;';
+router.get('/rols', async (req, res) => {
+    queryExec ='select * from Rol;';
     data = await execQuery(queryExec);
     res.json({
         rols: data
     });
 });
 
-router.get('/users/:userID', async (req, res) => {
+router.get('/:userID', async (req, res) => {
     const id = req.params.userID;
-    queryExec = queryUse + `select * from User where DNI='${id};'`;
+    queryExec =`select * from User where DNI='${id};'`;
     data = await execQuery(queryExec);
     if (data.length !== 0) {
         res.json({
@@ -61,12 +61,12 @@ router.get('/users/:userID', async (req, res) => {
     }
 });
 
-router.delete('/users', async (req, res) => {
+router.delete('/', async (req, res) => {
     if (bodyIsEmpty(req.body)) {
         res.status(400).send('Envía algo en el body .');
     } else {
         const id = req.body.dni;
-        queryExec = queryUse + `DELETE FROM User where DNI=${id};`;
+        queryExec =`DELETE FROM User where DNI=${id};`;
         data = await execQuery(queryExec);
         if (data && data.affectedRows === 0) {
             return res.send("El usuario no existe, inserte otro id");
@@ -78,7 +78,7 @@ router.delete('/users', async (req, res) => {
 }); //remove a specific user, if he/she wants to remove his/her account.
 
 
-router.put('/users/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     const dni = req.params.id;
     let putArr = [];
     let valuesInQuery = "";
@@ -103,7 +103,7 @@ router.put('/users/:id', async (req, res) => {
             }
         });
         valuesInQuery = putArr.join(" ").slice(0, -1);
-        queryExec = queryUse + `UPDATE User SET ${valuesInQuery} WHERE DNI=${dni};`;
+        queryExec =`UPDATE User SET ${valuesInQuery} WHERE DNI=${dni};`;
         data = await execQuery(queryExec);
         if (data && data.affectedRows === 0) {
             return res.send("El usuario no existe, inserte otro id");
@@ -112,8 +112,8 @@ router.put('/users/:id', async (req, res) => {
     }
 }); //update data of a specific user, edit user profile.
 
-router.get('/users/pickers', async (req, res) => {
-    queryExec = queryUse + `select * from User where rol=2;`;
+router.get('/pickers', async (req, res) => {
+    queryExec =`select * from User where rol=2;`;
     data = await execQuery(queryExec);
     res.json({
         msg: 'Solicitud exitosa',
@@ -122,11 +122,42 @@ router.get('/users/pickers', async (req, res) => {
 }); //get all users who are pickers.
 
 
-router.get('/users/owners', async (req, res) => {
-    queryExec = queryUse + `select * from User where rol=1;`;
+router.get('/owners', async (req, res) => {
+    queryExec =`select * from User where rol=1;`;
     data = await execQuery(queryExec);
     res.json({
         msg: 'Solicitud exitosa',
         pickers: data[1]
     });
 }); //get all users who are owners.
+
+router.get('/:userID/appointments', async (req, res) => {
+    console.log("entra");
+    const userId = req.params.userID;
+    const status = (req.query.status) ? (req.query.status) : undefined;
+    const request = (req.query.request) ? (req.query.request) : undefined;
+    let append = '';
+    //refactorizar cuando pueda, construir string
+    if (status && !request) {
+        append = ` AND appointment_status='Entregado';`;
+    } else if (request && !status) {
+        append = ` AND appointment_request='Pendiente'`;
+    } else if (request && status && status === 'No recogido') {
+        append = ` AND appointment_request='Aceptada' AND appointment_status='No recogido'`;
+    } else if (request && status && status !== 'No recogido') {
+        append = ` AND appointment_request='Aceptada' AND appointment_status='${status}'`;
+    }
+    //https://stackoverflow.com/questions/1754411/how-to-select-date-from-datetime-column
+
+    queryExec = queryUse + `SELECT id_appointment 
+    FROM Appointment
+    JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle) 
+    JOIN User ON (User.DNI = Vehicle.id_owner) WHERE id_owner = ${userId} AND User.id_rol=1${append};`;
+
+    data = await execQuery(queryExec);
+    res.json({
+        appointments: data
+    });
+}); //get all appointments from specific user.
+
+export {router};
