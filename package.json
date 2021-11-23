@@ -1,13 +1,13 @@
 {
-  "name": "server",
+  "name": "Pickauto",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node server",
-    "start:nodemon": "nodemon server.js",
+    "start": "node app",
+    "start:nodemon": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server"
+    "dev": "nodemon app"
   },
   "author": "",
   "license": "ISC",
