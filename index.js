@@ -307,6 +307,7 @@ app.get('/users/:userID/appointments', async (req, res) => {
   } else if (request && status && status !== 'No recogido') {
     append = ` AND appointment_request='Aceptada' AND appointment_status='${status}'`;
   }
+//https://stackoverflow.com/questions/1754411/how-to-select-date-from-datetime-column
 
   queryExec = queryUse + `SELECT id_appointment 
   FROM Appointment
