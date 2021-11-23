@@ -3,7 +3,7 @@ import {execQuery} from '../db/database.js'
 let data;
 
 export class VehicleModel{
-    
+
    async getVehicles(req, res){
         data = await execQuery(`use pickauto; SELECT * FROM Vehicle;`)
         return res.json({

@@ -153,7 +153,6 @@ app.get('/users/owners', async (req, res) => {
 
 app.use('/me/vehicles',vehicleRouter);
 
-
 app.get('/users/:userID/appointments?from=&to='); //get all dates from a specific date to specific date.
 app.get('/users/:userID/appointments?status="Pendiente"'); //get all pending dates from a specific user.
 ///appointments/:userID/:vehicleID'
