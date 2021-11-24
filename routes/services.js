@@ -1,9 +1,6 @@
 import express from 'express';
-import { execQuery } from '../db/database.js';
+import { execQuery } from '../database/database.js';
 const router = express.Router();
-
-
-
 
 let queryExec = '';
 
