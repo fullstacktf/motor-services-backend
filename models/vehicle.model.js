@@ -5,7 +5,7 @@ let data;
 export class VehicleModel{
 
    async getVehicles(req, res){
-        data = await execQuery(`use pickauto; SELECT * FROM Vehicle;`)
+        data = await execQuery(`SELECT * FROM Vehicle;`)
         return res.json({
             msg:'Solicitud exitosa',
             vehicle:data[0]
@@ -14,7 +14,7 @@ export class VehicleModel{
 
     async getVehiclesFromUser(req,res,id){
 
-        data = await execQuery(`use pickauto; SELECT * FROM Vehicle Where id_owner=${id};`)
+        data = await execQuery(`SELECT * FROM Vehicle Where id_owner=${id};`)
         return res.json({
             msg: 'Solicitud exitosa',
             vehicle: data
@@ -24,7 +24,7 @@ export class VehicleModel{
     async getVehicleById(req,res){
         const idUser = req.body.userId;
         const idVehicle = req.params.idVehicle;
-        data = await execQuery(`use pickauto; Select * from Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`)
+        data = await execQuery(`Select * from Vehicle Where id_owner=${idUser} && plate_number LIKE '${idVehicle}'`)
         return res.json({
             msg: 'Solicitud exitosa',
             vehicle: data
@@ -42,7 +42,7 @@ export class VehicleModel{
       const vehicle_description = req.body.vehicle_description;
       const vehicle_image = req.body.vehicle_image;
       
-      data = await execQuery(`use pickauto; INSERT INTO Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) VALUES ('${plate_number}', ${id_owner}, '${brand}', '${model}', ${powered}, ${kilometers}, '${fuel}', '${vehicle_description}', '${vehicle_image}')`)
+      data = await execQuery(`INSERT INTO Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) VALUES ('${plate_number}', ${id_owner}, '${brand}', '${model}', ${powered}, ${kilometers}, '${fuel}', '${vehicle_description}', '${vehicle_image}')`)
       return res.json({
             msg: 'Vehiculo insertado correctamente',
             vehicle: data
@@ -59,7 +59,7 @@ export class VehicleModel{
         let fuel = req.body.fuel;
         let vehicle_description = req.body.vehicle_description;
         let vehicle_image = req.body.vehicle_image;
-        data = await execQuery(`use pickauto; Update Vehicle set brand='${brand}', model='${model}', powered='${powered}', kilometers=${kilometers}, fuel='${fuel}', vehicle_description='${vehicle_description}', vehicle_image='${vehicle_image}'
+        data = await execQuery(`Update Vehicle set brand='${brand}', model='${model}', powered='${powered}', kilometers=${kilometers}, fuel='${fuel}', vehicle_description='${vehicle_description}', vehicle_image='${vehicle_image}'
         WHERE plate_number LIKE '${idVehicle}';`)
         return res.json({
             msg: 'Vehiculo actualizado correctamente',
@@ -69,7 +69,7 @@ export class VehicleModel{
 
     async deleteVehicle(req, res) {
         const idVehicle = req.params.idVehicle;
-        data = await execQuery(`use pickauto; DELETE FROM Vehicle Where plate_number LIKE '${idVehicle}'`)
+        data = await execQuery(`DELETE FROM Vehicle Where plate_number LIKE '${idVehicle}'`)
         return res.json({
             msg: 'Vehiculo borrado correctamente',
             vehicle: data
