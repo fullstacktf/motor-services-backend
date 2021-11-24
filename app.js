@@ -22,6 +22,7 @@ app.use('/vehicles', vehicleRouter);
 app.use('/users', userRouter);
 app.use('/appointments', appointmentRouter);
 app.use('/services', serviceRouter);
+app.use('/reviews', reviewRouter);
 
 
 
