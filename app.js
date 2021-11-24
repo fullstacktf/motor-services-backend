@@ -3,6 +3,8 @@ import {router as userRouter} from './routes/users.js';
 import { router as vehicleRouter } from './routes/vehicle.js';
 import {router as appointmentRouter} from './routes/appointments.js';
 import {router as serviceRouter} from './routes/services.js';
+import {router as reviewRouter} from './routes/reviews.js';
+
 
 const app = express();
 const port = 3000;
