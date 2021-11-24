@@ -32,6 +32,19 @@ export class ReviewModel{
         }
     };
 
+    async getReviewByPicker(req,res){
+        const picker_id = req.params.pickerID;
+        queryExec = `select * from Rating r join Appointment a using(id_appointment) where id_picker=${picker_id};`;
+        data = await execQuery(queryExec);
+        if (data.length!==0){
+            res.json({
+            reviews: data
+            });
+        } else {
+            res.send("No existe ningún servicio con ese ID");
+        }
+    };
+
     async addReview(req,res){
         if (bodyIsEmpty(req.body)) {
             res.status(400).send('Envía algo en el body.');

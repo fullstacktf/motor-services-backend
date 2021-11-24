@@ -11,10 +11,16 @@ router.get('/:userID/:appointmentID', async (req, res) => {
 
 router.get('/:userID', async (req, res) => { 
     return review.getReviews(req,res)
-});//get all reviews form an specific user, if it has it.
+});//get all reviews from an specific user, if it has it.
+
+router.get('/picker/:pickerID', async (req,res)=>{
+    return review.getReviewByPicker(req,res)
+});//get all reviews from an specific picker
+
 router.post('/:userID/:appointmentID', async (req,res) => {
     return review.addReview(req, res)
   }); //post a review to an specific appointment.
+
 router.delete('/:userID/:appointmentID', async (req,res) => {
     return review.deleteReview(req, res)
   }); //remove a review of a specific appointment, if it has it.
