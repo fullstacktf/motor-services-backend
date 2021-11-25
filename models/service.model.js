@@ -6,7 +6,7 @@ const bodyIsEmpty = (body) => Object.keys(body).length === 0;
 
 export class ServiceModel {
     async getServices(req, res){
-        queryExec = queryUse + 'select * from Services;';
+        queryExec ='select * from Services;';
         data = await execQuery(queryExec);
         res.json({
             services: data
@@ -14,7 +14,7 @@ export class ServiceModel {
     }
     async getService(req, res){
         const service_id = req.params.serviceID;
-        queryExec = queryUse + `select * from Services where id_service=${service_id};`;
+        queryExec =`select * from Services where id_service=${service_id};`;
         data = await execQuery(queryExec);
         if (data.length !== 0) {
             res.json({
