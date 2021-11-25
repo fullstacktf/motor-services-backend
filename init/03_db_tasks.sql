@@ -48,13 +48,13 @@ CREATE TABLE IF NOT EXISTS Services (
 );
 
 CREATE TABLE IF NOT EXISTS Appointment (
-    id_appointment INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_vehicle VARCHAR(8) NOT NULL,
     id_service INT UNSIGNED NOT NULL,
     id_picker INT UNSIGNED,
     pick_up_place VARCHAR(100) NOT NULL,
-    pick_up_date DATETIME NOT NULL,
-    appointment_status ENUM('No recogido', 'Camino al taller', 'En el taller', 'Camino al punto de entrega', 'Entregado'),
+    pick_up_date DATE NOT NULL,
+    pick_up_time TIME NOT NULL,
+    appointment_status ENUM('No recogido', 'Camino al taller', 'En el taller', 'Camino al punto de entrega', 'Entregado') DEFAULT 'No recogido',
     appointment_request ENUM ('Pendiente','Aceptada', 'Cancelada') DEFAULT 'Pendiente',
     owner_notes VARCHAR(200),
     picker_notes VARCHAR(200),
@@ -62,7 +62,8 @@ CREATE TABLE IF NOT EXISTS Appointment (
     garage VARCHAR(100),
     CONSTRAINT FOREIGN KEY (id_vehicle) REFERENCES Vehicle(plate_number) ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (id_service) REFERENCES Services(id_service) ON DELETE CASCADE,
-    CONSTRAINT FOREIGN KEY (id_picker) REFERENCES Picker(id_picker) ON DELETE CASCADE
+    CONSTRAINT FOREIGN KEY (id_picker) REFERENCES Picker(id_picker) ON DELETE CASCADE,
+    PRIMARY KEY (id_vehicle, pick_up_date)
 );
 
 CREATE TABLE IF NOT EXISTS Rating (
