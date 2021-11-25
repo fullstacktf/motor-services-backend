@@ -24,8 +24,6 @@ CREATE TABLE IF NOT EXISTS User (
 
 CREATE TABLE IF NOT EXISTS Picker (
     id_picker INT UNSIGNED NOT NULL PRIMARY KEY,
-    start_time TIME,
-    finish_time TIME,
     rating TINYINT DEFAULT 5,
     FOREIGN KEY (id_picker) REFERENCES User(DNI) ON DELETE CASCADE
 );
@@ -53,11 +51,11 @@ CREATE TABLE IF NOT EXISTS Appointment (
     id_appointment INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_vehicle VARCHAR(8) NOT NULL,
     id_service INT UNSIGNED NOT NULL,
-    id_picker INT UNSIGNED NOT NULL,
+    id_picker INT UNSIGNED,
     pick_up_place VARCHAR(100) NOT NULL,
     pick_up_date DATETIME NOT NULL,
     appointment_status ENUM('No recogido', 'Camino al taller', 'En el taller', 'Camino al punto de entrega', 'Entregado'),
-    appointment_request ENUM ('Pendiente','Aceptada', 'Cancelada'),
+    appointment_request ENUM ('Pendiente','Aceptada', 'Cancelada') DEFAULT 'Pendiente',
     owner_notes VARCHAR(200),
     picker_notes VARCHAR(200),
     delivery_place VARCHAR(100) NOT NULL,
@@ -74,6 +72,3 @@ CREATE TABLE IF NOT EXISTS Rating (
     rating TINYINT UNSIGNED,
     CONSTRAINT FOREIGN KEY (id_appointment) REFERENCES Appointment(id_appointment) ON DELETE CASCADE
 );
-
-CREATE TABLE products(name VARCHAR(100));
-INSERT INTO products VALUES ('portatil'), ('teclado'), ('raton');
