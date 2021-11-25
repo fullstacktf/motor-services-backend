@@ -1,4 +1,4 @@
-import {execQuery} from '../db/database.js' 
+import {execQuery} from '../database/database.js' 
 
 let data;
 
