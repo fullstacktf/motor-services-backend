@@ -3,6 +3,7 @@ const router = express.Router();
 import { UserModel } from '../models/user.model.js'
 
 const user = new UserModel();
+//login y logout
 
 router.post('/', async (req, res) => {
     return user.addUser(req, res);
