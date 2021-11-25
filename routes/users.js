@@ -80,37 +80,25 @@ router.delete('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const dni = req.params.id;
-    let putArr = [];
-    let valuesInQuery = "";
     if (bodyIsEmpty(req.body)) {
         res.status(400).send('Envía algo en el body .');
     } else {
-        let arrVarObj = {
-            email: [req.body.email, "email", "string"],
-            password: [req.body.password_key, "password_key", "string"],
-            phone_number: [req.body.phone_number, "phone_number", "number"],
-            birth_date: [req.body.birth_date, "birth_date", "string"],
-            profile_image: [req.body.profile_image, "profile_image", "string"],
-            city: [req.body.city, "city", "string"],
-            first_name: [req.body.first_name, "first_name", "string"],
-            last_name: [req.body.last_name, "last_name", "string"]
-        };
-        Object.values(arrVarObj).forEach(item => {
-            if (item[0] && item[2] === "number") {
-                putArr.push(`${item[1]}=${item[0]},`);
-            } else if (item[0] && item[2] === "string") {
-                putArr.push(`${item[1]}='${item[0]}',`);
-            }
-        });
-        valuesInQuery = putArr.join(" ").slice(0, -1);
-        queryExec =`UPDATE User SET ${valuesInQuery} WHERE DNI=${dni};`;
+            email = req.body.email;
+            password = req.body.password_key;
+            phone_number = req.body.phone_number;
+            birth_date = req.body.birth_date;
+            profile_image = req.body.profile_image;
+            city = req.body.city;
+            first_name = req.body.first_name;
+            last_name = req.body.last_name;
+        }
+        queryExec =`UPDATE User SET DNI=${dni}, id_rol=${id_rol}, password_key='${password}', email='${email}', city='${city}', first_name='${first_name}', last_name='${last_name}', phone_number=${phone_number}, birth_date='${birth_date}', profile_image='${profile_image} WHERE DNI=${dni};`;
         data = await execQuery(queryExec);
         if (data && data.affectedRows === 0) {
             return res.send("El usuario no existe, inserte otro id");
         }
         res.send("Usuario actualizado correctamente");
-    }
-}); //update data of a specific user, edit user profile.
+    }); //update data of a specific user, edit user profile.
 
 router.get('/pickers', async (req, res) => {
     queryExec =`select * from User where rol=2;`;
@@ -132,8 +120,36 @@ router.get('/owners', async (req, res) => {
 }); //get all users who are owners.
 
 router.get('/:userID/appointments', async (req, res) => {
-    console.log("entra");
     const userId = req.params.userID;
+    const status = (req.query.status) ? (req.query.status) : undefined;
+    const request = (req.query.request) ? (req.query.request) : undefined;
+    let append = '';
+    //refactorizar cuando pueda, construir string
+    if (status && !request) {
+        append = ` AND appointment_status='Entregado';`; //pasadas
+    } else if (request && !status) {
+        append = ` AND appointment_request='Pendiente'`; // pendientes de aceptar
+    } else if (request && status && status === 'No recogido') { 
+        append = ` AND appointment_request='Aceptada' AND appointment_status='No recogido'`;//futuras
+    } else if (request && status && status !== 'No recogido') {
+        append = ` AND appointment_request='Aceptada' AND appointment_status='${status}'`; // en curso
+    }
+
+    queryExec = queryUse + `SELECT id_appointment 
+    FROM Appointment
+    JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle) 
+    JOIN User ON (User.DNI = Vehicle.id_owner) WHERE id_owner = ${userId} AND User.id_rol=1${append};`;
+
+    data = await execQuery(queryExec);
+    res.json({
+        appointments: data
+    });
+}); //get all appointments from specific user.
+
+//funcion que me de todas las citas que tiene un picker
+ //https://stackoverflow.com/questions/1754411/how-to-select-date-from-datetime-column
+router.get('/:pickerID/appointments', async (req, res) => {
+    const pickerId = req.params.pickerID;
     const status = (req.query.status) ? (req.query.status) : undefined;
     const request = (req.query.request) ? (req.query.request) : undefined;
     let append = '';
@@ -147,17 +163,15 @@ router.get('/:userID/appointments', async (req, res) => {
     } else if (request && status && status !== 'No recogido') {
         append = ` AND appointment_request='Aceptada' AND appointment_status='${status}'`;
     }
-    //https://stackoverflow.com/questions/1754411/how-to-select-date-from-datetime-column
-
     queryExec = queryUse + `SELECT id_appointment 
     FROM Appointment
     JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle) 
-    JOIN User ON (User.DNI = Vehicle.id_owner) WHERE id_owner = ${userId} AND User.id_rol=1${append};`;
-
+    JOIN User ON (User.DNI = Vehicle.id_owner) WHERE id_picker = ${pickerId} AND User.id_rol=2${append};`;
     data = await execQuery(queryExec);
     res.json({
         appointments: data
     });
 }); //get all appointments from specific user.
+
 
 export {router};

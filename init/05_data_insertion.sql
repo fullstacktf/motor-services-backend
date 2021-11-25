@@ -1,7 +1,9 @@
 USE pickauto;
 CALL Insert_role(1, 'Owner');
 CALL Insert_role(2, 'Picker');
-/*Mirar que solo tengan coches los Owners y no los pickers*/
+
+/*-------------------------------*/
+
 CALL Insert_user(
     12345678,
     1,
@@ -110,9 +112,12 @@ CALL Insert_user(
     '1983-09-21',
     'Shannon'
 );
+
+/*-------------------------------*/
+
 CALL Insert_vehicle(
     '1134abd',
-    12345677,
+    12345671,
     'Ford',
     'Fiesta',
     140,
@@ -154,11 +159,59 @@ CALL Insert_vehicle(
     'Softail heritage. Nacional 5HD. TC 88  Inyeccion. Estado impecable. Ruedas, pastillas de freno y bateria nuevos.',
     'La mochillo'
 );
-CALL Insert_picker(12345677, '12:00', '17:30', 4);
-CALL Insert_picker(12345676, '09:00', '16:30', 5);
-CALL Insert_picker(12345674, '11:30', '20:30', 5);
-CALL Insert_picker(12345672, '18:00', '00:00', 5);
+CALL Insert_vehicle(
+    '6278geb',
+    12345679,
+    'Ford',
+    'Puma',
+    125,
+    2000,
+    'híbrido',
+    'FORD Puma 1.0 EcoBoost 92kW 125cv STLine MHEV 5p',
+    'Coche morado'
+);
+CALL Insert_vehicle(
+    '2863aaf',
+    12345671,
+    'BMW',
+    'Serie 1',
+    116,
+    6699,
+    'diesel',
+    'BMW Serie 1 116d 5p blanco',
+    'Coche ab'
+);
+CALL Insert_vehicle(
+    '3456fdh',
+    12345675,
+    'Mini',
+    'Clubman Cooper',
+    150,
+    55400,
+    'diesel',
+    'MINI CLUBMAN COOPER D automatico 5p verde',
+    'Mini verde'
+);
+CALL Insert_vehicle(
+    '3247jhr',
+    12345678,
+    'Lexus',
+    'NX',
+    197,
+    75400,
+    'híbrido',
+    'LEXUS NX 2.5300h F Sport 4WD Panoramico Navibox 5p rojo',
+    'Lexus rojo'
+);
 
+/*-------------------------------*/
+
+CALL Insert_picker(12345677, 4);
+CALL Insert_picker(12345676, 5);
+CALL Insert_picker(12345674, 5);
+CALL Insert_picker(12345672, 5);
+
+/*-------------------------------*/
 
 CALL Insert_service(
     'Chapa y Pintura',
@@ -181,6 +234,9 @@ CALL Insert_service(
     'Limpieza exterior, limpieza interior, limpieza de tapicerias, desinfeccion, pulido a maquina, restauracion de faros '
 );
 CALL Insert_service('ITV', 'Traslado del vehiculo al centro ITV');
+
+/*-------------------------------*/
+
 CALL Insert_appointment(
     '1154abd',
     2,
@@ -190,7 +246,7 @@ CALL Insert_appointment(
     'Entregado',
     'Aceptada',
     'Cambio de aceite y revisión de neumaticos.',
-    '',
+    'Proximo cambio de aceite 2000km, neumaticos OK',
     'Calle de la piruleta, 32',
     'Taller Pepe el Potencia'
 );
@@ -203,7 +259,7 @@ CALL Insert_appointment(
     'En el taller',
     'Aceptada',
     'Pintar verde menta.',
-    '',
+    'Aparcar en garage durante 1 semana',
     'Calle amarilla, 12',
     'Taller Camaleon'
 );
@@ -216,7 +272,7 @@ CALL Insert_appointment(
     'Camino al punto de entrega',
     'Aceptada',
     'Limpieza de tapiceria.',
-    '',
+    'Han dejado las monedas en el cenicero',
     'Calle imaginaria, 15',
     'LimpiAuto'
 );
@@ -236,7 +292,7 @@ CALL Insert_appointment(
 CALL Insert_appointment(
     '1154abd',
     5,
-    12345672,
+    Null,
     'Calle imaginaria, 15',
     '2021-11-29 12:30',
     'No recogido',
@@ -246,5 +302,75 @@ CALL Insert_appointment(
     'Calle imaginaria, 15',
     'LimpiAuto'
 );
+CALL Insert_appointment(
+    '3247jhr',
+    6,
+    12345676,
+    'Avenida Robert Downey Jr., 32',
+    '2021-10-29 11:17',
+    'Entregado',
+    'Aceptada',
+    'ITV.',
+    'ITV pasada',
+    'Calle imaginaria, 15',
+    'Centro ITV 2'
+);
+CALL Insert_appointment(
+    '6278geb',
+    4,
+    12345672,
+    'Calle relampago, 13',
+    '2021-11-29 12:30',
+    'Entregado',
+    'Aceptada',
+    'Llame al llegar a Santiago',
+    'Pago de peajes adicional',
+    'Calle hortaliza, 7, Santiago de Compostela',
+    Null
+);
+CALL Insert_appointment(
+    '2863aaf',
+    2,
+    12345674,
+    'Pasaje del pato, 5',
+    '2021-09-14 10:15',
+    'Entregado',
+    'Aceptada',
+    'Cambio de radio y sistema de audio',
+    'Las cajas de la radio y los altavoces están en el maletero',
+    'Pasaje del pato',
+    'Taller TechnoElectrico'
+);
+CALL Insert_appointment(
+    '1134abd',
+    1,
+    12345676,
+    'Parque Jurasico, 6',
+    '2021-08-13 16:30',
+    'Entregado',
+    'Aceptada',
+    'Quitar golpe puerta derecha',
+    'Tambien han reparado un pequeño roce en la puerta',
+    'Parque Jurasico',
+    'Taller Quitagolpes'
+);
+CALL Insert_appointment(
+    '3456fdh',
+    5,
+    12345674,
+    'Calle estrella, 43',
+    '2021-12-19 16:30',
+    'No recogido',
+    'Aceptada',
+    'Limpiar el exterior',
+    '',
+    'Calle estrella, 43',
+    'LimpiAuto'
+);
+
+
+/*-------------------------------*/
+
 CALL Insert_rating(2, 'Todo correcto, muy puntual', 5);
 CALL Insert_rating(3, 'Dejo el coche aparcado al sol', 4);
+CALL Insert_rating(9, 'Me ha rozado el coche', 0);
