@@ -206,13 +206,6 @@ CALL Insert_vehicle(
 
 /*-------------------------------*/
 
-CALL Insert_picker(12345677, 4);
-CALL Insert_picker(12345676, 5);
-CALL Insert_picker(12345674, 5);
-CALL Insert_picker(12345672, 5);
-
-/*-------------------------------*/
-
 CALL Insert_service(
     'Chapa y Pintura',
     'Distintos tipos de reparaciones y modificaciones sobre la carroceria del vehículo'

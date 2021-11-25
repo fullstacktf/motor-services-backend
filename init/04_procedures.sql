@@ -50,18 +50,6 @@ DELIMITER ;
 
 DELIMITER //
 //
-CREATE PROCEDURE pickauto.Insert_picker(
-  id_picker_value int(10) unsigned,
-  rating_value tinyint(4))
-    BEGIN
-      INSERT INTO Picker (id_picker, rating) VALUES 
-      (id_picker_value, rating_value);
-    END;//
-
-DELIMITER ;
-
-DELIMITER //
-//
 CREATE PROCEDURE pickauto.Insert_service(
   service_value varchar(25),
   service_description_value varchar(200))
