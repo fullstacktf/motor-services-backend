@@ -52,12 +52,10 @@ DELIMITER //
 //
 CREATE PROCEDURE pickauto.Insert_picker(
   id_picker_value int(10) unsigned,
-  start_time_value time,
-  finish_time_value time,
   rating_value tinyint(4))
     BEGIN
-      INSERT INTO Picker (id_picker, start_time, finish_time, rating) VALUES 
-      (id_picker_value, start_time_value, finish_time_value, rating_value);
+      INSERT INTO Picker (id_picker, rating) VALUES 
+      (id_picker_value, rating_value);
     END;//
 
 DELIMITER ;
