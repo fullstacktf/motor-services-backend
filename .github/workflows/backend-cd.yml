@@ -1,0 +1,24 @@
+name: Backend CD
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy NodeJS app
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{secrets.SSH_HOST}} # IP Digital Ocean
+          key: ${{secrets.SSH_KEY}} # Private SSH KEY
+          username: ${{ secrets.SSH_USERNAME }} # User of the server you use in SSH
+          #First clone docker-compose and start.sh
+          script: |
+            mkdir pickauto
+            cd pickauto
+            git clone git@gist.github.com:d799268881d5a2fa27d4b10c1fc45126.git
+            git clone git@gist.github.com:ad3806a3e50db63dd85bcb1aa6ad0de8.git
+            sh start.sh
+            git clone git@github.com:fullstacktf/motor-services-backend.git
+            echo 'Deployment successful to digital ocean' 
