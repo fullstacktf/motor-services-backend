@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS User (
 
 CREATE TABLE IF NOT EXISTS Picker (
     id_picker INT UNSIGNED NOT NULL PRIMARY KEY,
-    start_time TIME NOT NULL,
-    finish_time TIME NOT NULL,
+    start_time TIME,
+    finish_time TIME,
     rating TINYINT DEFAULT 5,
     FOREIGN KEY (id_picker) REFERENCES User(DNI) ON DELETE CASCADE
 );
@@ -74,8 +74,9 @@ CREATE TABLE IF NOT EXISTS Appointment (
 
 CREATE TABLE IF NOT EXISTS Rating (
     id_rating INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id_appointment INT UNSIGNED NOT NULL,
+    id_vehicle VARCHAR(8) NOT NULL,
+    pick_up_date DATE NOT NULL,
     rating_notes VARCHAR(200),
     rating TINYINT UNSIGNED,
-    CONSTRAINT FOREIGN KEY (id_appointment) REFERENCES Appointment(id_appointment) ON DELETE CASCADE
+    CONSTRAINT FOREIGN KEY (id_vehicle, pick_up_date) REFERENCES Appointment (id_vehicle, pick_up_date) ON DELETE CASCADE
 );

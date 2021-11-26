@@ -52,8 +52,8 @@ DELIMITER //
 //
 CREATE PROCEDURE pickauto.Insert_picker(
   id_picker_value int(10) unsigned,
-  start_time_value TIME NOT NULL,
-  finish_time_value TIME NOT NULL,
+  start_time_value TIME,
+  finish_time_value TIME,
   rating_value tinyint(4))
     BEGIN
       INSERT INTO Picker (id_picker, start_time, finish_time, rating) VALUES 
@@ -79,18 +79,17 @@ CREATE PROCEDURE pickauto.Insert_appointment(
   id_vehicle_value varchar(8),
   id_service_value int(10) unsigned,
   id_picker_value int(10) unsigned,
-  pick_up_latitude_value FLOAT NOT NULL,
-  pick_up_longitude_value FLOAT NOT NULL,
-  pick_up_city_value VARCHAR(100) NOT NULL,
-  pick_up_place_value varchar(100),
+  pick_up_latitude_value FLOAT,
+  pick_up_longitude_value FLOAT,
+  pick_up_city_value VARCHAR(100),
   pick_up_date_value date,
   pick_up_time_value time,
   appointment_status_value varchar(40),
   appointment_request_value varchar(40),
   owner_notes_value varchar(200),
   picker_notes_value varchar(200),
-  delivery_latitude_value FLOAT NOT NULL,
-  delivery_longitude_value FLOAT NOT NULL,
+  delivery_latitude_value FLOAT,
+  delivery_longitude_value FLOAT,
   delivery_city_value varchar(100),
   garage_value varchar(100))
     BEGIN
@@ -103,12 +102,13 @@ DELIMITER ;
 DELIMITER //
 //
 CREATE PROCEDURE pickauto.Insert_rating(
-  id_appointment_value int(10) unsigned,
+  id_vehicle_value VARCHAR(8),
+  pick_up_date_value DATE,
   rating_notes_value varchar(200),
   rating_value tinyint(3) unsigned)
     BEGIN
-      INSERT INTO Rating (id_appointment, rating_notes, rating) VALUES 
-      (id_appointment_value, rating_notes_value, rating_value);
+      INSERT INTO Rating (id_vehicle, pick_up_date, rating_notes, rating) VALUES 
+      (id_vehicle_value, pick_up_date_value, rating_notes_value, rating_value);
     END;//
 
 DELIMITER ;
