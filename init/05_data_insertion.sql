@@ -206,10 +206,10 @@ CALL Insert_vehicle(
 
 /*-------------------------------*/
 
-CALL Insert_picker(12345677, 4);
-CALL Insert_picker(12345676, 5);
-CALL Insert_picker(12345674, 5);
-CALL Insert_picker(12345672, 5);
+CALL Insert_picker(12345677, '12:00', '17:30', 4);
+CALL Insert_picker(12345676, '09:00', '16:30', 5);
+CALL Insert_picker(12345674, '11:30', '20:30', 5);
+CALL Insert_picker(12345672, '18:00', '00:00', 5);
 
 /*-------------------------------*/
 
@@ -241,130 +241,180 @@ CALL Insert_appointment(
     '1154abd',
     2,
     12345672,
-    'Calle de la piruleta, 32',
-    '2021-10-23 11:30',
+    40.4167, 
+    -3.7167,
+    'Madrid',
+    '2021-10-23',
+    '11:30',
     'Entregado',
     'Aceptada',
     'Cambio de aceite y revisión de neumaticos.',
     'Proximo cambio de aceite 2000km, neumaticos OK',
-    'Calle de la piruleta, 32',
+    40.4167, 
+    -3.7167,
+    'Madrid',
     'Taller Pepe el Potencia'
 );
 CALL Insert_appointment(
     '5154abd',
     1,
     12345677,
-    'Avenida del boniato, 88',
-    '2021-11-29 11:30',
+    40.4167,
+    -3.7167, 
+    'Madrid',
+    '2021-11-29',
+    '11:30',
     'En el taller',
     'Aceptada',
     'Pintar verde menta.',
     'Aparcar en garage durante 1 semana',
-    'Calle amarilla, 12',
+    40.4167,
+    -3.7167, 
+    'Madrid',
     'Taller Camaleon'
 );
 CALL Insert_appointment(
     '1134fbd',
     5,
     12345672,
-    'Calle imaginaria, 15',
-    '2021-11-29 12:30',
+    40.4167,
+    -3.7167, 
+    'Madrid',
+    '2021-11-29',
+    '12:30',
     'Camino al punto de entrega',
     'Aceptada',
     'Limpieza de tapiceria.',
     'Han dejado las monedas en el cenicero',
-    'Calle imaginaria, 15',
+    40.4167,
+    -3.7167, 
+    'Madrid',
     'LimpiAuto'
 );
 CALL Insert_appointment(
     '1154abd',
     1,
     12345672,
-    'Calle imaginaria, 15',
-    '2021-11-29 12:30',
+    40.4167,
+    -3.7167
+    'Madrid',
+    '2021-11-29',
+    '12:30',
     'No recogido',
     'Cancelada',
     'Píntenlo de azul',
     '',
-    'Calle imaginaria, 15',
+    40.4167,
+    -3.7167
+    'Madrid',
     'Taller de Chapa y pintura, Florencio'
 );
 CALL Insert_appointment(
     '1154abd',
     5,
     Null,
-    'Calle imaginaria, 15',
-    '2021-11-29 12:30',
+    40.4167,
+    -3.7167,
+    'Madrid',
+    '2021-11-29', 
+    '12:30',
     'No recogido',
     'Pendiente',
     'Limpieza de tapiceria.',
     '',
-    'Calle imaginaria, 15',
+    40.4167,
+    -3.7167
+    'Madrid',
     'LimpiAuto'
 );
 CALL Insert_appointment(
     '3247jhr',
     6,
     12345676,
-    'Avenida Robert Downey Jr., 32',
-    '2021-10-29 11:17',
+    40.4167,
+    -3.7167,
+    'Madrid',
+    '2021-10-29',
+    '11:17',
     'Entregado',
     'Aceptada',
     'ITV.',
     'ITV pasada',
-    'Calle imaginaria, 15',
+    40.4167,
+    -3.7167,
+    'Madrid',
     'Centro ITV 2'
 );
 CALL Insert_appointment(
     '6278geb',
     4,
     12345672,
-    'Calle relampago, 13',
-    '2021-11-29 12:30',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2021-11-29',
+    '12:30',
     'Entregado',
     'Aceptada',
     'Llame al llegar a Santiago',
     'Pago de peajes adicional',
-    'Calle hortaliza, 7, Santiago de Compostela',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
     Null
 );
 CALL Insert_appointment(
     '2863aaf',
     2,
     12345674,
-    'Pasaje del pato, 5',
-    '2021-09-14 10:15',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2021-09-14',
+    '10:15',
     'Entregado',
     'Aceptada',
     'Cambio de radio y sistema de audio',
     'Las cajas de la radio y los altavoces están en el maletero',
-    'Pasaje del pato',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
     'Taller TechnoElectrico'
 );
 CALL Insert_appointment(
     '1134abd',
     1,
     12345676,
-    'Parque Jurasico, 6',
-    '2021-08-13 16:30',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2021-08-13',
+    '16:30',
     'Entregado',
     'Aceptada',
     'Quitar golpe puerta derecha',
     'Tambien han reparado un pequeño roce en la puerta',
-    'Parque Jurasico',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
     'Taller Quitagolpes'
 );
 CALL Insert_appointment(
     '3456fdh',
     5,
     12345674,
-    'Calle estrella, 43',
-    '2021-12-19 16:30',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2021-12-19',
+    '16:30',
     'No recogido',
     'Aceptada',
     'Limpiar el exterior',
     '',
-    'Calle estrella, 43',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
     'LimpiAuto'
 );
 
