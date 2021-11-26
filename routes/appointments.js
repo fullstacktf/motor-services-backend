@@ -10,11 +10,11 @@ router.get('/', async (req, res) => {
     return appointment.getAppointments(req, res);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res) => { 
     return appointment.addAppointment(req, res);
 });
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res) => { // Cambiar ruta
     return appointment.getAvailablePickers(req, res);
 });
 
