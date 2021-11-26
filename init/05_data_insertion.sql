@@ -296,7 +296,7 @@ CALL Insert_appointment(
     1,
     12345672,
     40.4167,
-    -3.7167
+    -3.7167,
     'Madrid',
     '2021-11-29',
     '12:30',
@@ -305,7 +305,7 @@ CALL Insert_appointment(
     'Píntenlo de azul',
     '',
     40.4167,
-    -3.7167
+    -3.7167,
     'Madrid',
     'Taller de Chapa y pintura, Florencio'
 );
@@ -316,14 +316,14 @@ CALL Insert_appointment(
     40.4167,
     -3.7167,
     'Madrid',
-    '2021-11-29', 
+    '2021-01-01', 
     '12:30',
     'No recogido',
     'Pendiente',
     'Limpieza de tapiceria.',
     '',
     40.4167,
-    -3.7167
+    -3.7167,
     'Madrid',
     'LimpiAuto'
 );
@@ -421,6 +421,6 @@ CALL Insert_appointment(
 
 /*-------------------------------*/
 
-CALL Insert_rating(2, 'Todo correcto, muy puntual', 5);
-CALL Insert_rating(3, 'Dejo el coche aparcado al sol', 4);
-CALL Insert_rating(9, 'Me ha rozado el coche', 0);
+CALL Insert_rating('3456fdh', '2021-12-19','Todo correcto, muy puntual', 5);
+CALL Insert_rating('1134abd','2021-08-13', 'Dejo el coche aparcado al sol', 4);
+CALL Insert_rating('2863aaf','2021-09-14', 'Me ha rozado el coche', 0);
