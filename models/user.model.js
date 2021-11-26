@@ -120,7 +120,9 @@ export class UserModel {
             append = `AND appointment_request='Aceptada' AND appointment_status='${status}' `; // en curso
         }
     
-        queryExec = `SELECT * FROM Appointment JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle) WHERE id_owner =${userId} ${append}ORDER BY pick_up_date DESC;`;
+        queryExec = `SELECT id_appointment, id_vehicle, id_service, id_picker, pick_up_date, pick_up_place, 
+        appointment_status, appointment_request, owner_notes, picker_notes, delivery_place, garage FROM Appointment 
+        JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle) WHERE id_owner =${userId} ${append}ORDER BY pick_up_date DESC;`;
     
         data = await execQuery(queryExec);
         res.json({
@@ -141,7 +143,9 @@ export class UserModel {
         } else if (request && status && status !== 'No recogido') {
             append = `AND appointment_request='Aceptada' AND appointment_status='${status}' `;
         }
-        queryExec = `SELECT * FROM Appointment WHERE id_picker = ${pickerId} ${append}ORDER BY pick_up_date DESC;`;
+        queryExec = `SELECT id_appointment, id_vehicle, id_service, id_picker, pick_up_date, pick_up_place, 
+        appointment_status, appointment_request, owner_notes, picker_notes, delivery_place, garage
+        FROM Appointment WHERE id_picker = ${pickerId} ${append}ORDER BY pick_up_date DESC;`;
         data = await execQuery(queryExec);
         res.json({
             appointments: data

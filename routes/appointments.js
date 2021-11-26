@@ -6,6 +6,10 @@ const router = express.Router();
 
 const appointment = new AppointmentModel();
 
+router.get('/', async (req, res) => {
+    return appointment.getAppointments(req, res);
+});
+
 router.post('/', async (req, res) => {
     return appointment.addAppointment(req, res);
 });
