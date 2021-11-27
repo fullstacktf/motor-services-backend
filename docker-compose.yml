@@ -3,13 +3,11 @@ services:
 #  react_client:
 #    build: "./motor-services-frontend"
 #    container_name: "react_client"
-#   stdin_open: true
+#    stdin_open: true
 #    ports: 
 #    - "8080:80"
 #    networks:
 #      - mern-app
-
-  # Proxies requests to internal services
   node_server:
     build: "./"
     container_name: "node_server"
