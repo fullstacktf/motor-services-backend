@@ -19,4 +19,4 @@ jobs:
             cd pickauto
             git clone git@github.com:fullstacktf/motor-services-backend.git
             sh start.sh
-            echo 'Deployment successful to digital ocean' 
+            echo 'Deployment successfully to digital ocean' 
