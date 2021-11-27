@@ -11,7 +11,7 @@ services:
 
   # Proxies requests to internal services
   node_server:
-    build: "./motor-services-backend"
+    build: "./"
     container_name: "node_server"
     ports: 
     - "3000:3000"
