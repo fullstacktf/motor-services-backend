@@ -10,8 +10,8 @@ describe("Testing Review Endpoints",()=>{
     })
 
     
-    it("Should return Reviews from user",()=>{
-        supertest(app)
+    it("Should return Reviews from user", async ()=>{
+        await supertest(app)
             .get('/reviews')
             .expect('Content-Type', /json/)
             .expect(200)
