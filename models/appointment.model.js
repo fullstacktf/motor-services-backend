@@ -142,7 +142,6 @@ export class AppointmentModel {
     }
 
     async getAllAppointmentsByDate(req, res) {
-        const vehicleID = req.params.vehicleID;
         const first_date = req.body.first_date;
         const last_date = req.body.last_date;
         queryExec = `select * from Appointment where pick_up_date between '${first_date}' and '${last_date}';`;
