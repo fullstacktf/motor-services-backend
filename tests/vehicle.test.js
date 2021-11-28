@@ -12,7 +12,7 @@ describe("Testing Vehicle Endpoints",()=>{
     })
 
     
-    it("Should return vehicles from user", async ()=>{
+    it("Should return vehicles from user",()=>{
         supertest(app)
             .get('/me/vehicles')
             .expect('Content-Type', /json/)
@@ -20,7 +20,7 @@ describe("Testing Vehicle Endpoints",()=>{
         
     })
 
-    it("Should return one vehicle from user",async ()=>{
+    it("Should return one vehicle from user",()=>{
         supertest(app)
             .get('/me/vehicles/:idVehicle')
             .expect('Content-Type', /json/)
