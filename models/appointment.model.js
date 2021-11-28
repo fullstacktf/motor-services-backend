@@ -99,8 +99,4 @@ export class AppointmentModel {
             status: data
         })
     }
-
-    async searchPickerBySchedule(req, res){
-        data = await execQuery(`SELECT * from Picker where `);
-    }
 }

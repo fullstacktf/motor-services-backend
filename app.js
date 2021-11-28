@@ -26,7 +26,7 @@ app.use('/reviews', reviewRouter);
 
 
 
-//app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`));
 
-export default app;
+export {app};
 
