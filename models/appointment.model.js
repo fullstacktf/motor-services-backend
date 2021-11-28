@@ -165,5 +165,4 @@ export class AppointmentModel {
             status: data
         })
     }
-
 }
