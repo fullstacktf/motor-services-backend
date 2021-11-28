@@ -1,7 +1,7 @@
 name: Deploy Digital Ocean
 on:
   push:
-    branches: [issue56]
+    #branches: [issue56]
 
 jobs:
   deploy:
