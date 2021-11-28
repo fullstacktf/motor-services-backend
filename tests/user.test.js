@@ -10,7 +10,7 @@ describe("Testing User Endpoints",()=>{
     })
 
     
-    it("Should return users",()=>{
+    it("Should return users",async ()=>{
         supertest(app)
             .get('/users')
             .expect('Content-Type', /json/)
