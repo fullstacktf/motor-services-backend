@@ -23,4 +23,4 @@ jobs:
             chmod +x start.sh
             chmod +x docker-compose.yml
             ./start.sh
-            echo 'Deployment successfully to digital ocean' 
+            echo 'Deployment successfully to digital ocean'
