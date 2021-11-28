@@ -78,7 +78,7 @@ CALL Insert_user(
 );
 CALL Insert_user(
     12345675,
-    1,
+    2,
     'seguridad',
     'BooneCarlyle@lost.org',
     'Barcelona',
@@ -105,7 +105,7 @@ CALL Insert_user(
     2,
     'seguridad',
     'shannonrutherford@lost.org',
-    'Sevilla',
+    'Madrid',
     'Shannon',
     'Rutherford',
     103356729,
@@ -183,7 +183,7 @@ CALL Insert_vehicle(
 );
 CALL Insert_vehicle(
     '3456fdh',
-    12345675,
+    12345671,
     'Mini',
     'Clubman Cooper',
     150,
