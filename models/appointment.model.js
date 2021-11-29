@@ -6,6 +6,7 @@ const bodyIsEmpty = (body) => Object.keys(body).length === 0;
 
 
 export class AppointmentModel {
+    
 
     async getAppointments(req,res){
         queryExec = 'select * from Appointment;';
@@ -21,27 +22,32 @@ export class AppointmentModel {
             res.status(400).send('Envía algo en el body.');
         } else {
             const id_vehicle = req.body.id_vehicle;
-            const id_service = req.body.id_service;
-            const pick_up_latitude = req.body.pick_up_latitude;
-            const pick_up_longitude = req.body.pick_up_longitude;
-            const pick_up_city =req.body.pick_up_city;
-            const pick_up_date = req.body.pick_up_date;
-            const pick_up_time = req.body.pick_up_time;
-            const owner_notes = req.body.owner_notes;
-            const delivery_latitude = req.body.delivery_latitude;
-            const delivery_longitude = req.body.delivery_longitude;
-            const delivery_city = req.body.delivery_city;
-            const garage = req.body.garage;
-            queryExec = `insert into Appointment(id_vehicle, id_service, id_picker, pick_up_latitude, pick_up_longitude, pick_up_city, pick_up_date, pick_up_time, appointment_status, appointment_request, owner_notes, picker_notes, delivery_latitude, delivery_longitude, delivery_city, garage) 
-            VALUES('${id_vehicle}', ${id_service}, null, ${pick_up_latitude}, ${pick_up_longitude}, '${pick_up_city}', '${pick_up_date}', '${pick_up_time}', 'No recogido', 'Pendiente', '${owner_notes}', '', ${delivery_latitude}, ${delivery_longitude}, '${delivery_city}', '${garage}');`;
-            data = await execQuery(queryExec);
-            if (data && data.code === 'ER_DUP_ENTRY') {
-                return res.send("Cita ya insertada");
-            } else if (data && data.code === 'ER_BAD_FIELD_ERROR') {
-                return res.send("Campo en el body no reconocido");
+            const committedRegs = await this.searchIfvehicleCommitted(id_vehicle);
+            if (committedRegs.length == 0){
+                const id_service = req.body.id_service;
+                const pick_up_latitude = req.body.pick_up_latitude;
+                const pick_up_longitude = req.body.pick_up_longitude;
+                const pick_up_city =req.body.pick_up_city;
+                const pick_up_date = req.body.pick_up_date;
+                const pick_up_time = req.body.pick_up_time;
+                const owner_notes = req.body.owner_notes;
+                const delivery_latitude = req.body.delivery_latitude;
+                const delivery_longitude = req.body.delivery_longitude;
+                const delivery_city = req.body.delivery_city;
+                const garage = req.body.garage;
+                queryExec = `insert into Appointment(id_vehicle, id_service, id_picker, pick_up_latitude, pick_up_longitude, pick_up_city, pick_up_date, pick_up_time, appointment_status, appointment_request, owner_notes, picker_notes, delivery_latitude, delivery_longitude, delivery_city, garage) 
+                VALUES('${id_vehicle}', ${id_service}, null, ${pick_up_latitude}, ${pick_up_longitude}, '${pick_up_city}', '${pick_up_date}', '${pick_up_time}', 'No recogido', 'Pendiente', '${owner_notes}', '', ${delivery_latitude}, ${delivery_longitude}, '${delivery_city}', '${garage}');`;
+                data = await execQuery(queryExec);
+                if (data && data.code === 'ER_DUP_ENTRY') {
+                    return res.send("Cita ya insertada");
+                } else if (data && data.code === 'ER_BAD_FIELD_ERROR') {
+                    return res.send("Campo en el body no reconocido");
+                }
+                return res.send('Cita añadida correctamente');
+            } else {
+                return res.send('Este vehículo todavía tiene citas en curso, solicite la cita cuando el estado sea entregado');
             }
-            return res.send('Cita añadida correctamente');
-        };
+        }
     }
 
     async getAvailablePickers(req,res) {
@@ -155,17 +161,9 @@ export class AppointmentModel {
         }
     }
 
-    async searchIfvehicleCommitted(req, res) {
-        const idVehicle = req.params.idVehicle;
+    async searchIfvehicleCommitted(id_vehicle) {
         //data = await execQuery(`SELECT id_appointment FROM Appointment Where plate_number LIKE '${idVehicle}' and appointment_status='Entregado' and pick_up_date < today;`);
-        data = await execQuery(`SELECT * FROM Appointment Where id_vehicle LIKE '${idVehicle}' and appointment_status='Entregado' ORDER BY pick_up_date DESC limit 1;`);
-        return res.json({
-            msg: `Appointment status for vehicle ${idVehicle}`,
-            status: data
-        })
-    }
-
-    async searchPickerBySchedule(req, res){
-        data = await execQuery(`SELECT * from Picker where `);
+        data = await execQuery(`SELECT pick_up_date FROM Appointment Where id_vehicle LIKE '${id_vehicle}' and appointment_status='Entregado' ORDER BY pick_up_date DESC limit 1;`);
+        return data;
     }
 }
