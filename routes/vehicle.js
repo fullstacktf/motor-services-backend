@@ -1,21 +1,22 @@
 import express  from  'express'
 export const router = express.Router()
-import {VehicleModel} from '../models/vehicle.model.js'
 
-const vehicle = new VehicleModel()
+
+import {VehicleController} from '../controller/vehicle.controller.js'
+const vehicle = new VehicleController();
+
 
 router.get('/', (req, res) => {
-    const id = req.body.userId
-    return vehicle.getVehiclesFromUser(req, res,id)
-  
+    return vehicle.getVehiclesFromUser(req, res)
 })
 
 router.get('/:idVehicle',(req, res)=>{
     return vehicle.getVehicleById(req,res)
 })
 
+
 router.post('/add',(req, res)=>{
-    return vehicle.addVehicle(req,res)
+  return vehicle.addVehicle(req, res)
 })
 
 
