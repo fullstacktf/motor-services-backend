@@ -3,6 +3,8 @@ import { execQuery } from '../database/database.js'
 let data;
 let queryExec = '';
 const bodyIsEmpty = (body) => Object.keys(body).length === 0;
+import bcrypt from 'bcrypt';
+const saltRounds = 10;
 
 export class UserModel {
     async getUsers(req, res) {
@@ -12,6 +14,7 @@ export class UserModel {
             users: data
         });
     }
+
     async addUser(req, res) {
         if (bodyIsEmpty(req.body)) {
             res.status(400).send('Envía algo en el body.');
@@ -19,13 +22,17 @@ export class UserModel {
             const dni = req.body.dni;
             const id_rol = req.body.id_rol;
             const email = req.body.email;
-            const password = req.body.password_key;
+            const plainPassword = req.body.password_key;
             const city = req.body.city;
             const first_name = req.body.first_name;
             const last_name = req.body.last_name;
             const phone_number = req.body.phone_number;
             const birth_date = req.body.birth_date;
             const profile_image = req.body.profile_image;
+
+            const salt = bcrypt.genSaltSync(saltRounds);
+            const password = bcrypt.hashSync(plainPassword, salt);
+
             queryExec = `insert into User(DNI, id_rol, password_key, email, city, first_name, last_name, phone_number, birth_date, profile_image) VALUES(${dni}, ${id_rol}, '${password}', '${email}', '${city}', '${first_name}', '${last_name}', ${phone_number}, '${birth_date}', '${profile_image}');`;
             data = await execQuery(queryExec);
             if (data && data.code === 'ER_DUP_ENTRY') {
