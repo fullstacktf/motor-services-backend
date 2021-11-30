@@ -4,8 +4,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node app",
-    "start:nodemon": "nodemon app.js",
+    "start": "node server",
+    "start:nodemon": "nodemon server.js",
     "dev": "nodemon app",
     "test": "jest",
     "test:ci": "jest --forceExit",
