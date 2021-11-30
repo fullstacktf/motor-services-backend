@@ -1,12 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node app",
-    "start:nodemon": "nodemon app.js",
-    "dev": "nodemon app",
+    "start": "node server",
+    "start:nodemon": "nodemon server.js",
+    "dev": "nodemon server",
     "test": "jest",
     "test:ci": "jest --forceExit",
     "test:watch": "jest --watch"
