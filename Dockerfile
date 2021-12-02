@@ -3,11 +3,11 @@ FROM node:14-slim
 # Create app directory
 WORKDIR /app
 
-COPY package*.json .
+COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY ./ ./
 
 EXPOSE 3000
 

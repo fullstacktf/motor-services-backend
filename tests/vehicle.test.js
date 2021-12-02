@@ -1,7 +1,8 @@
 import supertest from 'supertest'
-import app from '../app.js'
+import {app} from '../app.js'
 import express from 'express'
 const router = express.Router()
+
 
 
 describe("Testing Vehicle Endpoints",()=>{

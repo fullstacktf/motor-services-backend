@@ -8,7 +8,8 @@
     "start:nodemon": "nodemon app.js",
     "dev": "nodemon app",
     "test": "jest",
-    "test:ci":"node --experimental-vm-modules node_modules/.bin/jest --detectOpenHandles --forceExit"
+    "test:ci": "jest --forceExit",
+    "test:watch": "jest --watch"
   },
   "author": "",
   "license": "ISC",
@@ -32,5 +33,8 @@
     "nodemon": "^2.0.15",
     "regenerator-runtime": "^0.13.9",
     "supertest": "^6.1.6"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   }
 }

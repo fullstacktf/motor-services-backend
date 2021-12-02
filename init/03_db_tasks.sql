@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS User (
     id_rol INT UNSIGNED NOT NULL, 
     password_key VARCHAR(20) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    city ENUM('Madrid', 'Barcelona', 'Bilbao', 'Sevilla') NOT NULL,  /*preguntar a Marta si cambio esto*/
+    city VARCHAR(100),  
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(40) NOT NULL,
     phone_number INT UNSIGNED,
@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS User (
 
 CREATE TABLE IF NOT EXISTS Picker (
     id_picker INT UNSIGNED NOT NULL PRIMARY KEY,
+    start_time TIME,
+    finish_time TIME,
     rating TINYINT DEFAULT 5,
     FOREIGN KEY (id_picker) REFERENCES User(DNI) ON DELETE CASCADE
 );
@@ -48,27 +50,33 @@ CREATE TABLE IF NOT EXISTS Services (
 );
 
 CREATE TABLE IF NOT EXISTS Appointment (
-    id_appointment INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_vehicle VARCHAR(8) NOT NULL,
     id_service INT UNSIGNED NOT NULL,
     id_picker INT UNSIGNED,
-    pick_up_place VARCHAR(100) NOT NULL,
-    pick_up_date DATETIME NOT NULL,
-    appointment_status ENUM('No recogido', 'Camino al taller', 'En el taller', 'Camino al punto de entrega', 'Entregado'),
+    pick_up_latitude FLOAT NOT NULL,
+    pick_up_longitude FLOAT NOT NULL,
+    pick_up_city VARCHAR(100) NOT NULL,
+    pick_up_date DATE NOT NULL,
+    pick_up_time TIME NOT NULL,
+    appointment_status ENUM('No recogido', 'Camino al taller', 'En el taller', 'Camino al punto de entrega', 'Entregado') DEFAULT 'No recogido',
     appointment_request ENUM ('Pendiente','Aceptada', 'Cancelada') DEFAULT 'Pendiente',
     owner_notes VARCHAR(200),
     picker_notes VARCHAR(200),
-    delivery_place VARCHAR(100) NOT NULL,
+    delivery_latitude FLOAT NOT NULL,
+    delivery_longitude FLOAT NOT NULL,
+    delivery_city VARCHAR(100) NOT NULL,
     garage VARCHAR(100),
     CONSTRAINT FOREIGN KEY (id_vehicle) REFERENCES Vehicle(plate_number) ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (id_service) REFERENCES Services(id_service) ON DELETE CASCADE,
-    CONSTRAINT FOREIGN KEY (id_picker) REFERENCES Picker(id_picker) ON DELETE CASCADE
+    CONSTRAINT FOREIGN KEY (id_picker) REFERENCES Picker(id_picker) ON DELETE CASCADE,
+    PRIMARY KEY (id_vehicle, pick_up_date)
 );
 
 CREATE TABLE IF NOT EXISTS Rating (
     id_rating INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id_appointment INT UNSIGNED NOT NULL,
+    id_vehicle VARCHAR(8) NOT NULL,
+    pick_up_date DATE NOT NULL,
     rating_notes VARCHAR(200),
     rating TINYINT UNSIGNED,
-    CONSTRAINT FOREIGN KEY (id_appointment) REFERENCES Appointment(id_appointment) ON DELETE CASCADE
+    CONSTRAINT FOREIGN KEY (id_vehicle, pick_up_date) REFERENCES Appointment (id_vehicle, pick_up_date) ON DELETE CASCADE
 );
