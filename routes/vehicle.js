@@ -15,7 +15,7 @@ router.get('/:idVehicle',(req, res)=>{
 })
 
 router.get('/:idVehicle/appointments',(req, res)=>{
-  return vehicle.getVehicleAppointment(req,res)
+  return vehicle.getVehicleAppointments(req,res)
 })
 
 
@@ -25,7 +25,7 @@ router.post('/add',(req, res)=>{
 
 
 router.put('/update/:idVehicle',(req, res)=>{
-  return vehicle.updateVehicle(req,res)
+  return vehicle.upgradeVehicle(req,res)
 })
 
 router.delete('/delete/:idVehicle',(req, res)=>{

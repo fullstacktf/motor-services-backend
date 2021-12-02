@@ -1,8 +1,8 @@
 import express from 'express';
-// import { AppointmentModel } from '../models/appointment.model.js';
+import { Appointment } from '../models/appointment.model.js';
 const router = express.Router();
 
-// const appointment = new AppointmentModel();
+const appointment = new Appointment();
 
 router.post('/', async (req, res) => {
     return appointment.addAppointment(req, res);
