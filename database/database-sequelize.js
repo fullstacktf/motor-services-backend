@@ -1,4 +1,9 @@
 import pkg from 'sequelize';
+/*import dotenv from 'dotenv';
+dotenv.config();
+import customenv from 'custom-env';
+customenv.config('dev');
+customenv.config('prod');*/
 const {Sequelize} = pkg;
 
 const sequelize = new Sequelize('pickauto','newuser','test',{

@@ -7,7 +7,7 @@ import {router as reviewRouter} from './routes/reviews.js';
 
 
 const app = express();
-const port = 3000;
+
 
 
 app.use(express.json());       // to support JSON-encoded bodies
@@ -15,9 +15,7 @@ app.use(express.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+
 app.use('/vehicles', vehicleRouter);
 app.use('/users', userRouter);
 app.use('/appointments', appointmentRouter);
@@ -26,7 +24,7 @@ app.use('/reviews', reviewRouter);
 
 
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
 
-export default app;
+
+export {app};
 
