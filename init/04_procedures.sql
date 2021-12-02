@@ -42,7 +42,7 @@ CREATE PROCEDURE pickauto.Insert_vehicle(
   vehicle_description_value varchar(200),
   vehicle_image_value varchar(200))
     BEGIN
-      insert into Vehicles (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) VALUES
+      insert into Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) VALUES
       (plate_number_value, id_owner_value, brand_value, model_value, powered_value, kilometers_value, fuel_value, vehicle_description_value, vehicle_image_value);
     END;//
 

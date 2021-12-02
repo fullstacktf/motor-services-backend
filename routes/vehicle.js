@@ -14,6 +14,10 @@ router.get('/:idVehicle',(req, res)=>{
     return vehicle.getVehicleById(req,res)
 })
 
+router.get('/:idVehicle/appointments',(req, res)=>{
+  return vehicle.getVehicleAppointment(req,res)
+})
+
 
 router.post('/add',(req, res)=>{
   return vehicle.addVehicle(req, res)

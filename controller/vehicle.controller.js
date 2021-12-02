@@ -1,6 +1,7 @@
 import {execQuery} from '../database/database.js' 
 import {Sequelize} from 'sequelize'
 import {Vehicle} from '../models/vehicle.model.js'
+import {Appointment} from '../models/appointment.model.js'
 import { async } from 'regenerator-runtime'
 
 
@@ -21,8 +22,20 @@ export class VehicleController {
 
     getVehicleById = async (req, res) =>{
         Vehicle.findByPk(req.params.idVehicle)
+            .then(data => res.status(200).json(data))
+            .catch(err =>console.log(err))
+    }
+
+    getVehicleAppointment = async (req, res) => {
+        const id = req.body.userID;
+        Vehicle.findAll(
+            {
+            where: {id_owner:id},
+            include:{
+            model:Appointment
+        }})
         .then(data => res.status(200).json(data))
-        .catch(err =>console.log(err));
+        .catch(err => console.log(err))
     }
 
     addVehicle = async (req, res)=>{
@@ -46,10 +59,9 @@ export class VehicleController {
             fuel: fuel,
             vehicle_description: vehicle_description,
             vehicle_image: vehicle_image,
-        }).then((data) => res.status(200).json(data))
-        .catch(function(err) {
-            console.log(err);
         })
+        .then((data) => res.status(200).json(data))
+        .catch(function(err) {console.log(err)})
 
     }
 
@@ -75,7 +87,8 @@ export class VehicleController {
             where:{
                 plate_number: plate_number,
             }
-        }).then((data) => res.status(200).json(data))
+        })
+        .then((data) => res.status(200).json(data))
         .catch(function(err) {console.log(err)})
     }
 
@@ -83,8 +96,9 @@ export class VehicleController {
         await Vehicle.destroy({
             where:{
                 plate_number: req.params.idVehicle
-        }}).then(() => res.send("Vehiculo eliminado Correctamente"))
-        .catch((err) => {console.log(err);})
+        }})
+        .then(() => res.send("Vehiculo eliminado Correctamente"))
+        .catch((err) => {console.log(err)})
 
     }
 

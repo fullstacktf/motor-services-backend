@@ -4,6 +4,7 @@ import {execQuery} from '../database/database.js'
 import pkg from 'sequelize';
 const {DataTypes, Model } = pkg;
 import {sequelize} from '../database/database-sequelize.js'
+import {Appointment} from './appointment.model.js'
 
 let data;
 
@@ -14,6 +15,7 @@ export class Vehicle extends Model{
             as:'user',
             foreignKey:'DNI'
         })
+        Vehicle.hasMany(Appointment,{foreignKey:'id_vehicle'})
     }
 
 }
@@ -52,7 +54,12 @@ Vehicle.init({
 },{
     sequelize,
     modelName: 'Vehicle',
+    freezeTableName: true,
 });
+
+
+
+
 
 
 
