@@ -28,7 +28,7 @@ Vehicle.init({
     },
     id_owner:{
         allowNull: false,
-        type:DataTypes.STRING
+        type:DataTypes.INTEGER
     },
     brand:{
         type:DataTypes.STRING

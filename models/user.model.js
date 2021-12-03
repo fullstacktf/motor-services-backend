@@ -19,7 +19,7 @@ export class User extends Model {
 
 }
 
-User.init({
+User.init({ // hay que decirle que picker hereda de user
     DNI:{
         primaryKey:true,
         allowNull: false,

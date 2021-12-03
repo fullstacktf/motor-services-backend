@@ -5,14 +5,14 @@ let queryExec = '';
 const bodyIsEmpty = (body) => Object.keys(body).length === 0;
 
 import pkg from 'sequelize';
-const {DataTypes, Model } = pkg;
-import {sequelize} from '../database/database-sequelize.js'
-import {Vehicle} from '../models/vehicle.model.js'
+const { DataTypes, Model } = pkg;
+import { sequelize } from '../database/database-sequelize.js'
+import { Vehicle } from '../models/vehicle.model.js'
 
 
 export class Appointment extends Model {
-    static associate(models){
-        Appointment.belongsTo(models.vehicle,{
+    static associate(models) {
+        Appointment.belongsTo(models.vehicle, {
             as: 'Vehicle',
             foreignKey: 'plate_number'
         })
@@ -20,59 +20,75 @@ export class Appointment extends Model {
 
 }
 
-Appointment.init({
-    id_appointment:{
-        primaryKey:true,
-        allowNull:false,
-        type:DataTypes.INTEGER
-    },
-    id_vehicle:{
-        allowNull:false,
-        type:DataTypes.STRING
-    },
-    id_service:{
-        allowNull:false,
-        type:DataTypes.INTEGER
-    },
-    id_picker:{
-        type:DataTypes.INTEGER
-    },
-    pick_up_place:{
-        allowNull:false,
-        type:DataTypes.STRING
-    },
-    pick_up_date:{
+Appointment.init({ //PRIMARY KEY (id_vehicle, pick_up_date)
+    id_appointment: {
+        primaryKey: true,
         allowNull: false,
-        type:DataTypes.DATE
+        type: DataTypes.INTEGER
     },
-    appointment_status:{
-       allowNull:false,
-       type:DataTypes.STRING 
-    },
-    appointment_request:{
-        allowNull:false,
-        type:DataTypes.STRING
-    },
-    owner_notes:{
-        type:DataTypes.STRING
-    },
-    picker_notes:{
-        type:DataTypes.STRING
-    },
-    delivery_place:{
+    id_vehicle: {
         allowNull: false,
-        type:DataTypes.STRING
+        type: DataTypes.STRING
     },
-    garage:{
-        type:DataTypes.STRING
+    id_service: {
+        allowNull: false,
+        type: DataTypes.INTEGER
+    },
+    id_picker: {
+        type: DataTypes.INTEGER
+    },
+    pick_up_latitude: {
+        allowNull: false,
+        type: DataTypes.FLOAT
+    },
+    pick_up_longitude: {
+        allowNull: false,
+        type: DataTypes.FLOAT
+    },
+    pick_up_city: {
+        allowNull: false,
+        type: DataTypes.STRING
+    },
+    pick_up_date: {
+        allowNull: false,
+        type: DataTypes.DATE
+    },
+    appointment_status: {
+        allowNull: false,
+        type: DataTypes.STRING
+    },
+    appointment_request: {
+        allowNull: false,
+        type: DataTypes.STRING
+    },
+    owner_notes: {
+        type: DataTypes.STRING
+    },
+    picker_notes: {
+        type: DataTypes.STRING
+    },
+    delivery_latitude: {
+        allowNull: false,
+        type: DataTypes.FLOAT
+    },
+    delivery_longitude: {
+        allowNull: false,
+        type: DataTypes.FLOAT
+    },
+    delivery_city: {
+        allowNull: false,
+        type: DataTypes.STRING
+    },
+    garage: {
+        type: DataTypes.STRING
     }
-},{
+}, {
     sequelize,
     modelName: 'Appointment',
     freezeTableName: true,
 })
 
-Appointment.belongsTo(Vehicle,{foreignKey:'id_vehicle'})
+Appointment.belongsTo(Vehicle, { foreignKey: 'id_vehicle' })
 
 
 
