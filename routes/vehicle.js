@@ -2,7 +2,7 @@ import express  from  'express'
 export const router = express.Router()
 
 
-import {VehicleController} from '../controller/vehicle.controller.js'
+import {VehicleController} from '../controllers/vehicle.controller.js'
 const vehicle = new VehicleController();
 
 

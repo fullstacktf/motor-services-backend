@@ -2,8 +2,8 @@ import express from 'express';
 export const router = express.Router();
 // import { UserModel } from '../models/user.model.js'
 
-import {UserController} from '../controller/user.controller.js'
-import {AppointmentController} from '../controller/appointment.controller.js'
+import {UserController} from '../controllers/user.controller.js'
+import {AppointmentController} from '../controllers/appointment.controller.js'
 const user = new UserController();
 const appointment = new AppointmentController();
 // const user = new UserModel();
