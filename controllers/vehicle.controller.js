@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize'
 import { Vehicle } from '../models/vehicle.model.js'
 import { Appointment } from '../models/appointment.model.js'
 import { async } from 'regenerator-runtime'
-import { findVehicles, findVehicle, findVehicleAppointments } from '../services/vehicleService.js'
+import { findVehicles, findVehicle, findVehicleAppointments } from '../services/vehicle.service.js'
 
 
 export class VehicleController {
