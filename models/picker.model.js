@@ -2,14 +2,12 @@
 import pkg from 'sequelize';
 const {DataTypes, Model } = pkg;
 import {sequelize} from '../database/database-sequelize.js'
-
+import { User } from '../models/service.model.js';
 
 
 export class Picker extends Model{
     static associate(models){
-        Picker.belongsTo(_,{
-        })
-        Picker.hasMany(_,{_})
+        Picker.hasOne(User,{foreignKey: 'DNI'});
     }
 }
 

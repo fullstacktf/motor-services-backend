@@ -5,11 +5,7 @@ import { sequelize } from '../database/database-sequelize.js'
 
 
 export class Services extends Model {
-    static associate(models) {
-        Services.belongsTo(_, {
-        })
-        Services.hasMany(_, { _ })
-    }
+
 };
 
 Services.init({ // hay que decirle que picker hereda de user

@@ -7,9 +7,10 @@ import {sequelize} from '../database/database-sequelize.js';
 
 export class Review extends Model{
     static associate(models){
-        Review.belongsTo(_,{
-        })
-        Review.hasMany(_,{_})
+        Review.belongsTo(models.Appointment,{
+            as:'Appointment',
+            foreignKey:'id_review'
+        }) //¿se pone appointment has many reviews?, esto pero al reves
     }
 }
 
