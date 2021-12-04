@@ -1,8 +1,6 @@
-import { execQuery } from '../database/database.js'
+import { execQuery } from '../database/database.js';
 
-let data;
-let queryExec = '';
-const bodyIsEmpty = (body) => Object.keys(body).length === 0;
+
 
 // import Model from 'sequelize'
 import pkg from 'sequelize';

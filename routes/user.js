@@ -11,7 +11,7 @@ const appointment = new AppointmentController();
 
 
 router.get('/:userID/appointments',(req, res) => {
-    return appointment.getOwnerAppointments(req, res)
+    return appointment.getOwnerAppointments(req, res);
 })
 
 router.get('/:pickerID/pickers/appointments', async (req, res) => {
@@ -19,19 +19,19 @@ router.get('/:pickerID/pickers/appointments', async (req, res) => {
 });
 
 router.get('/:userID', (req, res) => {
-    return user.getUser(req, res)
+    return user.getUser(req, res);
 })
 
 router.post('/' ,(req, res) => {
-    return user.addUser(req, res)
+    return user.addUser(req, res);
 })
 
 router.put('/:userID',(req, res) => {
-    return user.updateUser(req, res)
+    return user.upgradeUser(req, res);
 })
 
 router.delete('/:userID',(req, res) => {
-    return user.deleteUser(req, res)
+    return user.deleteUser(req, res);
 })
 
 

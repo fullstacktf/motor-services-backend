@@ -15,7 +15,7 @@ export class Appointment extends Model {
         Appointment.belongsTo(models.vehicle, {
             as: 'Vehicle',
             foreignKey: 'plate_number'
-        })
+        }) //tiene un servicio, un vehiculo y un picker
     }
 
 }

@@ -8,15 +8,15 @@ services:
 #    - "8080:80"
 #    networks:
 #      - mern-app
-  node_server:
-    build: "./"
-    container_name: "node_server"
-    ports: 
-    - "3000:3000"
-    networks:
-      - mern-app
-    depends_on:
-      - mariadb
+#  node_server:
+#    build: "./"
+#    container_name: "node_server"
+#    ports: 
+#    - "3000:3000"
+#    networks:
+#      - mern-app
+#    depends_on:
+#      - mariadb
   mariadb:
     container_name: "mariadb"
     image: "mariadb:10.5"

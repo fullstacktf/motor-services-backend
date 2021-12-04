@@ -1,18 +1,18 @@
-import { Vehicle } from '../models/vehicle.model.js'
+import { Vehicle } from '../models/vehicle.model.js';
 
 
-export const findVehicles = (req, res) => {
-    Vehicle.findAll({
+export const findVehicles = (owner_id) => {
+    return Vehicle.findAll({
         where: {
-            id_owner: req.body.UserId
+            id_owner: owner_id
         }
     });
 }
 
-export const findVehicle = (req, res) => {
-    Vehicle.findByPk(req.params.idVehicle);
+export const findVehicle = (vehicle_id) => {
+    return Vehicle.findByPk(vehicle_id);
 }
-
+/*
 export const findVehicleAppointments = (req, res) => {
     Vehicle.findAll(
         {
@@ -21,43 +21,24 @@ export const findVehicleAppointments = (req, res) => {
                 model: Appointment
             }
         })
+}*/
+
+export const createVehicle = (variables) => {  
+    return Vehicle.create(variables);
 }
 
-export const createVehicle = (req, res) => {
-    Vehicle.create({
-        plate_number: req.body.plate_number,
-        id_owner: req.body.id_owner,
-        brand: req.body.brand,
-        model: req.body.model,
-        powered: req.body.powered,
-        kilometers: req.body.kilometers,
-        fuel: req.body.fuel,
-        vehicle_description: req.body.vehicle_description,
-        vehicle_image: req.body.vehicle_image,
-    })
-}
-
-export const updateVehicle = (req, res) => {
-
-    Vehicle.update({
-        brand: req.body.brand,
-        model: req.body.model,
-        powered: req.body.powered,
-        kilometers: req.body.kilometers,
-        fuel: req.body.fuel,
-        vehicle_description: req.body.vehicle_description,
-        vehicle_image: req.body.vehicle_image,
-    }, {
+export const updateVehicle = (variables, plate_number) => {
+    return Vehicle.update(variables, {
         where: {
-            plate_number: req.params.idVehicle,
+            plate_number: plate_number,
         }
     })
 }
 
-export const destroyVehicle = (req, res) => {
-    Vehicle.destroy({
+export const destroyVehicle = (vehicle_id) => {
+    return Vehicle.destroy({
         where: {
-            plate_number: req.params.idVehicle
+            plate_number: vehicle_id
         }
     })
 }

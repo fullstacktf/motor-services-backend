@@ -50,14 +50,13 @@ DELIMITER ;
 
 DELIMITER //
 //
-CREATE PROCEDURE pickauto.Insert_picker(
+CREATE PROCEDURE pickauto.Update_picker(
   id_picker_value int(10) unsigned,
   start_time_value TIME,
   finish_time_value TIME,
   rating_value tinyint(4))
     BEGIN
-      INSERT INTO Picker (id_picker, start_time, finish_time, rating) VALUES 
-      (id_picker_value,start_time_value,finish_time_value, rating_value);
+     UPDATE Picker SET start_time = start_time_value, finish_time = finish_time_value, rating = rating_value WHERE id_picker = id_picker_value;
     END;//
 
 DELIMITER ;
@@ -102,13 +101,12 @@ DELIMITER ;
 DELIMITER //
 //
 CREATE PROCEDURE pickauto.Insert_rating(
-  id_vehicle_value VARCHAR(8),
-  pick_up_date_value DATE,
+  id_appointment int(10) unsigned,
   rating_notes_value varchar(200),
   rating_value tinyint(3) unsigned)
     BEGIN
-      INSERT INTO Rating (id_vehicle, pick_up_date, rating_notes, rating) VALUES 
-      (id_vehicle_value, pick_up_date_value, rating_notes_value, rating_value);
+      INSERT INTO Rating (id_appointment, rating_notes, rating) VALUES 
+      (id_appointment, rating_notes_value, rating_value);
     END;//
 
 DELIMITER ;

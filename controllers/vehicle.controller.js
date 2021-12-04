@@ -3,46 +3,69 @@ import { Sequelize } from 'sequelize'
 import { Vehicle } from '../models/vehicle.model.js'
 import { Appointment } from '../models/appointment.model.js'
 import { async } from 'regenerator-runtime'
-import { findVehicles, findVehicle, findVehicleAppointments } from '../services/vehicle.service.js'
+import { findVehicles, findVehicle, createVehicle, updateVehicle, destroyVehicle } from '../services/vehicle.service.js'
 
 
 export class VehicleController {
     getVehiclesFromUser = async (req, res) => {
-        findVehicles(req, res)
+        const owner_id = req.body.owner_id;
+        findVehicles(owner_id)
             .then(data => res.status(200).json(data))
             .catch(err => console.log(err))
 
     }
 
     getVehicleById = async (req, res) => {
-        findVehicle(req, res)
+        const vehicle_id = req.params.idVehicle;
+        findVehicle(vehicle_id)
             .then(data => res.status(200).json(data))
             .catch(err => console.log(err))
     }
-
-    getVehicleAppointments = async (req, res) => {
-        findVehicleAppointments(req, res)
-            .then(data => res.status(200).json(data))
-            .catch(err => console.log(err))
-    }
+    /*
+        getVehicleAppointments = async (req, res) => {
+            findVehicleAppointments(req, res)
+                .then(data => res.status(200).json(data))
+                .catch(err => console.log(err))
+        }*/
 
     addVehicle = async (req, res) => {
-        createVehicle(req, res)
-            .then((data) => res.status(200).json(data))
-            .catch(function (err) { console.log(err) })
+        const variables = {
+            plate_number: req.body.plate_number,
+            id_owner: req.body.id_owner,
+            brand: req.body.brand,
+            model: req.body.model,
+            powered: req.body.powered,
+            kilometers: req.body.kilometers,
+            fuel: req.body.fuel,
+            vehicle_description: req.body.vehicle_description,
+            vehicle_image: req.body.vehicle_image
+        };
+        createVehicle(variables)
+            .then((data) => res.status(200).send("Vehiculo añadido correctamente"))
+            .catch(function (err) { console.log(err) });
     }
 
     upgradeVehicle = async (req, res) => {
-        updateVehicle(req, res)
-            .then((data) => res.status(200).json(data))
+        const plate_number = req.params.idVehicle;
+        const variables = {
+            brand: req.body.brand,
+            model: req.body.model,
+            powered: req.body.powered,
+            kilometers: req.body.kilometers,
+            fuel: req.body.fuel,
+            vehicle_description: req.body.vehicle_description,
+            vehicle_image: req.body.vehicle_image
+        };
+        updateVehicle(variables, plate_number)
+            .then((data) => res.status(200).send("Vehículo actualizado correctamente"))
             .catch(function (err) { console.log(err) })
     }
 
     deleteVehicle = async (req, res) => {
-        destroyVehicle(req, res)
-            .then(() => res.send("Vehiculo eliminado Correctamente"))
+        const vehicle_id = req.params.idVehicle;
+        destroyVehicle(vehicle_id)
+            .then(() => res.send("Vehiculo eliminado correctamente"))
             .catch((err) => { console.log(err) })
     }
-
 }
 
