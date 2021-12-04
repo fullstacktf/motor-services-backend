@@ -1,19 +1,16 @@
-import {execQuery} from '../database/database.js' 
-
 // import Model from 'sequelize'
 import pkg from 'sequelize';
 const {DataTypes, Model } = pkg;
 import {sequelize} from '../database/database-sequelize.js'
 import {Appointment} from './appointment.model.js'
 
-let data;
 
 
 export class Vehicle extends Model{
     static associate(models){
         Vehicle.belongsTo(models.user,{
             as:'user',
-            foreignKey:'DNI'
+            foreignKey:'DNI' //esta foreign key que nombre hay que ponerle? el de vehicle o el de user
         })
         Vehicle.hasMany(Appointment,{foreignKey:'id_vehicle'})
     }

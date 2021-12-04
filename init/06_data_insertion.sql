@@ -421,6 +421,6 @@ CALL Insert_appointment(
 
 /*-------------------------------*/
 
-CALL Insert_rating(1,'Todo correcto, muy puntual', 5);
-CALL Insert_rating(2, 'Dejo el coche aparcado al sol', 4);
-CALL Insert_rating(3, 'Me ha rozado el coche', 0);
+CALL Insert_review(1,'Todo correcto, muy puntual', 5);
+CALL Insert_review(2, 'Dejo el coche aparcado al sol', 4);
+CALL Insert_review(3, 'Me ha rozado el coche', 0);
