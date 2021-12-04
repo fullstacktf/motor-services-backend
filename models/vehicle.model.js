@@ -8,11 +8,11 @@ import {Appointment} from './appointment.model.js'
 
 export class Vehicle extends Model{
     static associate(models){
-        Vehicle.belongsTo(models.user,{ // ¿por que aqui models.user de esta manera?
+        Vehicle.belongsTo(models.user,{ 
             as:'user',
-            foreignKey:'DNI' //esta foreign key que nombre hay que ponerle? el de vehicle o el de user
+            foreignKey:'DNI' 
         });
-        Vehicle.hasMany(Appointment,{foreignKey:'id_vehicle'}); // por que aqui appointment de esta manera??
+        Vehicle.hasMany(Appointment,{foreignKey:'id_vehicle'}); 
     }
 
 }

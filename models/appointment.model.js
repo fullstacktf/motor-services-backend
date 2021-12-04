@@ -22,7 +22,6 @@ export class Appointment extends Model {
         });
         Appointment.hasOne(Services, {foreignKey: 'id_service'});
     }
-
 }
 
 Appointment.init({ 

@@ -7,7 +7,10 @@ import { User } from '../models/service.model.js';
 
 export class Picker extends Model{
     static associate(models){
-        Picker.hasOne(User,{foreignKey: 'DNI'});
+        Picker.belongsTo(models.user,{
+            as: 'User',
+            foreignKey: 'DNI'
+        });
     }
 }
 
