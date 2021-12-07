@@ -1,6 +1,8 @@
 import express from 'express';
 const router = express.Router();
-import { UserModel } from '../models/user.model.js'
+import { UserModel } from '../models/user.model.js';
+import { LoginModel } from '../models/login.model.js';
+import jwt from 'jsonwebtoken';
 
 const user = new UserModel();
 //login y logout
@@ -17,8 +19,8 @@ router.get('/rols', async (req, res) => {
     return user.getRoles(req, res);
 });
 
-router.get('/:userID', async (req, res) => {
-    return user.getUser(req, res);
+router.get('/:userID', (req, res) => {
+    LoginModel.isAuthenticated(req, res, next, "user.getUser(req,res)")
 });
 
 router.delete('/', async (req, res) => {
@@ -45,6 +47,14 @@ router.get('/owner/:userID/appointments', async (req, res) => {
 
 router.get('/picker/:pickerID/appointments', async (req, res) => {
     return user.getPickerAppointments(req, res);
+});
+
+router.post('/:id/auth', async (req, res) => {
+    return user.logIn(req,res);
+});
+
+router.get('/logout', async (req,res) => {
+    return user.logOut(req,res);
 });
 
 
