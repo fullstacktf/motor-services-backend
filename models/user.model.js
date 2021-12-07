@@ -6,6 +6,7 @@ const bodyIsEmpty = (body) => Object.keys(body).length === 0;
 import bcrypt from 'bcrypt';
 const saltRounds = 10;
 
+
 export class UserModel {
     async getUsers(req, res) {
         queryExec = 'select * from User;';
@@ -19,7 +20,7 @@ export class UserModel {
         if (bodyIsEmpty(req.body)) {
             res.status(400).send('Envía algo en el body.');
         } else {
-            const dni = req.body.dni;
+            const dni = req.body.DNI;
             const id_rol = req.body.id_rol;
             const email = req.body.email;
             const plainPassword = req.body.password_key;
@@ -55,12 +56,13 @@ export class UserModel {
         queryExec = `select * from User where DNI='${id};'`;
         data = await execQuery(queryExec);
         if (data.length !== 0) {
+                console.log('The user name is: ', data[0].first_name); 
             res.json({
                 user: data
             });
         } else {
             res.send("No existe ningún usuario con ese DNI");
-        }
+        };
     }
     async deleteUser(req, res) {
         if (bodyIsEmpty(req.body)) {

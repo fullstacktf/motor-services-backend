@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS User (
     city VARCHAR(100),  
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(40) NOT NULL,
-    phone_number INT UNSIGNED,
+    phone_number INT UNSIGNED UNIQUE,
     birth_date DATE NOT NULL,
     profile_image VARCHAR(100),
     /*Las imágenes van en una carpeta y en la tabla se hace referencia a la ruta*/
