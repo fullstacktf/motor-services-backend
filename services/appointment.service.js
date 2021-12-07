@@ -15,7 +15,7 @@ export const findLastDateInDB = () => { // no sé si este va aquí
 }
 
 export const findAvailablePickersInDB = (variables) => {
-        return appointmentRepository.findAvailablePickers(variables);
+    return appointmentRepository.findAvailablePickers(variables);
 
 }
 
@@ -27,18 +27,18 @@ export const findAppointmentsByID = (appointment_id) => {
     return appointmentRepository.findByAppointmentPk(appointment_id);
 }
 
-export const createAppointment = (variables) => {
-    const committedRegs = appointmentRepository.findIfvehicleCommitted(variables.vehicleID); //si me peta es pq me falta await
-    const plateDateRegs = appointmentRepository.findPlateDateUnique(variables.vehicleID); //buscar que el vehiculo no tenga citas ese mismo dia, una cita por dia
-    if (committedRegs.length == 0) {
+export const createAppointment = async (variables) => {
+    const committedRegs = await appointmentRepository.findIfvehicleCommitted(variables.id_vehicle);
+    const plateDateRegs = await appointmentRepository.findPlateDateUnique(variables.id_vehicle, variables.pick_up_date);
+    if (committedRegs.length == 0 && plateDateRegs == 0) {
         return appointmentRepository.create(variables);
     } else { //vehiculo todavia tiene citas, preguntar este return
+        console.error(" No puedes pedir citas para ese vehículo, o bien ya solicitaste una cita para ese día o bien tu vehículo está en una cita en curso");
         return;
     }
-
 }
 
-export const updateAppointment = (variables) => { 
+export const updateAppointment = (variables) => {
     return appointmentRepository.update(variables);
 }
 

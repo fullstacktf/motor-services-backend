@@ -69,16 +69,18 @@ export class AppointmentRepository {
     }
 
     findIfvehicleCommitted = async (id_vehicle) => {
-        data = await execQuery(`SELECT pick_up_date 
+        queryExec = `SELECT pick_up_date 
         FROM Appointment 
-        WHERE id_vehicle LIKE '${id_vehicle}' and appointment_status='Entregado' ORDER BY pick_up_date DESC limit 1;`);
+        WHERE id_vehicle LIKE '${id_vehicle}' and appointment_status='Entregado' ORDER BY pick_up_date DESC limit 1;`;
+        data = await execQuery(queryExec);
         return data;
     }
 
-    findPlateDateUnique = async (id_vehicle) => { // estaba por aqui
-        data = await execQuery(`SELECT pick_up_date 
+    findPlateDateUnique = async (id_vehicle, pick_up_date) => { // estaba por aqui
+        queryExec = `SELECT pick_up_date 
         FROM Appointment 
-        WHERE id_vehicle LIKE '${id_vehicle}' and appointment_status='Entregado' ORDER BY pick_up_date DESC limit 1;`);
+        WHERE id_vehicle LIKE '${id_vehicle}' and pick_up_date='${pick_up_date}' ORDER BY pick_up_date DESC limit 1;`;
+        data = await execQuery(queryExec);
         return data;
     }
 

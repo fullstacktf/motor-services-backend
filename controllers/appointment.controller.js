@@ -79,6 +79,7 @@ const getAppointmentByID = async (req, res) => {
 const addAppointment = async (req, res) => {
     const variables = {
         id_vehicle: req.params.vehicleID,
+        id_service: req.body.id_service,
         pick_up_latitude: req.body.pick_up_latitude,
         pick_up_longitude: req.body.pick_up_longitude,
         pick_up_city: req.body.pick_up_city,
@@ -91,7 +92,7 @@ const addAppointment = async (req, res) => {
         garage: req.body.garage
     }
     createAppointment(variables)
-        .then(data => res.status(200).json(data))
+        .then(data => res.status(200).send("Cita insertada correctamente"))
         .catch(err => res.status(500).json(err));
 }
 
@@ -123,7 +124,7 @@ const editAppointment = async (req, res) => { //falta obtener los pickers dispon
 const deleteAppointment = async (req, res) => {
     const appointment_id = req.params.appointmentID
     destroyAppointment(appointment_id)
-        .then(data => res.status(200).json(data))
+        .then(data => res.status(200).send("Cita eliminada correctamente"))
         .catch(err => res.status(500).json(err));
 }
 
