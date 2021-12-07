@@ -17,16 +17,27 @@ import {
         
 //getAppointmentByID
 
+const lastDatefunction = async () => {
+    const date = await findLastDateInDB();
+    const data = JSON.stringify(date[0]
+        .pick_up_date)
+        .replace('"', '')
+        .split("T")[0];
+    return data;
+}
+ 
+
 
 const getOwnerAppointments = async (req, res) => {
+    const data = await findLastDateInDB();
     const variables = {
         user_id: req.params.userID,
-        status: (req.query.status) ? (req.query.status) : undefined,
-        request: (req.query.request) ? (req.query.request) : undefined,
-        from: (req.query.from) ? (req.query.from) : undefined, //pendiente
-        to: (req.query.to) ? (req.query.to) : undefined
+        status: (req.query.status) ? (req.query.status) : 'No recogido',
+        request: (req.query.request) ? (req.query.request) : 'Aceptada',
+        from: (req.query.from) ? (req.query.from) : '1970-01-01',
+        to: (req.query.to) ? (req.query.to) : await lastDatefunction()
     }
-
+    
     findAppointmentsByUserID(variables)
         .then(data => res.status(200).json(data))
         .catch(err => res.status(500).json(err));
@@ -38,7 +49,7 @@ const getPickerAppointments = async (req, res) => {
         status: (req.query.status) ? (req.query.status) : undefined,
         request: (req.query.request) ? (req.query.request) : undefined,
         from: (req.query.from) ? (req.query.from) : '1970-01-01', //pendiente
-        to: (req.query.to) ? (req.query.to) : findLastDateInDB()
+        to: (req.query.to) ? (req.query.to) : await findLastDateInDB()
     }
 
     findAppointmentsByPickerID(variables)

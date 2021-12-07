@@ -17,6 +17,7 @@ export class VehicleRepository {
     }
 
     create = async (variables) =>{
+        console.log("repo");
         queryExec = `INSERT INTO Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) VALUES ('${variables.plate_number}', ${variables.id_owner}, '${variables.brand}', '${variables.model}', ${variables.powered}, ${variables.kilometers}, '${variables.fuel}', '${variables.vehicle_description}', '${variables.vehicle_image}')`;
         data = await execQuery(queryExec);
         return data;

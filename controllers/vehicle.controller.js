@@ -37,7 +37,7 @@ const getVehicleById = async (req, res) => {
         };
         createVehicle(variables)
             .then(() => res.status(200).send("Vehiculo añadido correctamente"))
-            .catch(err => res.status(500).json(err));
+            .catch(err =>res.status(500).json(err));
     }
 
     const editVehicle = async (req, res) => {
@@ -53,7 +53,9 @@ const getVehicleById = async (req, res) => {
         };
         updateVehicle(variables)
             .then(() => res.status(200).send("Vehículo actualizado correctamente"))
-            .catch(err => res.status(500).json(err));
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err)});
     }
 
     const deleteVehicle = async (req, res) => {

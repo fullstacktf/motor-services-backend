@@ -44,7 +44,6 @@ const editUser = async (req, res) => {
         birth_date: req.body.birth_date,
         profile_image: req.body.profile_image
     };
-    console.log("controller");
     updateUser(variables)
         .then((data) => res.status(200).send("Usuario actualizado correctamente"))
         .catch(err => res.status(500).json(err))

@@ -14,7 +14,7 @@ export const createVehicle = (variables) => {
     return vehicleRepository.create(variables);
 }
 
-export const updateVehicle = (variables, plate_number) => {
+export const updateVehicle = (variables) => {
     return vehicleRepository.update(variables);
 }
 

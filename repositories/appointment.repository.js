@@ -23,11 +23,12 @@ export class AppointmentRepository {
     }
 
     findByUserPk = async (variables) => {
-        queryExec = `SELECT id_appointment, id_vehicle, id_service, id_picker, pick_up_date, pick_up_place, appointment_status, appointment_request, owner_notes, picker_notes, delivery_place, garage
+        queryExec = `SELECT *
         FROM Appointment 
         JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle) 
         WHERE id_owner =${variables.user_id} AND appointment_request='${variables.request}'
         AND appointment_status='${variables.status}' AND pick_up_date between '${variables.from}' AND '${variables.to}' ORDER BY pick_up_date DESC;`;
+        console.log(queryExec);
         data = await execQuery(queryExec);
         return data;
     }
@@ -76,7 +77,7 @@ export class AppointmentRepository {
     }
 
     findLastDate = async () => {
-        data = await execQuery(`SELECT * 
+        data = await execQuery(`SELECT pick_up_date 
         FROM Appointment
         WHERE pick_up_date IN (SELECT max(pick_up_date) FROM Appointment);`);
         return data;

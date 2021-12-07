@@ -17,8 +17,6 @@ export class UserRepository {
     }
 
     update = async (variables) => {
-        console.log("repository");
-        console.log(variables);
         queryExec = `UPDATE User SET password_key='${variables.password}', email='${variables.email}', city='${variables.city}', first_name='${variables.first_name}', last_name='${variables.last_name}', phone_number=${variables.phone_number}, birth_date='${variables.birth_date}', profile_image='${variables.profile_image}' WHERE DNI=${variables.dni};`;
         data = await execQuery(queryExec);
         return data;

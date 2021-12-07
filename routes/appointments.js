@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 
-router.get('/user/:userID',(req, res) => {
+router.get('/owner/:userID',(req, res) => {
     return appointmentController.getOwnerAppointments(req, res);
 })
 
