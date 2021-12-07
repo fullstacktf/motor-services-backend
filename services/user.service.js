@@ -1,26 +1,19 @@
-import { User } from '../models/user.model.js';
+import { UserRepository } from '../repositories/user.repository.js';
 
+const userRepository = new UserRepository();
 
 export const findUser =  (user_id) => {
-   return User.findByPk(user_id);
+   return userRepository.findByUserPk(user_id);
 }
 
 export const createUser = (variables) => {
-    return User.create(variables);
+    return userRepository.create(variables);
 }
 
-export const updateUser = (variables, dni) =>{
-    return User.update(variables,{
-        where:{
-            DNI: dni
-        }
-    })
+export const updateUser = (variables) =>{
+    return userRepository.update(variables);
 }
 
 export const destroyUser = (dni) => {
-    return User.destroy({
-        where: {
-            DNI: dni
-        }
-    })
+    return userRepository.destroy(dni);
 }

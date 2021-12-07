@@ -11,7 +11,10 @@ mariadb.createPool({
   user: "newuser", 
   password: "test",
   database: "pickauto",
-  multipleStatements: true
+  multipleStatements: true,
+  connectionLimit: 10,
+  acquireTimeout: 30000,
+  idleTimeout: 10000
 });
 
 

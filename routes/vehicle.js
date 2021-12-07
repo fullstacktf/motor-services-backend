@@ -1,35 +1,29 @@
-import express  from  'express'
-export const router = express.Router()
+import express  from  'express';
+export const router = express.Router();
 
 
-import {VehicleController} from '../controllers/vehicle.controller.js'
-const vehicle = new VehicleController();
+import vehicleController from '../controllers/vehicle.controller.js';
 
 
-router.get('/', (req, res) => { 
-    return vehicle.getVehiclesFromUser(req, res)
+router.get('/user/:userID', (req, res) => { 
+    return vehicleController.getVehiclesFromUser(req, res)
 })
 
 router.get('/:idVehicle',(req, res)=>{
-    return vehicle.getVehicleById(req,res)
+    return vehicleController.getVehicleById(req,res)
 })
-/*
-router.get('/:idVehicle/appointments',(req, res)=>{
-  return vehicle.getVehicleAppointments(req,res)
-})
-*/
 
-router.post('/add',(req, res)=>{
-  return vehicle.addVehicle(req, res)
+router.post('/',(req, res)=>{
+  return vehicleController.addVehicle(req, res)
 })
 
 
-router.put('/update/:idVehicle',(req, res)=>{
-  return vehicle.upgradeVehicle(req,res)
+router.put('/:idVehicle',(req, res)=>{
+  return vehicleController.editVehicle(req,res)
 })
 
-router.delete('/delete/:idVehicle',(req, res)=>{
-  return vehicle.deleteVehicle(req,res)
+router.delete('/:idVehicle',(req, res)=>{
+  return vehicleController.deleteVehicle(req,res)
 })
 
 

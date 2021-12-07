@@ -2,15 +2,17 @@
 import pkg from 'sequelize';
 const {DataTypes, Model } = pkg;
 import {sequelize} from '../database/database-sequelize.js';
+import { Appointment } from './appointment.model.js';
 
 
 
 export class Review extends Model{
     static associate(models){
-        Review.belongsTo(models.Appointment,{
-            as:'Appointment',
-            foreignKey:'id_review'
-        }) //¿se pone appointment has many reviews?, esto pero al reves
+        /*Review.belongsTo(models.appointment,{
+            as:'appointment',
+            foreignKey:'id_appointment'
+        }) //¿se pone appointment has many reviews?, esto pero al reves */
+        Review.hasOne(Appointment, {foreignKey:'id_appointment'});
     }
 }
 

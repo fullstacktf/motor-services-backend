@@ -2,7 +2,7 @@
 import pkg from 'sequelize';
 const {DataTypes, Model } = pkg;
 import {sequelize} from '../database/database-sequelize.js'
-import { User } from '../models/service.model.js';
+import { User } from './services.model.js';
 
 
 export class Picker extends Model{

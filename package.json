@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node server",
-    "start:nodemon": "nodemon server.js",
+    "start:nodemon": "nodemon server.js --delay 500ms",
     "dev": "nodemon server",
     "test": "jest",
     "test:ci": "jest --forceExit",

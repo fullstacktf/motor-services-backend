@@ -1,43 +1,41 @@
 import express from 'express';
-import { Appointment } from '../models/appointment.model.js';
+import appointmentController from '../controllers/appointment.controller.js';
 const router = express.Router();
 
-const appointment = new Appointment();
 
-router.get('/', async (req, res) => {
-    return appointment.getAppointments(req, res);
+
+router.get('/user/:userID',(req, res) => {
+    return appointmentController.getOwnerAppointments(req, res);
+})
+
+router.get('/picker/:pickerID', async (req, res) => {
+    return appointmentController.getPickerAppointments(req, res);
 });
 
-router.post('/', async (req, res) => { 
-    return appointment.addAppointment(req, res);
+
+router.post('/vehicle/:vehicleID', async (req, res) => { 
+    return appointmentController.addAppointment(req, res);
 });
 
-router.get('/', async (req, res) => { // Cambiar ruta
+router.get('/availablePickers', async(req, res) => {
     return appointment.getAvailablePickers(req, res);
-});
-
-router.get('/filter', async (req, res) => {
-    return appointment.getAllAppointmentsByDate(req, res);
 })
 
-router.get('/:vehicleID', async (req, res) => {
-    return appointment.getAppointment(req, res);
+router.get('/vehicle/:vehicleID', async (req, res) => {
+    return appointment.getAppointmentByVehicleID(req, res);
 });
 
-router.get('/:vehicleID/:appointment_date', async (req, res) => {
-    return appointment.getSpecificAppointment(req,res);
+router.get('/:appointmentID', async (req, res) => {
+    return appointment.getAppointmentByID(req,res);
 })
 
-router.put('/:vehicleID/:appointment_date', async (req, res) => {
+router.put('/:appointmentID', async (req, res) => {
     return appointment.editAppointment(req, res);
 });
 
-router.delete('/:vehicleID/:appointment_date', async (req, res) => {
+router.delete('/:appointmentID', async (req, res) => {
     return appointment.removeAppointment(req, res);
 });
 
-router.get('/:vehicle/filter', async (req, res) => {
-    return appointment.getVehicleAppointmentsByDate(req, res);
-})
 
 export { router }

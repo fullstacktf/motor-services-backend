@@ -8,7 +8,7 @@ export class Services extends Model {
 
 };
 
-Services.init({ // hay que decirle que picker hereda de user
+Services.init({
     id_service: {
         primaryKey: true,
         allowNull: false,
@@ -25,7 +25,7 @@ Services.init({ // hay que decirle que picker hereda de user
     }
 }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'Services',
     freezeTableName: true,
 });
 

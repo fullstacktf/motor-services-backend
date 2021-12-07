@@ -7,24 +7,26 @@ const bodyIsEmpty = (body) => Object.keys(body).length === 0;
 import pkg from 'sequelize';
 const { DataTypes, Model } = pkg;
 import { sequelize } from '../database/database-sequelize.js';
-import { Vehicle } from '../models/vehicle.model.js';
-import { Services } from '../models/service.model.js';
+import { Review } from '../models/review.model.js';
+import { Services } from './services.model.js';
 
 export class Appointment extends Model {
     static associate(models) {
+        /*
         Appointment.belongsTo(models.vehicle, {
-            as: 'Vehicle',
+            as: 'vehicle',
             foreignKey: 'plate_number'
         });
         Appointment.belongsTo(models.picker, {
-            as: 'Picker',
+            as: 'picker',
             foreignKey: 'id_picker'
         });
-        Appointment.hasOne(Services, {foreignKey: 'id_service'});
+        Appointment.hasOne(Services, { foreignKey: 'id_service' });*/
+        Appointment.hasOne(models.Review, { foreignKey: 'id_review' });
     }
 }
 
-Appointment.init({ 
+Appointment.init({
     id_appointment: {
         primaryKey: true,
         allowNull: false,
@@ -93,7 +95,6 @@ Appointment.init({
 })
 
 //Appointment.belongsTo(Vehicle, { foreignKey: 'id_vehicle' })
-
 
 
 
