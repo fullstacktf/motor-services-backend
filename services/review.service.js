@@ -10,7 +10,7 @@ export const findReviewsByAppointmentID = (appointment_id) => {
     return reviewRepository.findByAppointmentPk(appointment_id);
 }
 
-export const findReviewsByPicker = (picker_id) => {
+export const findReviewsByPickerID = (picker_id) => {
     return reviewRepository.findByPickerPk(picker_id);
 }
 

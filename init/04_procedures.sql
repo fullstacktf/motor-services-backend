@@ -101,12 +101,12 @@ DELIMITER ;
 DELIMITER //
 //
 CREATE PROCEDURE pickauto.Insert_review(
-  id_appointment_value int(10) unsigned,
+  id_review_value int(10) unsigned,
   notes_value varchar(200),
   rating_value tinyint(3) unsigned)
     BEGIN
-      INSERT INTO Review (id_appointment, notes, rating) VALUES 
-      (id_appointment_value, notes_value, rating_value);
+      INSERT INTO Review (id_review, notes, rating) VALUES 
+      (id_review_value, notes_value, rating_value);
     END;//
 
 DELIMITER ;

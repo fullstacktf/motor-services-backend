@@ -1,6 +1,6 @@
 import { findReviewsByUserID,
      findReviewsByAppointmentID, 
-     findReviewsByPicker, 
+     findReviewsByPickerID, 
      createReview, 
      destroyReview 
     } from '../services/review.service.js';
@@ -8,7 +8,7 @@ import { findReviewsByUserID,
 
 
     const getReviewsByUserID = async (req, res) => {
-        const user_id = req.params.id_user;
+        const user_id = req.params.userID;
         findReviewsByUserID(user_id)
             .then(data => res.status(200).json(data))
             .catch(err => res.status(500).json(err));
@@ -22,23 +22,22 @@ import { findReviewsByUserID,
     }
 
 
-    const getReviewsByPicker = async (req, res) => {
+    const getReviewsByPickerID = async (req, res) => {
         const picker_id = req.params.id_picker;
-        findReviewsByPicker(picker_id)
+        findReviewsByPickerID(picker_id)
             .then(data => res.status(200).json(data))
             .catch(err => res.status(500).json(err));
     }
 
     const addReview = async (req, res) => {
         const variables = {
-            appointment_date: req.params.appointmentdate,
-            vehicleID: req.params.vehicleID,
-            rating_notes: req.body.rating_notes,
+            id_appointment: req.params.id_appointment,
+            notes: req.body.rating_notes,
             rating: req.body.rating,
         }
         createReview(variables)
             .then(() => res.status(200).send("Valoración añadida correctamente"))
-            .catch(res.status(500).json(err));
+            .catch(err => res.status(500).json(err));
     }
 
     const deleteReview = async (req, res) => {
@@ -52,7 +51,7 @@ import { findReviewsByUserID,
 export default {
     getReviewsByUserID,
     getReviewByAppointmentID,
-    getReviewsByPicker,
+    getReviewsByPickerID,
     addReview,
     deleteReview
 };

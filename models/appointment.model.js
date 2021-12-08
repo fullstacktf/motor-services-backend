@@ -1,28 +1,13 @@
-import { execQuery } from '../database/database.js'
-
-let data;
-let queryExec = '';
-const bodyIsEmpty = (body) => Object.keys(body).length === 0;
-
-import pkg from 'sequelize';
-const { DataTypes, Model } = pkg;
-import { sequelize } from '../database/database-sequelize.js';
-import { Review } from '../models/review.model.js';
-import { Services } from './services.model.js';
-
-export class Appointment extends Model {
-    static associate(models) {
-        /*
-        Appointment.belongsTo(models.vehicle, {
-            as: 'vehicle',
-            foreignKey: 'plate_number'
-        });
-        Appointment.belongsTo(models.picker, {
-            as: 'picker',
-            foreignKey: 'id_picker'
-        });
-        Appointment.hasOne(Services, { foreignKey: 'id_service' });*/
-        Appointment.hasOne(models.Review, { foreignKey: 'id_review' });
+export class Appointment {
+    constructor(params){
+        this.id_appointment = params.id_appointment,
+        this.id_vehicle = params.id_vehicle, 
+        this.id_service = params.id_service, 
+        this.id_picker = params.id_picker, 
+        this.pick_up_latitude = params.pick_up_latitude, 
+        this.pick_up_longitude = params.pick_up_longitude, 
+        this.pick_up_city = params.pick_up_city, 
+        this.pick_up_date = params.pick_up_date
     }
 }
 

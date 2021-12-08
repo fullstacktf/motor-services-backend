@@ -34,7 +34,7 @@ export const createAppointment = async (variables) => {
         return appointmentRepository.create(variables);
     } else { //vehiculo todavia tiene citas, preguntar este return
         console.error(" No puedes pedir citas para ese vehículo, o bien ya solicitaste una cita para ese día o bien tu vehículo está en una cita en curso");
-        return;
+        throw error; // comprobar esto
     }
 }
 

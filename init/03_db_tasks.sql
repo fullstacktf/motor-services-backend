@@ -75,8 +75,7 @@ CREATE TABLE IF NOT EXISTS Appointment (
 
 CREATE TABLE IF NOT EXISTS Review (
     id_review INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id_appointment INT UNSIGNED NOT NULL,
     notes VARCHAR(200),
     rating TINYINT UNSIGNED,
-    CONSTRAINT FOREIGN KEY (id_appointment) REFERENCES Appointment (id_appointment) ON DELETE CASCADE
+    CONSTRAINT FOREIGN KEY (id_review) REFERENCES Appointment (id_appointment) ON DELETE CASCADE
 );
