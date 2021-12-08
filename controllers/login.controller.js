@@ -5,12 +5,11 @@ const login = async (req,res) => {
     const plainPassword = req.body.password_key;
     try {
         const loginData = await getLogin(userEmail, plainPassword);
+        res.cookie('jwt', loginData.token, loginData.cookieOptions)
         res.status(200)
-       // res.cookies('jwt', loginData.token, loginData.cookieOptions)
-        //res.send("Usuario añadido correctamente")
-        res.send(loginData)
+        res.send("Usuario añadido correctamente")
     } catch(error) {
-        console.error("Error al iniciar sesion", await getLogin(userEmail, plainPassword));
+        console.error("Error al iniciar sesion en controller");
         res.status(500).json(error);
     }  
 }
