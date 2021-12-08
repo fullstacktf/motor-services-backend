@@ -1,5 +1,4 @@
 import express from 'express';
-import session from 'express-session';
 import {router as loginRouter} from './routes/login.js';
 import {router as userRouter} from './routes/user.js';
 import {router as vehicleRouter} from './routes/vehicle.js';
@@ -13,20 +12,12 @@ import dotenv from 'dotenv';
 dotenv.config({path: './.env'});
 
 const app = express();
-const port = 3000;
+
 
 
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({     // to support URL-encoded bodies
   extended: true
-}));
-app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: 30 * 86400000, // 30 * (24 * 60 * 60 * 1000) = 30 * 86400000 => session is stored 30 days
-}
 }));
 app.use(cookieParser());
 
@@ -40,9 +31,6 @@ app.use('/appointments', appointmentRouter);
 app.use('/services', serviceRouter);
 app.use('/reviews', reviewRouter);
 
-
-
-app.listen(port, async() => console.log(`Listening on port ${port}`));
 
 export {app};
 
