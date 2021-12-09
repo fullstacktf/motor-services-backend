@@ -6,8 +6,8 @@ import mariadb from 'mariadb';
 
 export const pool = 
 mariadb.createPool({
-  host: "127.0.0.1",  //mariadb en produccion
-  port: "3307",      //3306 en produccion
+  host: "127.0.0.1" || "mariadb", //quiero que en desarrollo sea una ip y en produccion otra, pero asi no me funciona
+  port: "3307" || "3306", 
   user: "newuser", 
   password: "test",
   database: "pickauto",

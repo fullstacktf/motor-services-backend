@@ -13,7 +13,7 @@ services:
 #    container_name: "node_server"
 #    ports: 
 #    - "3000:3000"
-#    networks:
+#   networks:
 #      - mern-app
 #    depends_on:
 #      - mariadb
