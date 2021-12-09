@@ -18,16 +18,8 @@ const getUser = async (req, res) => {
 const addUser = async (req, res) => {
     const password = req.body.password_key;
     const variables = {
-        DNI: req.body.dni,
-        id_rol: req.body.id_rol,
         password_key: bcrypt.hashSync(password, salt),
-        email: req.body.email,
-        city: req.body.city,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        phone_number: req.body.phone_number,
-        birth_date: req.body.birth_date,
-        profile_image: req.body.profile_image
+        ...req.body
     }
 
     createUser(variables)
@@ -39,15 +31,9 @@ const addUser = async (req, res) => {
 const editUser = async (req, res) => {
     const password = req.body.password_key;
     const variables = {
-        dni: req.params.userID,
-        email: req.body.email,
         password: bcrypt.hashSync(password, salt),
-        city: req.body.city,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        phone_number: req.body.phone_number,
-        birth_date: req.body.birth_date,
-        profile_image: req.body.profile_image
+        dni: req.params.userID,
+        ...req.body
     };
     updateUser(variables)
         .then((data) => res.status(200).send("Usuario actualizado correctamente"))

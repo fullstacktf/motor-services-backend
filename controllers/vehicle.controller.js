@@ -25,15 +25,7 @@ const getVehicleById = async (req, res) => {
 
     const addVehicle = async (req, res) => {
         const variables = {
-            plate_number: req.body.plate_number,
-            id_owner: req.body.id_owner,
-            brand: req.body.brand,
-            model: req.body.model,
-            powered: req.body.powered,
-            kilometers: req.body.kilometers,
-            fuel: req.body.fuel,
-            vehicle_description: req.body.vehicle_description,
-            vehicle_image: req.body.vehicle_image
+            ...req.body
         };
         createVehicle(variables)
             .then(() => res.status(200).send("Vehiculo añadido correctamente"))
@@ -43,13 +35,7 @@ const getVehicleById = async (req, res) => {
     const editVehicle = async (req, res) => {
         const variables = {
             plate_number: req.params.idVehicle,
-            brand: req.body.brand,
-            model: req.body.model,
-            powered: req.body.powered,
-            kilometers: req.body.kilometers,
-            fuel: req.body.fuel,
-            vehicle_description: req.body.vehicle_description,
-            vehicle_image: req.body.vehicle_image
+            ...req.body
         };
         updateVehicle(variables)
             .then(() => res.status(200).send("Vehículo actualizado correctamente"))

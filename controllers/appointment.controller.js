@@ -98,8 +98,7 @@ const deleteAppointment = async (req, res) => {
 
 const getAvailablePickers = async (req, res) => {
     const variables = {
-        pick_up_time: req.body.pick_up_time,
-        pick_up_place: req.body.pick_up_place
+        ...req.body
     }
     findAvailablePickersInDB(variables)
         .then(data => res.status(200).json(data))
