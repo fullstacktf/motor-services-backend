@@ -13,8 +13,6 @@ dotenv.config({path: './.env'});
 
 const app = express();
 
-
-
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({     // to support URL-encoded bodies
   extended: true
@@ -22,7 +20,7 @@ app.use(express.urlencoded({     // to support URL-encoded bodies
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Bienvenidos a la API de pickauto.');
 });
 app.use('/', loginRouter);
 app.use('/vehicles', vehicleRouter);
