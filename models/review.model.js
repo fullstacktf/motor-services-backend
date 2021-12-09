@@ -1,8 +1,44 @@
-import {execQuery} from '../database/database.js' 
+// import Model from 'sequelize'
+import pkg from 'sequelize';
+const {DataTypes, Model } = pkg;
+import {sequelize} from '../database/database-sequelize.js';
+import { Appointment } from './appointment.model.js';
 
-let data = {};
-let queryExec = '';
 
+
+export class Review extends Model{
+    static associate(models){
+        /*Review.belongsTo(models.appointment,{
+            as:'appointment',
+            foreignKey:'id_appointment'
+        }) //¿se pone appointment has many reviews?, esto pero al reves */
+        Review.hasOne(Appointment, {foreignKey:'id_appointment'});
+    }
+}
+
+Review.init({
+    id_review:{
+        primaryKey:true,
+        autoIncrement: true,
+        allowNull: false,
+        type:DataTypes.INTEGER
+    },
+    id_appointment:{
+        allowNull: false,
+        type:DataTypes.INTEGER
+    },
+    notes:{
+        type:DataTypes.STRING
+    },
+    rating:{
+        type:DataTypes.TINYINT
+    }
+},{
+    sequelize,
+    modelName: 'Review',
+    freezeTableName: true,
+});
+/*
 export class ReviewModel{
 
     async getReviews(req,res){
@@ -81,4 +117,4 @@ export class ReviewModel{
             res.send("Valoración eliminada correctamente");
         }
     };
-}
+}*/

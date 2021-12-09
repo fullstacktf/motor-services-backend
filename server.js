@@ -1,5 +1,8 @@
-import {app} from './app.js';
+import {app} from './app.js'
 const port = 3000;
 
+app.get('/', (req, res) => {
+    res.send('Bienvenidos a la API de pickauto');
+  });
+app.listen(port, () => console.log(`Listening on port ${port}`));
 
-app.listen(port, async() => console.log(`Listening on port ${port}`));

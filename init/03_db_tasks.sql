@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS Vehicle (
     model VARCHAR(20),
     powered INT UNSIGNED,
     kilometers INT UNSIGNED,
-    fuel ENUM('diesel', 'gasolina','híbrido', 'electrico', 'gas'),
+    fuel ENUM('diesel', 'gasolina','híbrido', 'electrico', 'gas'), /*Cambiar esto por varchars y añadirlo en data insertion*/
     vehicle_description VARCHAR(200),
     vehicle_image VARCHAR(100),
     FOREIGN KEY (id_owner) REFERENCES User(DNI) ON DELETE CASCADE
@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS Services (
 );
 
 CREATE TABLE IF NOT EXISTS Appointment (
+    id_appointment INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_vehicle VARCHAR(8) NOT NULL,
     id_service INT UNSIGNED NOT NULL,
     id_picker INT UNSIGNED,
@@ -68,15 +69,13 @@ CREATE TABLE IF NOT EXISTS Appointment (
     garage VARCHAR(100),
     CONSTRAINT FOREIGN KEY (id_vehicle) REFERENCES Vehicle(plate_number) ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (id_service) REFERENCES Services(id_service) ON DELETE CASCADE,
-    CONSTRAINT FOREIGN KEY (id_picker) REFERENCES Picker(id_picker) ON DELETE CASCADE,
-    PRIMARY KEY (id_vehicle, pick_up_date)
+    CONSTRAINT FOREIGN KEY (id_picker) REFERENCES Picker(id_picker) ON DELETE CASCADE
+    /* PRIMARY KEY (id_vehicle, pick_up_date) un vehiculo solo puede pedir una cita por dia */ 
 );
 
-CREATE TABLE IF NOT EXISTS Rating (
-    id_rating INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id_vehicle VARCHAR(8) NOT NULL,
-    pick_up_date DATE NOT NULL,
-    rating_notes VARCHAR(200),
+CREATE TABLE IF NOT EXISTS Review (
+    id_review INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    notes VARCHAR(200),
     rating TINYINT UNSIGNED,
-    CONSTRAINT FOREIGN KEY (id_vehicle, pick_up_date) REFERENCES Appointment (id_vehicle, pick_up_date) ON DELETE CASCADE
+    CONSTRAINT FOREIGN KEY (id_review) REFERENCES Appointment (id_appointment) ON DELETE CASCADE
 );

@@ -4,10 +4,9 @@ import {router as userRouter} from './routes/user.js';
 import {router as vehicleRouter} from './routes/vehicle.js';
 import {router as appointmentRouter} from './routes/appointments.js';
 import {router as serviceRouter} from './routes/services.js';
-import {router as reviewRouter} from './routes/reviews.js';
+import {router as reviewRouter} from './routes/review.js';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
-
 
 dotenv.config({path: './.env'});
 
@@ -19,9 +18,6 @@ app.use(express.urlencoded({     // to support URL-encoded bodies
 }));
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-  res.send('Bienvenidos a la API de pickauto.');
-});
 app.use('/', loginRouter);
 app.use('/vehicles', vehicleRouter);
 app.use('/users', userRouter);
@@ -30,5 +26,5 @@ app.use('/services', serviceRouter);
 app.use('/reviews', reviewRouter);
 
 
-export {app};
 
+export {app};

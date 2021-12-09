@@ -11,7 +11,10 @@ mariadb.createPool({
   user: "newuser", 
   password: "test",
   database: "pickauto",
-  multipleStatements: true
+  multipleStatements: true,
+  connectionLimit: 10,
+  acquireTimeout: 30000,
+  idleTimeout: 10000
 });
 
 
@@ -22,7 +25,7 @@ export async function execQuery(queryExec) {
   try {
     data = await pool.query(queryUse + queryExec);
   } catch (error) {
-    console.log(error);
+    console.log(error); //preguntar como logear los errores 
     return error;
   }
   return data[1];

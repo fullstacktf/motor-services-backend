@@ -1,15 +1,14 @@
 import express from 'express';
 const router = express.Router();
-import {ServiceModel} from '../models/service.model.js';
+import serviceController from '../controllers/services.controller.js';
 
-const service = new ServiceModel();
 
 router.get('/', async (req, res) => {
-    return service.getServices(req, res);
-}); //get all services.
+    return serviceController.getServices(req, res);
+}); 
 
 router.get('/:serviceID', async (req, res) => {
-    return service.getService(req, res);
-}); //get a specific service.
+    return serviceController.getService(req, res);
+}); 
 
 export {router}

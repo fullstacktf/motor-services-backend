@@ -206,10 +206,10 @@ CALL Insert_vehicle(
 
 /*-------------------------------*/
 
-CALL Insert_picker(12345677, '12:00', '17:30', 4);
-CALL Insert_picker(12345676, '09:00', '16:30', 5);
-CALL Insert_picker(12345674, '11:30', '20:30', 5);
-CALL Insert_picker(12345672, '18:00', '00:00', 5);
+CALL Update_picker(12345677, '12:00', '17:30', 4);
+CALL Update_picker(12345676, '09:00', '16:30', 5);
+CALL Update_picker(12345674, '11:30', '20:30', 5);
+CALL Update_picker(12345672, '18:00', '00:00', 5);
 
 /*-------------------------------*/
 
@@ -421,6 +421,6 @@ CALL Insert_appointment(
 
 /*-------------------------------*/
 
-CALL Insert_rating('3456fdh', '2021-12-19','Todo correcto, muy puntual', 5);
-CALL Insert_rating('1134abd','2021-08-13', 'Dejo el coche aparcado al sol', 4);
-CALL Insert_rating('2863aaf','2021-09-14', 'Me ha rozado el coche', 0);
+CALL Insert_review(1, 'Todo correcto, muy puntual', 5);
+CALL Insert_review(2, 'Dejo el coche aparcado al sol', 4);
+CALL Insert_review(3, 'Me ha rozado el coche', 0);
