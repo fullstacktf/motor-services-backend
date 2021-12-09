@@ -25,6 +25,7 @@ export class ReviewRepository {
     create = async (variables) => {
         queryExec = `INSERT INTO Review (id_review, notes, rating) VALUES ('${variables.id_appointment}' ,'${variables.notes}', ${variables.rating});`;
         data = await execQuery(queryExec);
+        console.log("repository");
         return data;
     }
 

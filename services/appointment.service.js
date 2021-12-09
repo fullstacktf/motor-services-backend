@@ -27,14 +27,16 @@ export const findAppointmentsByID = (appointment_id) => {
     return appointmentRepository.findByAppointmentPk(appointment_id);
 }
 
-export const createAppointment = async (variables) => {
-    const committedRegs = await appointmentRepository.findIfvehicleCommitted(variables.id_vehicle);
-    const plateDateRegs = await appointmentRepository.findPlateDateUnique(variables.id_vehicle, variables.pick_up_date);
+export const createAppointment = async (appointment) => {
+
+    //los test se hacen en servicios
+    const committedRegs = await appointmentRepository.findIfvehicleCommitted(appointment.id_vehicle);
+    const plateDateRegs = await appointmentRepository.findPlateDateUnique(appointment.id_vehicle, appointment.pick_up_date);
     if (committedRegs.length == 0 && plateDateRegs == 0) {
-        return appointmentRepository.create(variables);
+        return appointmentRepository.create(appointment);
     } else { //vehiculo todavia tiene citas, preguntar este return
-        console.error(" No puedes pedir citas para ese vehículo, o bien ya solicitaste una cita para ese día o bien tu vehículo está en una cita en curso");
-        throw error; // comprobar esto
+        console.error();
+        throw new Error("No puedes pedir citas para ese vehículo, o bien ya solicitaste una cita para ese día o bien tu vehículo está en una cita en curso"); // comprobar esto
     }
 }
 
