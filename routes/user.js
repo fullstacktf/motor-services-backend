@@ -1,6 +1,8 @@
 import express from 'express';
 export const router = express.Router();
-
+import { UserModel } from '../models/user.model.js';
+import { LoginModel } from '../models/login.model.js';
+import jwt from 'jsonwebtoken';
 import userController from '../controllers/user.controller.js';
 
 router.get('/:userID', (req, res) => {
@@ -19,4 +21,14 @@ router.delete('/:userID',(req, res) => {
     return userController.deleteUser(req, res);
 })
 
+router.get('/:userID', (req, res) => {
+    LoginModel.isAuthenticated(req, res, next, "user.getUser(req,res)")
+});
 
+router.post('/:id/auth', async (req, res) => {
+    return user.logIn(req,res);
+});
+
+router.get('/logout', async (req,res) => {
+    return user.logOut(req,res);
+});
