@@ -1,8 +1,5 @@
 import express from 'express';
 export const router = express.Router();
-import { UserModel } from '../models/user.model.js';
-import { LoginModel } from '../models/login.model.js';
-import jwt from 'jsonwebtoken';
 import userController from '../controllers/user.controller.js';
 
 router.get('/:userID', (req, res) => {

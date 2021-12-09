@@ -1,4 +1,6 @@
 export class Appointment {
+    //preguntar a Raul si se le puede pasar esto en el controlador al servicio, en este caso haría falta repository?
+    // Aquí a parte del constructor podría poner más métodos de esta clase?
     constructor(params){
         this.id_appointment = params.id_appointment,
         this.id_vehicle = params.id_vehicle, 
@@ -7,7 +9,15 @@ export class Appointment {
         this.pick_up_latitude = params.pick_up_latitude, 
         this.pick_up_longitude = params.pick_up_longitude, 
         this.pick_up_city = params.pick_up_city, 
-        this.pick_up_date = params.pick_up_date
+        this.pick_up_date = params.pick_up_date,
+        this.appointment_status = params.pick_up_date,
+        this.appointment_request = params.appointment_request, 
+        this.owner_notes = params.owner_notes, 
+        this.picker_notes = params.picker_notes, 
+        this.delivery_latitude = params.delivery_latitude, 
+        this.delivery_longitude = params.delivery_longitude, 
+        this.delivery_city = params.delivery_city, 
+        this.garage = params.garage
     }
 }
 
