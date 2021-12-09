@@ -14,6 +14,10 @@ export const findReviewsByPickerID = (picker_id) => {
     return reviewRepository.findByPickerPk(picker_id);
 }
 
+export const findAverageRatingByPickerID = (picker_id) => {
+    return reviewRepository.findAverageRatingByPickerPk(picker_id);
+}
+
 export const createReview = (variables) => {
     return reviewRepository.create(variables);
 }

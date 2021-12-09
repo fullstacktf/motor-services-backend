@@ -1,6 +1,7 @@
 import { findReviewsByUserID,
      findReviewsByAppointmentID, 
      findReviewsByPickerID, 
+     findAverageRatingByPickerID,
      createReview, 
      destroyReview 
     } from '../services/review.service.js';
@@ -21,10 +22,16 @@ import { findReviewsByUserID,
             .catch(err => res.status(500).json(err));
     }
 
-
     const getReviewsByPickerID = async (req, res) => {
         const picker_id = req.params.id_picker;
         findReviewsByPickerID(picker_id)
+            .then(data => res.status(200).json(data))
+            .catch(err => res.status(500).json(err));
+    }
+
+    const getAverageRatingByPickerID = async(req, res) => {
+        const picker_id = req.params.id_picker;
+        findAverageRatingByPickerID(picker_id)
             .then(data => res.status(200).json(data))
             .catch(err => res.status(500).json(err));
     }
@@ -52,6 +59,7 @@ export default {
     getReviewsByUserID,
     getReviewByAppointmentID,
     getReviewsByPickerID,
+    getAverageRatingByPickerID,
     addReview,
     deleteReview
 };

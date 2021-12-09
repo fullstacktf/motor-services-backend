@@ -33,7 +33,15 @@ export class ReviewRepository {
         data = await execQuery(queryExec);
         return data;
     }
+
+    findAverageRatingByPickerPk = async (id_picker) =>{ // comprobar esto
+        queryExec = `SELECT AVG(rating)
+        from Review r join Appointment a on r.id_review = a.id_appointment where id_picker=${id_picker};`
+        data = await execQuery(queryExec);
+        return data;
+    }
+
 }
 
 
-///calcular la media de las notas del picker
+///calcular la media de las notas del picker con una query que te devuelva las notas de un picker determinado y te calcule la media
