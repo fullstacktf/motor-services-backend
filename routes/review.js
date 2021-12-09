@@ -11,6 +11,10 @@ router.get('/picker/:id_picker', async (req,res)=>{
     return reviewController.getReviewsByPickerID(req,res);
 });
 
+router.get('/averageRatingPicker/:id_picker', async (req,res)=>{
+  return reviewController.getAverageRatingByPickerID(req,res);
+});
+
 router.get('/appointment/:id_appointment/', async (req,res)=>{
   return reviewController.getReviewByAppointmentID(req,res);
 });
