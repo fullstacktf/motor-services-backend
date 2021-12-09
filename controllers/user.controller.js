@@ -12,7 +12,7 @@ const getUser = async (req, res) => {
     const user_id = req.params.userID;
     findUser(user_id)
         .then(data => res.status(200).json(data))
-        .catch(err => res.status(500).json({error: err})); // quizas no es status 500
+        .catch(err => res.status(500).json({error: String(err)})); // quizas no es status 500
 }
 
 const addUser = async (req, res) => {
@@ -32,7 +32,7 @@ const addUser = async (req, res) => {
 
     createUser(variables)
         .then((data) => res.status(200).send("Usuario añadido correctamente"))
-        .catch(err => res.status(500).json({error: err}));
+        .catch(err => res.status(500).json({error: String(err)}));
 
 }
 
@@ -51,14 +51,14 @@ const editUser = async (req, res) => {
     };
     updateUser(variables)
         .then((data) => res.status(200).send("Usuario actualizado correctamente"))
-        .catch(err => res.status(500).json({error: err}));
+        .catch(err => res.status(500).json({error: String(err)}));
 }
 
 const deleteUser = async (req, res) => {
     const dni = req.params.userID;
     destroyUser(dni)
         .then(() => res.status(200).send("Usuario eliminado correctamente"))
-        .catch(err => res.status(500).json({error: err}));
+        .catch(err => res.status(500).json({error: String(err)}));
 }
 
 export default {
