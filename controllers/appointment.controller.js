@@ -33,7 +33,7 @@ const getOwnerAppointments = async (req, res) => {
     }
     findAppointmentsByUserID(variables)
         .then(data => res.status(200).json(data))
-        .catch(err => res.status(500).json(err));
+        .catch(err => res.status(500).json(String(err)));
 }
 
 const getPickerAppointments = async (req, res) => {
@@ -74,46 +74,26 @@ const addAppointment = async (req, res) => {
         id_vehicle: req.params.vehicleID,
         ...req.body
     }
-    console.log(variables);
     createAppointment(variables)
         .then(data => res.status(200).send("Cita insertada correctamente"))
         .catch(err => res.status(500).json({error: String(err)}));
 }
 
 const editAppointment = async (req, res) => { 
-    /*    const variables = {
-        appointment_id: req.params.appointmentID,
-        id_service: req.body.id_service,
-        id_picker: req.body.id_picker,
-        id_vehicle: req.body.id_vehicle,
-        pick_up_latitude: req.body.pick_up_latitude,
-        pick_up_longitude: req.body.pick_up_longitude,
-        pick_up_city: req.body.pick_up_city,
-        pick_up_date: req.body.pick_up_date,
-        pick_up_time: req.body.pick_up_time,
-        appointment_status: req.body.appointment_status,
-        appointment_request: req.body.appointment_request,
-        picker_notes: req.body.picker_notes,
-        owner_notes: req.body.owner_notes,
-        delivery_latitude: req.body.delivery_latitude,
-        delivery_longitude: req.body.delivery_longitude,
-        delivery_city: req.body.delivery_city,
-        garage: req.body.garage
-    }*/
-    const appointment = { //esto CREMBAAAAA
+    const appointment = { 
         id_appointment: req.params.id,
         ...req.body
     };
     updateAppointment(appointment)
         .then(data => res.status(200).send("Cita modificada correctamente"))
-        .catch(err => res.status(500).json({error: err}));
+        .catch(err => res.status(500).json({error: String(err)}));
 }
 
 const deleteAppointment = async (req, res) => {
     const appointment_id = req.params.appointmentID
     destroyAppointment(appointment_id)
         .then(data => res.status(200).send("Cita eliminada correctamente"))
-        .catch(err => res.status(500).json({error: err}));
+        .catch(err => res.status(500).json({error: String(err)}));
 }
 
 const getAvailablePickers = async (req, res) => {
@@ -123,7 +103,7 @@ const getAvailablePickers = async (req, res) => {
     }
     findAvailablePickersInDB(variables)
         .then(data => res.status(200).json(data))
-        .catch(err => res.status(500).json({error: err}));
+        .catch(err => res.status(500).json({error: String(err)}));
 }
 
 
