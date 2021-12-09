@@ -4,9 +4,9 @@ import { execQuery } from '../database/database.js';
 
 
 // import Model from 'sequelize'
-import pkg from 'sequelize';
+//import pkg from 'sequelize';
 const {DataTypes, Model } = pkg;
-import {sequelize} from '../database/database-sequelize.js'
+//import {sequelize} from '../database/database-sequelize.js'
 
 export class User extends Model {
     static associate(models){
@@ -18,10 +18,11 @@ export class User extends Model {
 let data;
 let queryExec = '';
 const bodyIsEmpty = (body) => Object.keys(body).length === 0;
-import bcrypt from 'bcrypt';
+//import bcrypt from 'bcrypt';
 const saltRounds = 10;
-
-
+    }
+}
+/*
 export class UserModel {
     async getUsers(req, res) {
         queryExec = 'select * from User;';
@@ -172,7 +173,7 @@ User.init({ // hay que decirle que picker hereda de user
     modelName: 'User',
     freezeTableName: true,
 });
-
+*/
 
 // export class UserModel {
 //     async getUsers(req, res) {
@@ -319,32 +320,5 @@ User.init({ // hay que decirle que picker hereda de user
 //         });
 //     }
 // }
-
-        data = await execQuery(queryExec);
-        res.json({
-            appointments: data
-        });
-    }
-    async getPickerAppointments(req, res){
-        const pickerId = req.params.pickerID;
-        const status = (req.query.status) ? (req.query.status) : undefined;
-        const request = (req.query.request) ? (req.query.request) : undefined;
-        let append = '';
-        if (status && !request) {
-            append = `AND appointment_status='Entregado' `;
-        } else if (request && !status) {
-            append = `AND appointment_request='Pendiente' `;
-        } else if (request && status && status === 'No recogido') {
-            append = `AND appointment_request='Aceptada' AND appointment_status='No recogido' `;
-        } else if (request && status && status !== 'No recogido') {
-            append = `AND appointment_request='Aceptada' AND appointment_status='${status}' `;
-        }
-        queryExec = `SELECT id_appointment, id_vehicle, id_service, id_picker, pick_up_date, pick_up_place, 
-        appointment_status, appointment_request, owner_notes, picker_notes, delivery_place, garage
-        FROM Appointment WHERE id_picker = ${pickerId} ${append}ORDER BY pick_up_date DESC;`;
-        data = await execQuery(queryExec);
-        res.json({
-            appointments: data
-        });
-    }
-}
+/*
+*/

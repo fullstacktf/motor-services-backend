@@ -4,7 +4,7 @@ import mariadb from 'mariadb';
 // Create a connection pool
 
 
-export const pool = 
+const pool = 
 mariadb.createPool({
   host: "127.0.0.1" || "mariadb", //quiero que en desarrollo sea una ip y en produccion otra, pero asi no me funciona
   port: "3307" || "3306", 
@@ -16,7 +16,6 @@ mariadb.createPool({
   acquireTimeout: 30000,
   idleTimeout: 10000
 });
-
 
 
 export async function execQuery(queryExec) {

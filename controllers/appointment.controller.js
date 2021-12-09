@@ -10,14 +10,6 @@ import {
     findAvailablePickersInDB
 } from '../services/appointment.service.js';
 
-    /*
-        getVehicleAppointments = async (req, res) => {
-            findVehicleAppointments(req, res)
-                .then(data => res.status(200).json(data))
-                .catch(err => res.status(500).json(err))
-        }*/
-        
-//getAppointmentByID
 
 const lastDatefunction = async () => { //¿Esta función va bien aqui?
     const date = await findLastDateInDB();

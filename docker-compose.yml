@@ -9,7 +9,7 @@ services:
 #    networks:
 #      - mern-app
 #  node_server:
-#    build: "./"
+#    build: "./motor-services-backend"
 #    container_name: "node_server"
 #    ports: 
 #    - "3000:3000"
@@ -22,8 +22,8 @@ services:
     image: "mariadb:10.5"
     restart: always
     volumes:
-      - "./mysql_data:/var/lib/mysql"
-      - "./init:/docker-entrypoint-initdb.d"
+      - "./docker-compose-backend/mysql_data:/var/lib/mysql"
+      - "./docker-compose-backend/init:/docker-entrypoint-initdb.d"
     environment:
       - MYSQL_ROOT_PASSWORD='mypassword'
       - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD='yes'
@@ -32,7 +32,6 @@ services:
     networks:
     - mern-app
     
-
 networks:
   mern-app:
     name: "mern-app"
