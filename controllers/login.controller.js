@@ -10,7 +10,7 @@ const login = async (req,res) => {
         res.send("Inicio de sesión correcto")
     } catch(error) {
         console.error("Error al iniciar sesion en controller");
-        res.status(500).json(error);
+        res.status(500).json(String(error));
     }  
 }
 

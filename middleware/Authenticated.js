@@ -16,3 +16,5 @@ export const isAuthenticated = async (req, res, next) => {
         res.send("Fallo de autenticacion.")
     }
 }
+
+//falta .env

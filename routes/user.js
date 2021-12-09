@@ -29,3 +29,5 @@ router.post('/:id/auth', async (req, res) => {
 router.get('/logout', async (req,res) => {
     return user.logOut(req,res);
 });
+
+//comprobar si es picker o owner?
