@@ -31,6 +31,7 @@ const getOwnerAppointments = async (req, res) => {
         from: (req.query.from) ? (req.query.from) : '1970-01-01',
         to: (req.query.to) ? (req.query.to) : await lastDatefunction()
     }
+    console.log(req.query.status);
     findAppointmentsByUserID(variables)
         .then(data => res.status(200).json(data))
         .catch(err => res.status(500).json(String(err)));
