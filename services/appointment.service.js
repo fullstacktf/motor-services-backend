@@ -35,7 +35,6 @@ export const createAppointment = async (appointment) => {
     if (committedRegs.length == 0 && plateDateRegs == 0) {
         return appointmentRepository.create(appointment);
     } else { //vehiculo todavia tiene citas, preguntar este return
-        console.error();
         throw new Error("No puedes pedir citas para ese vehículo, o bien ya solicitaste una cita para ese día o bien tu vehículo está en una cita en curso"); // comprobar esto
     }
 }

@@ -22,7 +22,7 @@ const lastDatefunction = async () => { //¿Esta función va bien aqui?
 }
  
 
-
+//http://localhost:3000/appointments/owner/12345671?from=2021-01-01&to=2021-12-20&status=No%20Recogido
 const getOwnerAppointments = async (req, res) => {
     const variables = {
         user_id: req.params.userID,
@@ -31,6 +31,7 @@ const getOwnerAppointments = async (req, res) => {
         from: (req.query.from) ? (req.query.from) : '1970-01-01',
         to: (req.query.to) ? (req.query.to) : await lastDatefunction()
     }
+
     findAppointmentsByUserID(variables)
         .then(data => res.status(200).json(data))
         .catch(err => res.status(500).json(String(err)));
