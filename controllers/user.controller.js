@@ -16,11 +16,10 @@ const getUser = async (req, res) => {
 }
 
 const addUser = async (req, res) => {
-    const password = req.body.password_key;
     const variables = {
-        password_key: bcrypt.hashSync(password, salt),
-        ...req.body
+        ...req.body 
     }
+    console.log(variables.password_key)
 
     createUser(variables)
         .then((data) => res.status(200).send("Usuario añadido correctamente"))
