@@ -24,6 +24,7 @@ services:
     volumes:
       - "./mysql_data:/var/lib/mysql"
       - "./init:/docker-entrypoint-initdb.d"
+      - "./extraconfig/db_config.cnf:/etc/mysql/conf.d/extraconfig.cnf"
     environment:
       - MYSQL_ROOT_PASSWORD='mypassword'
       - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD='yes'
