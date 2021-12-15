@@ -19,7 +19,6 @@ const addUser = async (req, res) => {
     const variables = {
         ...req.body 
     }
-    console.log(variables.password_key)
 
     createUser(variables)
         .then((data) => res.status(200).send("Usuario añadido correctamente"))
