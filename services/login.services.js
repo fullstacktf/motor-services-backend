@@ -10,9 +10,10 @@ export const getLogin = async (user_email, plainPassword) => {
     if (userData.length == 0 || ! (await bcrypt.compare(plainPassword, userData[0].password_key))){
         console.error("Usuario o contraseña incorrectos.")
     } else {
+        console.log(userData[0])
         const id = userData[0].DNI;
-        const rol = userData[0].id_rol;
-        const token = jwt.sign({id:id, rol:rol}, process.env.JWT_SECRET, {
+        //const rol = userData[0].id_rol;
+        const token = jwt.sign({id:id}, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRESIN
         });
 
