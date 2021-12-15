@@ -1,5 +1,6 @@
 import {
     findAppointmentsByUserID,
+    filterAppointmentsByStatus,
     findAppointmentsByPickerID,
     createAppointment,
     updateAppointment,
@@ -18,6 +19,7 @@ const lastDatefunction = async () => { //¿Esta función va bien aqui?
         .pick_up_date)
         .replace('"', '')
         .split("T")[0];
+        console.log(data)
     return data;
 }
  
@@ -26,12 +28,25 @@ const lastDatefunction = async () => { //¿Esta función va bien aqui?
 const getOwnerAppointments = async (req, res) => {
     const variables = {
         user_id: req.params.userID,
+        request: (req.query.request) ? (req.query.request) : 'Aceptada',
+        fromDate: (req.query.from) ? (req.query.from) : '1970-01-01',
+        toDate: (req.query.to) ? (req.query.to) : '2100-01-01'//await lastDatefunction()
+    };
+    console.log(variables.toDate)
+    findAppointmentsByUserID(variables)
+        .then(data => res.status(200).json(data))
+        .catch(err => res.status(500).json(String(err)));
+}
+
+const filterOwnerAppointmentsByStatus = async (req, res) => {
+    const variables = {
+        user_id: req.params.userID,
         status: (req.query.status) ? (req.query.status) : 'No recogido',
         request: (req.query.request) ? (req.query.request) : 'Aceptada',
-        from: (req.query.from) ? (req.query.from) : '1970-01-01',
-        to: (req.query.to) ? (req.query.to) : await lastDatefunction()
+        fromDate: (req.query.from) ? (req.query.from) : '1970-01-01',
+        toDate: (req.query.to) ? (req.query.to) : await lastDatefunction()
     }
-    findAppointmentsByUserID(variables)
+    filterAppointmentsByStatus(variables)
         .then(data => res.status(200).json(data))
         .catch(err => res.status(500).json(String(err)));
 }
@@ -39,10 +54,9 @@ const getOwnerAppointments = async (req, res) => {
 const getPickerAppointments = async (req, res) => {
     const variables = {
         picker_id: req.params.pickerID,
-        status: (req.query.status) ? (req.query.status) : 'No recogido',
         request: (req.query.request) ? (req.query.request) : 'Aceptada',
-        from: (req.query.from) ? (req.query.from) : '1970-01-01', 
-        to: (req.query.to) ? (req.query.to) : await lastDatefunction()
+        fromDate: (req.query.from) ? (req.query.from) : '1970-01-01', 
+        toDate: (req.query.to) ? (req.query.to) : await lastDatefunction()
     }
     findAppointmentsByPickerID(variables)
         .then(data => res.status(200).json(data))
@@ -52,10 +66,9 @@ const getPickerAppointments = async (req, res) => {
 const getAppointmentByVehicleID = async (req, res) =>{
     const variables = {
         vehicle_id: req.params.vehicleID,
-        status: (req.query.status) ? (req.query.status) : 'No recogido',
         request: (req.query.request) ? (req.query.request) : 'Aceptada',
-        from: (req.query.from) ? (req.query.from) : '1970-01-01', 
-        to: (req.query.to) ? (req.query.to) : await lastDatefunction()
+        fromDate: (req.query.from) ? (req.query.from) : '1970-01-01', 
+        toDate: (req.query.to) ? (req.query.to) : await lastDatefunction()
     }
     findAppointmentsByVehicleID(variables)
     .then(data => res.status(200).json(data))
@@ -114,5 +127,6 @@ export default {
     addAppointment, 
     editAppointment, 
     deleteAppointment, 
-    getAvailablePickers
+    getAvailablePickers,
+    filterOwnerAppointmentsByStatus
 }

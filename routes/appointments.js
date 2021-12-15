@@ -1,11 +1,18 @@
 import express from 'express';
+import { async } from 'regenerator-runtime';
 import appointmentController from '../controllers/appointment.controller.js';
+// import { isAuthenticated} from '../middleware/Authenticated.js';
 const router = express.Router();
 
 
 
-router.get('/owner/:userID',(req, res) => {
+router.get('/owner/:userID', async (req, res) => {
+    // /?
     return appointmentController.getOwnerAppointments(req, res); //hacer el join
+})
+
+router.get('/owner/:userID/filter', async (req,res) => {
+    return appointmentController.filterOwnerAppointmentsByStatus(req, res);
 })
 
 router.get('/picker/:pickerID', async (req, res) => {

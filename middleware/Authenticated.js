@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 export const isAuthenticated = async (req, res, next) => {
     if(req.cookies.jwt){
         try{
@@ -5,7 +7,8 @@ export const isAuthenticated = async (req, res, next) => {
                 if (err) {
                     res.send('Ha habido un error de autenticación')
                 } else {
-                    res.send(verifiedJWT)
+                    console.log(verifiedJWT)
+                    return verifiedJWT
                 }
             })
         } catch (error){

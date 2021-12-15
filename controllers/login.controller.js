@@ -8,6 +8,7 @@ const login = async (req,res) => {
         res.cookie('jwt', loginData.token, loginData.cookieOptions)
         res.status(200)
         res.send("Inicio de sesión correcto")
+        console.log(req.cookies.jwt)
     } catch(error) {
         console.error("Error al iniciar sesion en controller");
         res.status(500).json(String(error));

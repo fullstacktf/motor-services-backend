@@ -1,9 +1,14 @@
 import express from 'express';
 export const router = express.Router();
 import userController from '../controllers/user.controller.js';
+import { isAuthenticated} from '../middleware/Authenticated.js';
 
-router.get('/:userID', (req, res) => {
-    return userController.getUser(req, res);
+router.get('/:userID', (req, res, next) => {
+    const AuthenticationToken = isAuthenticated(req, res, next)
+    if (AuthenticationToken) {
+        console.log(AuthenticationToken)
+        return userController.getUser(req, res);
+    };
 })
 
 router.post('/' ,(req, res) => {
