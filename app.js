@@ -7,10 +7,13 @@ import {router as serviceRouter} from './routes/services.js';
 import {router as reviewRouter} from './routes/review.js';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config({path: './.env'});
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({     // to support URL-encoded bodies
