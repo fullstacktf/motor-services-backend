@@ -17,3 +17,7 @@ export const updateUser = (variables) =>{
 export const destroyUser = (dni) => {
     return userRepository.destroy(dni);
 }
+
+export const getLocationImage = (path) => {
+    return userRepository
+}

@@ -1,7 +1,8 @@
 import { createUser, 
     findUser, 
     updateUser,
-    destroyUser 
+    destroyUser,
+    getLocationImage, 
 } from '../services/user.service.js';
 import bcrypt from 'bcrypt';
 
@@ -47,10 +48,22 @@ const deleteUser = async (req, res) => {
         .catch(err => res.status(500).json({error: String(err)}));
 }
 
+const uploadImage = async(req, res, next) => {
+    const file = req.file;
+    if (!file) {
+       return res.status(400).send({ message: 'Sube una foto.' });
+    }
+    //getLocationImage(file.path);
+    return res.send({ message: 'Foto subida correctamente.', file });
+}
+
+
+
 export default {
     getUser,
     addUser,
     editUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    uploadImage
 }

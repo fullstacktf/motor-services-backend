@@ -1,7 +1,5 @@
 import { execQuery } from '../database/database.js';
 
-//let data = '';
-//let queryExec = '';
 
 export class UserRepository {
     findByUserPk = async (user_id) => {

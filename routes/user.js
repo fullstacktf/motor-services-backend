@@ -1,6 +1,7 @@
 import express from 'express';
 export const router = express.Router();
 import userController from '../controllers/user.controller.js';
+import uploadUtils from '../upload/upload.js';
 
 router.get('/:userID', (req, res) => {
     return userController.getUser(req, res);
@@ -23,11 +24,16 @@ router.get('/:userID', (req, res) => {
 });
 
 router.post('/:id/auth', async (req, res) => {
-    return user.logIn(req,res);
+    return userController.logIn(req,res);
 });
 
 router.get('/logout', async (req,res) => {
-    return user.logOut(req,res);
+    return userController.logOut(req,res);
 });
+
+router.post('/uploadImage', uploadUtils.upload.single('dataFile'), (req, res, next) => {
+    return userController.uploadImage(req, res, next);
+ });
+
 
 //comprobar si es picker o owner?
