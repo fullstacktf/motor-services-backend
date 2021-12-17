@@ -10,7 +10,7 @@ export class UserRepository {
 
     create = async(variables) => {
         const queryExec = `insert into User(DNI, id_rol, password_key, email, city, first_name, last_name, phone_number, birth_date, profile_image) 
-        VALUES(${variables.DNI}, ${variables.id_rol}, '${variables.password_key}', '${variables.email}', '${variables.city}', '${variables.first_name}', '${variables.last_name}', ${variables.phone_number}, '${variables.birth_date}', '${variables.profile_image}');`;
+        VALUES(${variables.DNI}, ${variables.id_rol}, '${variables.password_key}', '${variables.email}', '${variables.city}', '${variables.first_name}', '${variables.last_name}', ${variables.phone_number}, '${variables.birth_date}', '');`;
         const data = await execQuery(queryExec);
         return data;
     }

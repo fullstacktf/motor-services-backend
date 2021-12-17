@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router();
 import userController from '../controllers/user.controller.js';
-import uploadUtils from '../upload/upload.js';
+import uploadUtils from '../uploadUtils/uploadImageUser.js';
 
 router.get('/:userID', (req, res) => {
     return userController.getUser(req, res);
@@ -31,7 +31,7 @@ router.get('/logout', async (req,res) => {
     return userController.logOut(req,res);
 });
 
-router.post('/uploadImage', uploadUtils.upload.single('dataFile'), (req, res, next) => {
+router.post('/uploadImage/:userID', uploadUtils.upload.single('dataFile'), (req, res, next) => {
     return userController.uploadImage(req, res, next);
  });
 
