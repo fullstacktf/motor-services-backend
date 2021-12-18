@@ -24,11 +24,6 @@ router.delete('/:userID/:idVehicle',(req, res)=>{
   return vehicleController.deleteVehicle(req,res)
 })
 
-// router.post('/upload/:userID', (req, res)=>{
-//  return vehicleController.uploadImage(req, res)
-//})
-
-
 router.post('/uploadImage/:vehicleID', uploadUtils.upload.single('dataFile'), (req, res, next) => {
   return vehicleController.uploadImage(req, res, next);
 });
