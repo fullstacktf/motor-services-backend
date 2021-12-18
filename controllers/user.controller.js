@@ -1,5 +1,4 @@
 import {
-    createUser,
     findUser,
     updateUser,
     destroyUser
@@ -45,7 +44,7 @@ const deleteUser = async (req, res) => {
 
 const editPicker = async (req, res) => {
     const variables = {
-        pickerID = req.params.pickerID;
+        pickerID: req.params.pickerID,
         ...req.body
     };
     if (variables.pickerID==req.userDNI){

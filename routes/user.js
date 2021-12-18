@@ -15,7 +15,7 @@ router.delete('/:userID',(req, res) => {
     return userController.deleteUser(req, res);
 })
 
-router.update('/picker/:pickerID', (req,res) => {
+router.put('/picker/:pickerID', (req,res) => {
     return userController.editPicker(req, res);
 })
 
