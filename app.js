@@ -5,6 +5,7 @@ import {router as vehicleRouter} from './routes/vehicle.js';
 import {router as appointmentRouter} from './routes/appointments.js';
 import {router as serviceRouter} from './routes/services.js';
 import {router as reviewRouter} from './routes/review.js';
+import {router as uploadRouter} from './routes/upload.js';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -28,6 +29,7 @@ app.use('/appointments', appointmentRouter);
 app.use('/services', serviceRouter);
 app.use('/reviews', reviewRouter);
 
+app.use('/upload', uploadRouter);
 
 
 export {app};
