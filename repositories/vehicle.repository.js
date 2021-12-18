@@ -1,8 +1,5 @@
 import { execQuery } from '../database/database.js';
 
-let data = '';
-let queryExec = '';
-
 export class VehicleRepository {
     findVehiclesByOwner = async(id_owner) => {
         const queryExec = `SELECT * FROM Vehicle Where id_owner=${id_owner};`;
@@ -17,11 +14,10 @@ export class VehicleRepository {
     }
 
     create = async (variables) =>{
-        queryExec = `INSERT INTO Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description) 
+        const queryExec = `INSERT INTO Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) 
         VALUES ('${variables.plate_number}', ${variables.id_owner}, '${variables.brand}', '${variables.model}', ${variables.powered}, ${variables.kilometers}, '${variables.fuel}', '${variables.vehicle_description}')`;
-        data = await execQuery(queryExec);
+        const data = await execQuery(queryExec);
         return data;
-
     }
 
     update = async (variables) => {

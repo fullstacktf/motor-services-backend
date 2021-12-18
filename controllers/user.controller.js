@@ -1,17 +1,18 @@
-import { 
-    findUser, 
+import {
+    createUser,
+    findUser,
     updateUser,
-    destroyUser, 
-    updatePicker
+    destroyUser
 } from '../services/user.service.js';
 import bcrypt from 'bcrypt';
-import res from 'express/lib/response';
+import fs from 'fs';
 
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
 
 const getUser = async (req, res) => {
     const user_id = req.params.userID;
+
     if (user_id==req.userDNI){
         findUser(user_id)
             .then(data => res.status(200).json(data))

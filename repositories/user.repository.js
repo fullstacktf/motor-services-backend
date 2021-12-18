@@ -1,7 +1,5 @@
 import { execQuery } from '../database/database.js';
 
-//let data = '';
-//let queryExec = '';
 
 export class UserRepository {
     findByUserPk = async (user_id) => {
@@ -9,6 +7,7 @@ export class UserRepository {
          const data = await execQuery(queryExec);
          return data;
     }
+
 
     update = async (variables) => {
         const queryExec = `UPDATE User 

@@ -24,7 +24,7 @@ const lastDatefunction = async () => { //¿Esta función va bien aqui?
 }
  
 
-
+//http://localhost:3000/appointments/owner/12345671?from=2021-01-01&to=2021-12-20&status=No%20Recogido
 const getOwnerAppointments = async (req, res) => {
     const variables = {
         user_id: req.params.userID,

@@ -9,10 +9,13 @@ import {router as uploadRouter} from './routes/upload.js';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { isAuthenticated } from './middleware/Authenticated.js';
+import cors from 'cors';
 
 dotenv.config({path: './.env'});
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({     // to support URL-encoded bodies
@@ -29,6 +32,7 @@ app.use('/appointments', appointmentRouter);
 app.use('/reviews', reviewRouter);
 app.use('/upload', uploadRouter);
 
+app.use('/upload', uploadRouter);
 
 
 export {app};
