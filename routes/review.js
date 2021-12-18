@@ -15,14 +15,14 @@ router.get('/averageRatingPicker/:id_picker', async (req,res)=>{
   return reviewController.getAverageRatingByPickerID(req,res);
 });
 
-router.get('/appointment/:id_appointment/', async (req,res)=>{
+router.get('/:userID/appointment/:id_appointment/', async (req,res)=>{
   return reviewController.getReviewByAppointmentID(req,res);
 });
 
-router.post('/appointment/:id_appointment/', async (req,res) => {
+router.post('/:userID/appointment/:id_appointment/', async (req,res) => {
     return reviewController.addReview(req, res);
   }); 
 
-router.delete('/appointment/:id_appointment', async (req,res) => {
+router.delete('/:userID/appointment/:id_appointment', async (req,res) => {
     return reviewController.deleteReview(req, res);
   }); 

@@ -1,4 +1,4 @@
-import { getLogin } from "../services/login.services.js";
+import { getLogin, createUser } from "../services/login.services.js";
 
 const login = async (req,res) => {
     const userEmail = req.body.email;
@@ -15,9 +15,20 @@ const login = async (req,res) => {
     }  
 }
 
-const logout = async (req, res) => {
+const logout = (req, res) => {
     res.clearCookie('jwt');
     res.send("Sesión terminada")
 }
 
-export default {login, logout}
+const addUser = async (req, res) => {
+    const variables = {
+        ...req.body 
+    }
+    
+    createUser(variables)
+        .then((data) => res.status(200).send("Usuario añadido correctamente"))
+        .catch(err => res.status(500).json({error: String(err)}));
+
+}
+
+export default {login, logout, addUser}

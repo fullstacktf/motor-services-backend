@@ -10,16 +10,10 @@ export class UserRepository {
          return data;
     }
 
-    create = async(variables) => {
-        const queryExec = `insert into User(DNI, id_rol, password_key, email, city, first_name, last_name, phone_number, birth_date, profile_image) 
-        VALUES(${variables.DNI}, ${variables.id_rol}, '${variables.password_key}', '${variables.email}', '${variables.city}', '${variables.first_name}', '${variables.last_name}', ${variables.phone_number}, '${variables.birth_date}', '${variables.profile_image}');`;
-        const data = await execQuery(queryExec);
-        return data;
-    }
-
     update = async (variables) => {
         const queryExec = `UPDATE User 
-        SET password_key='${variables.password_key}', email='${variables.email}', city='${variables.city}', first_name='${variables.first_name}', last_name='${variables.last_name}', phone_number=${variables.phone_number}, birth_date='${variables.birth_date}', profile_image='${variables.profile_image}' WHERE DNI=${variables.dni};`;
+        SET password_key='${variables.password_key}', email='${variables.email}', city='${variables.city}', first_name='${variables.first_name}', last_name='${variables.last_name}', phone_number=${variables.phone_number}, birth_date='${variables.birth_date}' 
+        WHERE DNI=${variables.dni};`;
         const data = await execQuery(queryExec);
         return data;
     }
@@ -28,5 +22,11 @@ export class UserRepository {
         const queryExec = `DELETE FROM User where DNI=${dni};`;
         const data = await execQuery(queryExec);
         return data;
+    }
+
+    updatePicker = async(variables) => {
+        const queryExec = `UPDATE Picker
+        SET start_time='${variables.start_time}', finish_time='${variables.finish_time}'
+        WHERE id_picker=${variables.pickerID};`
     }
 }

@@ -10,6 +10,10 @@ router.get('/logout', async(req, res)=> {
     return loginController.logout(req, res);
 });
 
+router.post('/register' , async(req, res) => {
+    return loginController.addUser(req, res);
+})
+
 // router.get('/checking', async(req,res) => {
 //     return login.checkCookie(req,res);
 // })
