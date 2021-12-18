@@ -6,14 +6,14 @@ export const findUser =  (user_id) => {
    return userRepository.findByUserPk(user_id);
 }
 
-export const createUser = (variables) => {
-    return userRepository.create(variables);
-}
-
 export const updateUser = (variables) =>{
     return userRepository.update(variables);
 }
 
 export const destroyUser = (dni) => {
     return userRepository.destroy(dni);
+}
+
+export const updatePicker = (variables) => {
+    return userRepository.updatePicker(variables);
 }

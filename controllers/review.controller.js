@@ -10,48 +10,63 @@ import { findReviewsByUserID,
 
     const getReviewsByUserID = async (req, res) => {
         const user_id = req.params.userID;
-        findReviewsByUserID(user_id)
-            .then(data => res.status(200).json(data))
-            .catch(err => res.status(500).json(String(err)));
+        if (user_id==req.userDNI){
+            findReviewsByUserID(user_id)
+                .then(data => res.status(200).json(data))
+                .catch(err => res.status(500).json(String(err)));
+        } else {res.status(403).json({error: "No tiene permisos"})}
     }
 
     const getReviewByAppointmentID = async (req, res) => {
+        const user_id = req.params.userID;
         const appointment_id = req.params.id_appointment;
-        findReviewsByAppointmentID(appointment_id)
-            .then(data => res.status(200).json(data))
-            .catch(err => res.status(500).json(String(err)));
+        if (user_id==req.userDNI){
+            findReviewsByAppointmentID(appointment_id)
+                .then(data => res.status(200).json(data))
+                .catch(err => res.status(500).json(String(err)));
+        }else {res.status(403).json({error: "No tiene permisos"})}
     }
 
     const getReviewsByPickerID = async (req, res) => {
         const picker_id = req.params.id_picker;
-        findReviewsByPickerID(picker_id)
-            .then(data => res.status(200).json(data))
-            .catch(err => res.status(500).json(String(err)));
+        if (picker_id==req.userDNI){
+            findReviewsByPickerID(picker_id)
+                .then(data => res.status(200).json(data))
+                .catch(err => res.status(500).json(String(err)));
+        }else {res.status(403).json({error: "No tiene permisos"})}
     }
 
     const getAverageRatingByPickerID = async(req, res) => {
         const picker_id = req.params.id_picker;
-        findAverageRatingByPickerID(picker_id)
-            .then(data => res.status(200).json(data))
-            .catch(err => res.status(500).json(String(err)));
+        if (picker_id==req.userDNI){
+            findAverageRatingByPickerID(picker_id)
+                .then(data => res.status(200).json(data))
+                .catch(err => res.status(500).json(String(err)));
+        }else {res.status(403).json({error: "No tiene permisos"})}
     }
 
     const addReview = async (req, res) => {
+        const user_id=req.params.userID;
         const variables = {
             id_appointment: req.params.id_appointment,
             notes: req.body.rating_notes,
             rating: req.body.rating,
         }
-        createReview(variables)
-            .then(() => res.status(200).send("Valoración añadida correctamente"))
-            .catch(err => res.status(500).json(String(err)));
+        if (user_id==req.userDNI){
+            createReview(variables)
+                .then(() => res.status(200).send("Valoración añadida correctamente"))
+                .catch(err => res.status(500).json(String(err)));
+        }else {res.status(403).json({error: "No tiene permisos"})}
     }
 
     const deleteReview = async (req, res) => {
+        const user_id = req.params.userID;
         const id_appointment = req.params.id_appointment;
-        destroyReview(id_appointment)
-            .then(() => res.status(200).send("Valoración eliminada correctamente"))
-            .catch(res.status(500).json(String(err)));
+        if (user_id==req.userDNI){
+            destroyReview(id_appointment)
+                .then(() => res.status(200).send("Valoración eliminada correctamente"))
+                .catch(res.status(500).json(String(err)));
+        }else {res.status(403).json({error: "No tiene permisos"})}
 
     }
 

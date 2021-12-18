@@ -6,6 +6,10 @@ export const findAppointmentsByUserID = (variables) => {
     return appointmentRepository.findByUserPk(variables);
 }
 
+export const filterAppointmentsByStatus = (variables) => {
+    return appointmentRepository.filterByStatus(variables);
+}
+
 export const findAppointmentsByPickerID = (variables) => {
     return appointmentRepository.findByPickerPk(variables);
 }
@@ -45,4 +49,21 @@ export const updateAppointment = (variables) => {
 
 export const destroyAppointment = (variables) => {
     return appointmentRepository.destroy(variables);
+}
+
+export const getCurrentDay = () => {
+    let today = new Date();
+
+    let dd = today.getDate();
+    if(dd<10) {
+        dd = '0'+dd;
+    };
+    let mm = today.getMonth();
+    if(mm<10) {
+        mm = '0'+mm;
+    };
+    const yyyy = today.getFullYear();
+    today = yyyy+'-'+mm+'-'+'dd';
+    return today
+
 }

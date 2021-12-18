@@ -18,7 +18,6 @@ export class VehicleRepository {
         VALUES ('${variables.plate_number}', ${variables.id_owner}, '${variables.brand}', '${variables.model}', ${variables.powered}, ${variables.kilometers}, '${variables.fuel}', '${variables.vehicle_description}')`;
         const data = await execQuery(queryExec);
         return data;
-
     }
 
     update = async (variables) => {
