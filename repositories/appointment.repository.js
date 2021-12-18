@@ -12,7 +12,7 @@ export class AppointmentRepository {
     findByVehiclePk = async (variables) => {
         const queryExec = `SELECT * 
         FROM Appointment 
-        WHERE id_vehicle='${variables.vehicle_id}' AND appointment_request='${variables.request}' AND appointment_status='${variables.status}' 
+        WHERE id_vehicle='${variables.vehicle_id}' AND appointment_request='${variables.request}' 
         AND pick_up_date between '${variables.from}' AND '${variables.to}' 
         ORDER BY pick_up_date DESC;`;
         const data = await execQuery(queryExec);
@@ -22,9 +22,10 @@ export class AppointmentRepository {
     findByUserPk = async (variables) => {
         const queryExec = `SELECT *
         FROM Appointment 
-        JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle) 
+        JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle)
+        JOIN Services ON (Appointment.id_serviced = Services.id_service)
         WHERE id_owner =${variables.user_id} AND appointment_request='${variables.request}'
-        AND appointment_status='${variables.status}' AND pick_up_date between '${variables.from}' AND '${variables.to}' ORDER BY pick_up_date DESC;`;
+        AND pick_up_date between '${variables.from}' AND '${variables.to}' ORDER BY pick_up_date DESC;`;
         const data = await execQuery(queryExec);
         return data;
     }
@@ -32,7 +33,7 @@ export class AppointmentRepository {
     findByPickerPk = async (variables) => {
         const queryExec = `SELECT *
         FROM Appointment WHERE id_picker = ${variables.picker_id} AND appointment_request='${variables.request}' AND 
-        appointment_status='${variables.status}' AND pick_up_date between '${variables.from}' AND '${variables.to}' ORDER BY pick_up_date DESC;`;
+        AND pick_up_date between '${variables.from}' AND '${variables.to}' ORDER BY pick_up_date DESC;`;
         const data = await execQuery(queryExec);
         return data;
     }

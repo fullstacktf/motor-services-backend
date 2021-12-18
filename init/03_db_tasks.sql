@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS Services (
 CREATE TABLE IF NOT EXISTS Appointment (
     id_appointment INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_vehicle VARCHAR(8) NOT NULL,
-    id_service INT UNSIGNED NOT NULL,
+    id_serviced INT UNSIGNED NOT NULL,
     id_picker INT UNSIGNED,
     pick_up_latitude FLOAT NOT NULL,
     pick_up_longitude FLOAT NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS Appointment (
     delivery_city VARCHAR(100) NOT NULL,
     garage VARCHAR(100),
     CONSTRAINT FOREIGN KEY (id_vehicle) REFERENCES Vehicle(plate_number) ON DELETE CASCADE,
-    CONSTRAINT FOREIGN KEY (id_service) REFERENCES Services(id_service) ON DELETE CASCADE,
+    CONSTRAINT FOREIGN KEY (id_serviced) REFERENCES Services(id_service) ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (id_picker) REFERENCES Picker(id_picker) ON DELETE CASCADE
     /* PRIMARY KEY (id_vehicle, pick_up_date) un vehiculo solo puede pedir una cita por dia */ 
 );

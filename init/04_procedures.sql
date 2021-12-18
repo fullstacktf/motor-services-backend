@@ -74,7 +74,7 @@ DELIMITER //
 //
 CREATE PROCEDURE pickauto.Insert_appointment(
   id_vehicle_value varchar(8),
-  id_service_value int(10) unsigned,
+  id_serviced_value int(10) unsigned,
   id_picker_value int(10) unsigned,
   pick_up_latitude_value FLOAT,
   pick_up_longitude_value FLOAT,
@@ -90,8 +90,8 @@ CREATE PROCEDURE pickauto.Insert_appointment(
   delivery_city_value varchar(100),
   garage_value varchar(100))
     BEGIN
-      insert into Appointment (id_vehicle, id_service, id_picker, pick_up_latitude, pick_up_longitude, pick_up_city, pick_up_date, pick_up_time, appointment_status, appointment_request, owner_notes, picker_notes, delivery_latitude, delivery_longitude, delivery_city, garage) VALUES
-      (id_vehicle_value, id_service_value, id_picker_value, pick_up_latitude_value, pick_up_longitude_value, pick_up_city_value, pick_up_date_value, pick_up_time_value, appointment_status_value, appointment_request_value, owner_notes_value, picker_notes_value, delivery_latitude_value, delivery_longitude_value, delivery_city_value, garage_value);
+      insert into Appointment (id_vehicle, id_serviced, id_picker, pick_up_latitude, pick_up_longitude, pick_up_city, pick_up_date, pick_up_time, appointment_status, appointment_request, owner_notes, picker_notes, delivery_latitude, delivery_longitude, delivery_city, garage) VALUES
+      (id_vehicle_value, id_serviced_value, id_picker_value, pick_up_latitude_value, pick_up_longitude_value, pick_up_city_value, pick_up_date_value, pick_up_time_value, appointment_status_value, appointment_request_value, owner_notes_value, picker_notes_value, delivery_latitude_value, delivery_longitude_value, delivery_city_value, garage_value);
     END;//
 
 DELIMITER ;

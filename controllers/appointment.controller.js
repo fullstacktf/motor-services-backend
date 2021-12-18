@@ -26,7 +26,6 @@ const lastDatefunction = async () => { //¿Esta función va bien aqui?
 const getOwnerAppointments = async (req, res) => {
     const variables = {
         user_id: req.params.userID,
-        status: (req.query.status) ? (req.query.status) : 'No recogido',
         request: (req.query.request) ? (req.query.request) : 'Aceptada',
         from: (req.query.from) ? (req.query.from) : '1970-01-01',
         to: (req.query.to) ? (req.query.to) : await lastDatefunction()
@@ -40,7 +39,6 @@ const getOwnerAppointments = async (req, res) => {
 const getPickerAppointments = async (req, res) => {
     const variables = {
         picker_id: req.params.pickerID,
-        status: (req.query.status) ? (req.query.status) : 'No recogido',
         request: (req.query.request) ? (req.query.request) : 'Aceptada',
         from: (req.query.from) ? (req.query.from) : '1970-01-01', 
         to: (req.query.to) ? (req.query.to) : await lastDatefunction()
@@ -53,7 +51,6 @@ const getPickerAppointments = async (req, res) => {
 const getAppointmentByVehicleID = async (req, res) =>{
     const variables = {
         vehicle_id: req.params.vehicleID,
-        status: (req.query.status) ? (req.query.status) : 'No recogido',
         request: (req.query.request) ? (req.query.request) : 'Aceptada',
         from: (req.query.from) ? (req.query.from) : '1970-01-01', 
         to: (req.query.to) ? (req.query.to) : await lastDatefunction()
