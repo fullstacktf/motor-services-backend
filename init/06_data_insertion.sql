@@ -534,7 +534,24 @@ CALL Insert_appointment(
     'LimpiAuto'
 );
 
-
+CALL Insert_appointment(
+    '1134abd',
+    5,
+    12345674,
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2021-10-19',
+    '10:30',
+    'No recogido',
+    'Pendiente',
+    'Limpiar el exterior',
+    '',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    'LimpiAuto'
+);
 /*-------------------------------*/
 
 CALL Insert_review(1, 'Todo correcto, muy puntual', 5);
