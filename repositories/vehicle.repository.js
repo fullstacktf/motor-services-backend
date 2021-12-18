@@ -15,14 +15,14 @@ export class VehicleRepository {
 
     create = async (variables) =>{
         const queryExec = `INSERT INTO Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) 
-        VALUES ('${variables.plate_number}', ${variables.id_owner}, '${variables.brand}', '${variables.model}', ${variables.powered}, ${variables.kilometers}, '${variables.fuel}', '${variables.vehicle_description}', '${variables.vehicle_image}')`;
+        VALUES ('${variables.plate_number}', ${variables.id_owner}, '${variables.brand}', '${variables.model}', ${variables.powered}, ${variables.kilometers}, '${variables.fuel}', '${variables.vehicle_description}')`;
         const data = await execQuery(queryExec);
         return data;
 
     }
 
     update = async (variables) => {
-        const queryExec = `UPDATE Vehicle SET brand='${variables.brand}', model='${variables.model}', powered='${variables.powered}', kilometers=${variables.kilometers}, fuel='${variables.fuel}', vehicle_description='${variables.vehicle_description}', vehicle_image='${variables.vehicle_image}'
+        const queryExec = `UPDATE Vehicle SET brand='${variables.brand}', model='${variables.model}', powered='${variables.powered}', kilometers=${variables.kilometers}, fuel='${variables.fuel}', vehicle_description='${variables.vehicle_description}'
         WHERE plate_number LIKE '${variables.plate_number}';`
         const data = await execQuery(queryExec);
         return data;

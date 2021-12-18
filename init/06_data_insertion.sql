@@ -13,8 +13,7 @@ CALL Insert_user(
     'James',
     'Ford',
     123456789,
-    '1969-07-20',
-    'Sawyer'
+    '1969-07-20'
 );
 CALL Insert_user(
     12345679,
@@ -25,8 +24,7 @@ CALL Insert_user(
     'Jack',
     'Shephard',
     123456389,
-    '1966-07-14',
-    'Doctor'
+    '1966-07-14'
 );
 CALL Insert_user(
     12345671,
@@ -37,8 +35,7 @@ CALL Insert_user(
     'Kate',
     'Hudson',
     123356789,
-    '1979-08-03',
-    'Kate'
+    '1979-08-03'
 );
 CALL Insert_user(
     12345672,
@@ -49,8 +46,7 @@ CALL Insert_user(
     'John',
     'Locke',
     123356289,
-    '1952-07-15',
-    'Locke'
+    '1952-07-15'
 );
 CALL Insert_user(
     12345673,
@@ -61,8 +57,7 @@ CALL Insert_user(
     'Hugo',
     'Reyes',
     123356729,
-    '1973-04-28',
-    'Hurley'
+    '1973-04-28'
 );
 CALL Insert_user(
     12345674,
@@ -73,8 +68,7 @@ CALL Insert_user(
     'Charlie',
     'Pace',
     113356729,
-    '1976-12-08',
-    'Charlie'
+    '1976-12-08'
 );
 CALL Insert_user(
     12345675,
@@ -85,8 +79,7 @@ CALL Insert_user(
     'Boone',
     'Carlyle',
     123356029,
-    '1978-12-08',
-    'Boone'
+    '1978-12-08'
 );
 CALL Insert_user(
     12345676,
@@ -97,8 +90,7 @@ CALL Insert_user(
     'Sayid',
     'Jarrah',
     123356720,
-    '1969-01-17',
-    'Sayid'
+    '1969-01-17'
 );
 CALL Insert_user(
     12345677,
@@ -109,8 +101,7 @@ CALL Insert_user(
     'Shannon',
     'Rutherford',
     103356729,
-    '1983-09-21',
-    'Shannon'
+    '1983-09-21'
 );
 
 /*-------------------------------*/
@@ -123,8 +114,7 @@ CALL Insert_vehicle(
     140,
     38909,
     'diesel',
-    'Precioso ford fiesta morado, 5 puertas',
-    'Coche morado'
+    'Precioso ford fiesta morado, 5 puertas'
 );
 CALL Insert_vehicle(
     '1134fbd',
@@ -134,8 +124,7 @@ CALL Insert_vehicle(
     140,
     323879,
     'gasolina',
-    'Edicion Veneno',
-    'Mercedes blanco'
+    'Edicion Veneno'
 );
 CALL Insert_vehicle(
     '1154abd',
@@ -145,8 +134,7 @@ CALL Insert_vehicle(
     115,
     29000,
     'gasolina',
-    'RENAULT Megane Limited TCe GPF 85 kW 115CV 5p',
-    'Coche morado'
+    'RENAULT Megane Limited TCe GPF 85 kW 115CV 5p'
 );
 CALL Insert_vehicle(
     '5154abd',
@@ -156,8 +144,7 @@ CALL Insert_vehicle(
     88,
     24000,
     'gasolina',
-    'Softail heritage. Nacional 5HD. TC 88  Inyeccion. Estado impecable. Ruedas, pastillas de freno y bateria nuevos.',
-    'La mochillo'
+    'Softail heritage. Nacional 5HD. TC 88  Inyeccion. Estado impecable. Ruedas, pastillas de freno y bateria nuevos.'
 );
 CALL Insert_vehicle(
     '6278geb',
@@ -167,8 +154,7 @@ CALL Insert_vehicle(
     125,
     2000,
     'híbrido',
-    'FORD Puma 1.0 EcoBoost 92kW 125cv STLine MHEV 5p',
-    'Coche morado'
+    'FORD Puma 1.0 EcoBoost 92kW 125cv STLine MHEV 5p'
 );
 CALL Insert_vehicle(
     '2863aaf',
@@ -178,8 +164,7 @@ CALL Insert_vehicle(
     116,
     6699,
     'diesel',
-    'BMW Serie 1 116d 5p blanco',
-    'Coche ab'
+    'BMW Serie 1 116d 5p blanco'
 );
 CALL Insert_vehicle(
     '3456fdh',
@@ -189,8 +174,7 @@ CALL Insert_vehicle(
     150,
     55400,
     'diesel',
-    'MINI CLUBMAN COOPER D automatico 5p verde',
-    'Mini verde'
+    'MINI CLUBMAN COOPER D automatico 5p verde'
 );
 CALL Insert_vehicle(
     '3247jhr',
@@ -200,8 +184,7 @@ CALL Insert_vehicle(
     197,
     75400,
     'híbrido',
-    'LEXUS NX 2.5300h F Sport 4WD Panoramico Navibox 5p rojo',
-    'Lexus rojo'
+    'LEXUS NX 2.5300h F Sport 4WD Panoramico Navibox 5p rojo'
 );
 
 /*-------------------------------*/
@@ -400,6 +383,25 @@ CALL Insert_appointment(
     'Taller Quitagolpes'
 );
 CALL Insert_appointment(
+    '6278geb',
+    5,
+    12345674,
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2021-12-19',
+    '16:30',
+    'No recogido',
+    'Aceptada',
+    'Limpiar el exterior',
+    '',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    'LimpiAuto'
+);
+
+CALL Insert_appointment(
     '3456fdh',
     5,
     12345674,
@@ -407,6 +409,120 @@ CALL Insert_appointment(
     2.1769, 
     'Barcelona',
     '2021-12-19',
+    '16:30',
+    'No recogido',
+    'Aceptada',
+    'Limpiar el exterior',
+    '',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    'LimpiAuto'
+);
+
+CALL Insert_appointment(
+    '3247jhr',
+    5,
+    12345674,
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2021-12-19',
+    '11:30',
+    'No recogido',
+    'Aceptada',
+    'Limpiar el exterior',
+    '',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    'LimpiAuto'
+);
+
+CALL Insert_appointment(
+    '3456fdh',
+    5,
+    12345674,
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2021-12-19',
+    '16:30',
+    'No recogido',
+    'Aceptada',
+    'Limpiar el exterior',
+    '',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    'LimpiAuto'
+);
+
+CALL Insert_appointment(
+    '3247jhr',
+    5,
+    12345674,
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2021-11-17',
+    '19:30',
+    'No recogido',
+    'Aceptada',
+    'Limpiar el exterior',
+    '',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    'LimpiAuto'
+);
+
+CALL Insert_appointment(
+    '2863aaf',
+    5,
+    12345674,
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2020-01-19',
+    '15:30',
+    'No recogido',
+    'Aceptada',
+    'Limpiar el exterior',
+    '',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    'LimpiAuto'
+);
+
+CALL Insert_appointment(
+    '2863aaf',
+    5,
+    12345674,
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2021-12-19',
+    '17:30',
+    'No recogido',
+    'Aceptada',
+    'Limpiar el exterior',
+    '',
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    'LimpiAuto'
+);
+
+CALL Insert_appointment(
+    '2863aaf',
+    5,
+    12345674,
+    41.3825, 
+    2.1769, 
+    'Barcelona',
+    '2021-10-19',
     '16:30',
     'No recogido',
     'Aceptada',

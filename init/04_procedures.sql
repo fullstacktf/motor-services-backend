@@ -20,11 +20,10 @@ CREATE PROCEDURE pickauto.Insert_user(
   first_name_value varchar(20),
   last_name_value varchar(40),
   phone_number_value int(10) unsigned,
-  birth_date_value date,
-  profile_image_value varchar(100))
+  birth_date_value date)
     BEGIN
-      insert into User (DNI, id_rol, password_key, email, city, first_name, last_name, phone_number, birth_date, profile_image) VALUES
-      (DNI_value,id_rol_value, password_key_value, email_value, city_value, first_name_value, last_name_value, phone_number_value, birth_date_value, profile_image_value);
+      insert into User (DNI, id_rol, password_key, email, city, first_name, last_name, phone_number, birth_date) VALUES
+      (DNI_value,id_rol_value, password_key_value, email_value, city_value, first_name_value, last_name_value, phone_number_value, birth_date_value);
     END;//
 
 DELIMITER ;
@@ -39,11 +38,10 @@ CREATE PROCEDURE pickauto.Insert_vehicle(
   powered_value int(10) unsigned,
   kilometers_value int(10) unsigned,
   fuel_value varchar(10),
-  vehicle_description_value varchar(200),
-  vehicle_image_value varchar(200))
+  vehicle_description_value varchar(200))
     BEGIN
-      insert into Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description, vehicle_image) VALUES
-      (plate_number_value, id_owner_value, brand_value, model_value, powered_value, kilometers_value, fuel_value, vehicle_description_value, vehicle_image_value);
+      insert into Vehicle (plate_number, id_owner, brand, model, powered, kilometers, fuel, vehicle_description) VALUES
+      (plate_number_value, id_owner_value, brand_value, model_value, powered_value, kilometers_value, fuel_value, vehicle_description_value);
     END;//
 
 DELIMITER ;

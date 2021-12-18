@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS User (
     last_name VARCHAR(40) NOT NULL,
     phone_number INT UNSIGNED UNIQUE,
     birth_date DATE NOT NULL,
-    profile_image VARCHAR(100),  /*fs.writeFile(req.body['file'].toByteArray())    /var/www/html/images*/
     /*Las imágenes van en una carpeta y en la tabla se hace referencia a la ruta*/
     FOREIGN KEY (id_rol) REFERENCES Rol(id_rol) ON DELETE CASCADE
 );
@@ -39,7 +38,6 @@ CREATE TABLE IF NOT EXISTS Vehicle (
     kilometers INT UNSIGNED,
     fuel ENUM('diesel', 'gasolina','híbrido', 'electrico', 'gas'), /*Cambiar esto por varchars y añadirlo en data insertion*/
     vehicle_description VARCHAR(200),
-    vehicle_image VARCHAR(100),
     FOREIGN KEY (id_owner) REFERENCES User(DNI) ON DELETE CASCADE
 );
 

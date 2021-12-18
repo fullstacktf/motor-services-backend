@@ -25,7 +25,6 @@ export class AppointmentRepository {
         JOIN Vehicle ON (Vehicle.plate_number = Appointment.id_vehicle) 
         WHERE id_owner =${variables.user_id} AND appointment_request='${variables.request}'
         AND appointment_status='${variables.status}' AND pick_up_date between '${variables.from}' AND '${variables.to}' ORDER BY pick_up_date DESC;`;
-        console.log(queryExec);
         const data = await execQuery(queryExec);
         return data;
     }
