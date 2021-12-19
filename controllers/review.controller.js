@@ -3,7 +3,8 @@ import { findReviewsByUserID,
      findReviewsByPickerID, 
      findAverageRatingByPickerID,
      createReview, 
-     destroyReview 
+     destroyReview , 
+     updateReview
     } from '../services/review.service.js';
 
 
@@ -47,14 +48,25 @@ import { findReviewsByUserID,
 
     const addReview = async (req, res) => {
         const user_id=req.params.userID;
-        const variables = {
-            id_appointment: req.params.id_appointment,
-            notes: req.body.rating_notes,
-            rating: req.body.rating,
-        }
+        const id_appointment= req.params.id_appointment;
+
         if (user_id==req.userDNI){
-            createReview(variables)
+            createReview(id_appointment)
                 .then(() => res.status(200).send("Valoración añadida correctamente"))
+                .catch(err => res.status(500).json(String(err)));
+        }else {res.status(403).json({error: "No tiene permisos"})}
+    }
+
+    const editReview = async (req, res) => {
+        const user_id=req.params.userID;
+        const variables = {
+            review_id: req.params.id_appointment,
+            ...req.body
+        }
+
+        if (user_id==req.userDNI){
+            updateReview(variables)
+                .then(() => res.status(200).send("Valoración actualizada correctamente"))
                 .catch(err => res.status(500).json(String(err)));
         }else {res.status(403).json({error: "No tiene permisos"})}
     }
@@ -76,5 +88,6 @@ export default {
     getReviewsByPickerID,
     getAverageRatingByPickerID,
     addReview,
-    deleteReview
+    deleteReview,
+    editReview
 };

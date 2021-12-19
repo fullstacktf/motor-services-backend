@@ -23,6 +23,10 @@ router.post('/:userID/appointment/:id_appointment/', async (req,res) => {
     return reviewController.addReview(req, res);
   }); 
 
+router.put('/:userID/appointment/:id_appointment', async (req,res) => {
+  return reviewController.editReview(req, res);
+});
+
 router.delete('/:userID/appointment/:id_appointment', async (req,res) => {
     return reviewController.deleteReview(req, res);
   }); 
