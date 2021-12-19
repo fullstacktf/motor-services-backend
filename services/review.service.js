@@ -18,8 +18,12 @@ export const findAverageRatingByPickerID = (picker_id) => {
     return reviewRepository.findAverageRatingByPickerPk(picker_id);
 }
 
-export const createReview = (variables) => {
-    return reviewRepository.create(variables);
+export const createReview = (id_appointment) => {
+    return reviewRepository.create(id_appointment);
+}
+
+export const updateReview = (variables) => {
+    return reviewRepository.update(variables);
 }
 
 export const destroyReview = (appointment_id) => {
