@@ -34,9 +34,10 @@ export const findAppointmentsByID = (appointment_id) => {
 export const createAppointment = async (appointment) => {
 
     //los test se hacen en servicios
-    const committedRegs = await appointmentRepository.findIfvehicleCommitted(appointment.id_vehicle);
+    //const committedRegs = await appointmentRepository.findIfvehicleCommitted(appointment.id_vehicle);
     const plateDateRegs = await appointmentRepository.findPlateDateUnique(appointment.id_vehicle, appointment.pick_up_date);
-    if (committedRegs.length == 0 && plateDateRegs == 0) {
+    console.log(/*committedRegs, */plateDateRegs);
+    if (/*committedRegs.length == 0 && */plateDateRegs == 0) {
         return appointmentRepository.create(appointment);
     } else { //vehiculo todavia tiene citas, preguntar este return
         throw new Error("No puedes pedir citas para ese vehículo, o bien ya solicitaste una cita para ese día o bien tu vehículo está en una cita en curso"); // comprobar esto
