@@ -110,7 +110,7 @@ const addAppointment = async (req, res) => {
 const editAppointment = async (req, res) => { 
     const userID = req.params.userID;
     const appointment = { 
-        id_appointment: req.params.id,
+        appointment_id: req.params.appointmentID,
         ...req.body
     };
     if (userID==req.userDNI){
