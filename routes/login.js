@@ -1,4 +1,5 @@
 import express from 'express';
+import { async } from 'regenerator-runtime';
 const router = express.Router();
 import loginController from '../controllers/login.controller.js';
 
@@ -12,6 +13,10 @@ router.get('/logout', async(req, res)=> {
 
 router.post('/register' , async(req, res) => {
     return loginController.addUser(req, res);
+})
+
+router.get('/cookie', async(req, res) => {
+    return req.cookies.jwt
 })
 
 // router.get('/checking', async(req,res) => {
