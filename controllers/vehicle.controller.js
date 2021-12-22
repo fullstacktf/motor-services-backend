@@ -10,22 +10,22 @@ import fs from 'fs';
 
 const getVehiclesFromUser = async (req, res) => {
     const owner_id = req.params.userID;
-    if (owner_id==req.userDNI){
+    //if (owner_id==req.userDNI){
         findVehicles(owner_id)
             .then(data => res.status(200).json(data))
             .catch(err => res.status(500).json(String(err)));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 
 }
 
 const getVehicleById = async (req, res) => {
     const user_id =req.params.userID;
     const vehicle_id = req.params.idVehicle;
-    if (user_id==req.userDNI){
+    //if (user_id==req.userDNI){
         findVehicle(vehicle_id)
             .then(data => res.status(200).json(data))
             .catch(err => res.status(500).json(String(err)));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const addVehicle = async (req, res) => {
@@ -33,11 +33,11 @@ const addVehicle = async (req, res) => {
         id_owner: req.params.userID,
         ...req.body
     };
-    if (variables.id_owner==req.userDNI){
+    //if (variables.id_owner==req.userDNI){
         createVehicle(variables)
             .then(() => res.status(200).send("Vehiculo añadido correctamente"))
             .catch(err =>res.status(500).json(String(err)));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const editVehicle = async (req, res) => {
@@ -47,26 +47,26 @@ const editVehicle = async (req, res) => {
         plate_number: req.params.idVehicle,
         ...req.body
     };
-    if (user_id==req.userDNI){
+    //if (user_id==req.userDNI){
         updateVehicle(variables)
             .then(() => res.status(200).send("Vehículo actualizado correctamente"))
             .catch(err => {res.status(500).json(String(err))});
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const deleteVehicle = async (req, res) => {
     const user_id = req.params.userID;
     const vehicle_id = req.params.idVehicle;
-    if (user_id==req.userDNI){
+    //if (user_id==req.userDNI){
         destroyVehicle(vehicle_id)
             .then(() => res.send("Vehiculo eliminado correctamente"))
             .catch(err => res.status(500).json(String(err)));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const uploadImage = async (req, res, next) => {
     const userID = req.params.userID
-    if (userID==req.userDNI){
+    //if (userID==req.userDNI){
         //cambiar el nombre al archivo
         const file = req.file;
         if (!file) {
@@ -84,7 +84,7 @@ const uploadImage = async (req, res, next) => {
           }
 
         return res.send({ message: 'Foto subida correctamente.', file });
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }   
 
 export default {

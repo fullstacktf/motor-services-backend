@@ -44,21 +44,21 @@ export class ReviewRepository {
 
     create = async (id_appointment) => {
         const queryExec = `INSERT INTO Review (id_review) 
-        VALUES ('${id_appointment}';`;
+        VALUES (${id_appointment});`;
         const data = await execQuery(queryExec);
         return data;
     }
 
     update = async (variables) => {
         const queryExec = `UPDATE Review 
-        SET notes='${variables.notes}' rating=${variables.rating}
+        SET notes='${variables.notes}', rating=${variables.rating}
         WHERE id_review = ${variables.review_id};`;
         const data = await execQuery(queryExec);
         return data;
     }
 
     destroy = async (appointment_id) => {
-        const queryExec =`DELETE FROM Review where id_review='${appointment_id}';`;
+        const queryExec =`DELETE FROM Review where id_review=${appointment_id};`;
         const data = await execQuery(queryExec);
         return data;
     }

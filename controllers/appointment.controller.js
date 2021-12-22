@@ -1,3 +1,4 @@
+import { async } from 'regenerator-runtime';
 import {
     findAppointmentsByUserID,
     filterAppointmentsByStatus,
@@ -8,7 +9,10 @@ import {
     findLastDateInDB,
     findAppointmentsByVehicleID,
     findAppointmentsByID,
-    findAvailablePickersInDB
+    findAvailablePickersInDB, 
+    updateAppointmentRequest,
+    updateAppointmentStatus,
+    findAppointmentByRequest
 } from '../services/appointment.service.js';
 
 
@@ -33,11 +37,11 @@ const getOwnerAppointments = async (req, res) => {
         toDate: (req.query.to) ? (req.query.to) : '2100-01-01'//await lastDatefunction()
     };
     //console.log(variables.toDate)
-    if (variables.user_id==req.userDNI){
+    //if (variables.user_id==req.userDNI){
         findAppointmentsByUserID(variables)
             .then(data => res.status(200).json(data))
             .catch(err => res.status(500).json(String(err)));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const filterOwnerAppointmentsByStatus = async (req, res) => {
@@ -48,11 +52,11 @@ const filterOwnerAppointmentsByStatus = async (req, res) => {
         fromDate: (req.query.from) ? (req.query.from) : '1970-01-01',
         toDate: (req.query.to) ? (req.query.to) : await lastDatefunction()
     }
-    if (variables.user_id==req.userDNI){
+    //if (variables.user_id==req.userDNI){
         filterAppointmentsByStatus(variables)
             .then(data => res.status(200).json(data))
             .catch(err => res.status(500).json(String(err)));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const getPickerAppointments = async (req, res) => {
@@ -62,11 +66,11 @@ const getPickerAppointments = async (req, res) => {
         fromDate: (req.query.from) ? (req.query.from) : '1970-01-01', 
         toDate: (req.query.to) ? (req.query.to) : await lastDatefunction()
     }
-    if (variables.picker_id==req.userDNI){
+    //if (variables.picker_id==req.userDNI){
         findAppointmentsByPickerID(variables)
             .then(data => res.status(200).json(data))
             .catch(err => res.status(500).json(String(err)));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const getAppointmentByVehicleID = async (req, res) =>{
@@ -77,21 +81,34 @@ const getAppointmentByVehicleID = async (req, res) =>{
         fromDate: (req.query.from) ? (req.query.from) : '1970-01-01', 
         toDate: (req.query.to) ? (req.query.to) : await lastDatefunction()
     }
-    if(userID==req.userDNI){
+    //if(userID==req.userDNI){
         findAppointmentsByVehicleID(variables)
             .then(data => res.status(200).json(data))
             .catch(err => res.status(500).json(String(err)));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const getAppointmentByID = async (req, res) => {
     const user_id = req.params.userID;
     const appointment_id = req.params.appointmentID;
-    if (user_id==req.userDNI){
+    //if (user_id==req.userDNI){
         findAppointmentsByID(appointment_id)
         .then(data => res.status(200).json(data))
             .catch(err => res.status(500).json(String(err)));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
+}
+
+const getAppointmentByRequest = async (req, res) => {
+    const user_id =req.params.userID;
+    const variables = {
+        id_picker: req.params.userID,
+        appointment_request: req.params.requestStatus
+    }
+    //if (user_id==req.userDNI){
+        findAppointmentByRequest(variables)
+            .then(data => res.status(200).json(data))
+            .catch(err => res.status(500).json(String(err)));
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const addAppointment = async (req, res) => {
@@ -100,11 +117,11 @@ const addAppointment = async (req, res) => {
         id_vehicle: req.params.vehicleID,
         ...req.body
     }
-    if (userID==req.userDNI){
+    //if (userID==req.userDNI){
         createAppointment(variables)
             .then(data => res.status(200).send("Cita insertada correctamente"))
             .catch(err => res.status(500).json({error: String(err)}));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const editAppointment = async (req, res) => { 
@@ -113,21 +130,47 @@ const editAppointment = async (req, res) => {
         appointment_id: req.params.appointmentID,
         ...req.body
     };
-    if (userID==req.userDNI){
+    //if (userID==req.userDNI){
         updateAppointment(appointment)
             .then(data => res.status(200).send("Cita modificada correctamente"))
             .catch(err => res.status(500).json({error: String(err)}));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
+}
+
+const editRequest = async (req,res) => {
+    const userID = req.params.userID
+    const variables = {
+        id_appointment: req.params.appointmentID,
+        ...req.body
+    };
+    //if (userID==req.userDNI) {
+        updateAppointmentRequest(variables)
+            .then(data => res.status(200).send("Estado de la petición actualizado"))
+            .catch(err => res.status(500).json({error: String(err)}));
+    //}else {res.status(403).json({error: "No tiene permisos"})}
+}
+
+const editStatus = async (req,res) => {
+    const userID = req.params.userID
+    const variables = {
+        id_appointment: req.params.appointmentID,
+        ...req.body
+    };
+    //if (userID==req.userDNI) {
+        updateAppointmentStatus(variables)
+            .then(data => res.status(200).send("Estado de la cita actualizado"))
+            .catch(err => res.status(500).json({error: String(err)}));
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const deleteAppointment = async (req, res) => {
     const user_id = req.params.userID;
     const appointment_id = req.params.appointmentID;
-    if (user_id==req.userDNI){
+    //if (user_id==req.userDNI){
         destroyAppointment(appointment_id)
             .then(data => res.status(200).send("Cita eliminada correctamente"))
             .catch(err => res.status(500).json({error: String(err)}));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const getAvailablePickers = async (req, res) => {
@@ -149,5 +192,8 @@ export default {
     editAppointment, 
     deleteAppointment, 
     getAvailablePickers,
-    filterOwnerAppointmentsByStatus
+    filterOwnerAppointmentsByStatus,
+    editRequest,
+    editStatus,
+    getAppointmentByRequest
 }

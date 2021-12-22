@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 app.use('/', loginRouter);
 app.use('/services', serviceRouter);
-app.use(isAuthenticated)
+//app.use(isAuthenticated)
 app.use('/vehicles', vehicleRouter);
 app.use('/users', userRouter);
 app.use('/appointments', appointmentRouter);

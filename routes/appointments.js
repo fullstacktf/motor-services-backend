@@ -31,6 +31,10 @@ router.get('/:userID/:appointmentID', async (req, res) => {
     return appointmentController.getAppointmentByID(req,res);
 });
 
+router.get('/:userID/picker/:requestStatus', async (req, res) => {
+    return appointmentController.getAppointmentByRequest(req,res);
+})
+
 router.post('/:userID/vehicle/:vehicleID', async (req, res) => { 
     return appointmentController.addAppointment(req, res);
 });
@@ -38,6 +42,14 @@ router.post('/:userID/vehicle/:vehicleID', async (req, res) => {
 router.put('/:userID/:appointmentID', async (req, res) => {
     return appointmentController.editAppointment(req, res);
 });
+
+router.put('/:userID/picker/:appointmentID/request', async (req,res) => {
+    return appointmentController.editRequest(req,res);
+})
+
+router.put('/:userID/picker/:appointmentID/status', async (req,res) => {
+    return appointmentController.editStatus(req,res);
+})
 
 router.delete('/:userID/:appointmentID', async (req, res) => {
     return appointmentController.deleteAppointment(req, res);

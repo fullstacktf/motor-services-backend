@@ -31,6 +31,11 @@ export const findAppointmentsByID = (appointment_id) => {
     return appointmentRepository.findByAppointmentPk(appointment_id);
 }
 
+export const findAppointmentByRequest = (variables) => {
+    console.log("service", variables);
+    return appointmentRepository.filterByRequest(variables);
+}
+
 export const createAppointment = async (appointment) => {
 
     //los test se hacen en servicios
@@ -46,6 +51,14 @@ export const createAppointment = async (appointment) => {
 
 export const updateAppointment = (variables) => {
     return appointmentRepository.update(variables);
+}
+
+export const updateAppointmentRequest = (variables) => {
+    return appointmentRepository.updateRequest(variables);
+}
+
+export const updateAppointmentStatus = (variables) => {
+    return appointmentRepository.updateStatus(variables);
 }
 
 export const destroyAppointment = (variables) => {
