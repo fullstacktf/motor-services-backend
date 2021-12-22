@@ -1,3 +1,4 @@
+import { async } from 'regenerator-runtime';
 import { execQuery } from '../database/database.js';
 
 export class AppointmentRepository {
@@ -50,6 +51,15 @@ export class AppointmentRepository {
         return data;
     }
 
+    filterByRequest = async (variables) => {
+        console.log(variables.appointment_request, variables.id_picker);
+        const queryExec = `SELECT id_appointment, id_service, pick_up_time, pick_up_date, service_type, id_picker, appointment_status 
+        FROM Appointment JOIN Services USING (id_service)
+        WHERE id_picker =${variables.id_picker} AND appointment_request='${variables.appointment_request}';`;
+        const data = await execQuery(queryExec);
+        return data;
+    }
+
     findByPickerPk = async (variables) => {
         const queryExec = `SELECT id_appointment, id_vehicle, id_service, id_picker, pick_up_latitude, pick_up_longitude, pick_up_city, 
         pick_up_date, pick_up_time, appointment_status, appointment_request, owner_notes, picker_notes, delivery_latitude, delivery_longitude, 
@@ -80,6 +90,20 @@ export class AppointmentRepository {
         appointment_request='${variables.appointment_request}', owner_notes ='${variables.owner_notes}', picker_notes='${variables.picker_notes}', 
         delivery_longitude=${variables.delivery_longitude}, delivery_latitude=${variables.delivery_latitude}, delivery_city='${variables.delivery_city}', garage='${variables.garage}' 
         WHERE id_appointment = ${variables.appointment_id};`;
+        const data = await execQuery(queryExec);
+        return data;
+    }
+
+    updateRequest =async (variables) => {
+        
+        const queryExec = `UPDATE Appointment SET appointment_request='${variables.appointment_request}' WHERE id_appointment=${variables.id_appointment};`;
+        const data = await execQuery(queryExec);
+        return data;
+    }
+
+    updateStatus = async (variables) => {
+        console.log(variables);
+        const queryExec = `UPDATE Appointment SET appointment_status='${variables.appointment_status}' WHERE id_appointment=${variables.id_appointment};`;
         const data = await execQuery(queryExec);
         return data;
     }

@@ -12,11 +12,11 @@ const salt = bcrypt.genSaltSync(saltRounds);
 const getUser = async (req, res) => {
     const user_id = req.params.userID;
 
-    if (user_id==req.userDNI){
+    //if (user_id==req.userDNI){
         findUser(user_id)
             .then(data => res.status(200).json(data))
             .catch(err => res.status(500).json({error: String(err)})); // quizas no es status 500
-    } else {res.status(403).json({error: "No tiene permisos"})} // 403:Prohibida o 401:No autorizada
+    //} else {res.status(403).json({error: "No tiene permisos"})} // 403:Prohibida o 401:No autorizada
 }
 
 const editUser = async (req, res) => {
@@ -26,20 +26,20 @@ const editUser = async (req, res) => {
         dni: req.params.userID,
         ...req.body
     };
-    if (variables.dni==req.userDNI){
+    //if (variables.dni==req.userDNI){
         updateUser(variables)
             .then((data) => res.status(200).send("Usuario actualizado correctamente"))
             .catch(err => res.status(500).json({error: String(err)}));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const deleteUser = async (req, res) => {
     const dni = req.params.userID;
-    if (dni==req.userDNI){
+    //if (dni==req.userDNI){
         destroyUser(dni)
             .then(() => res.status(200).send("Usuario eliminado correctamente"))
             .catch(err => res.status(500).json({error: String(err)}));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const editPicker = async (req, res) => {
@@ -47,17 +47,17 @@ const editPicker = async (req, res) => {
         pickerID: req.params.pickerID,
         ...req.body
     };
-    if (variables.pickerID==req.userDNI){
+    //if (variables.pickerID==req.userDNI){
         updatePicker(variables)
             .then((data) => res.status(200).send("Horario actualizado correctamente"))
             .catch(err => res.status(500).json({error: String(err)}));
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
 }
 
 const uploadImage = async (req, res, next) => {
     //cambiar el nombre al archivo
     const userID =req.params.userID
-    if (userID==req.userDNI){
+    //if (userID==req.userDNI){
         const file = req.file;
         if (!file) {
             return res.status(400).send({ message: 'Sube una foto.' });
@@ -74,7 +74,7 @@ const uploadImage = async (req, res, next) => {
           }
     
         return res.send({ message: 'Foto subida correctamente.', file });
-    }else {res.status(403).json({error: "No tiene permisos"})}
+    //}else {res.status(403).json({error: "No tiene permisos"})}
     }
 
 export default {
